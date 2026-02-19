@@ -218,24 +218,56 @@
 
   function drawDailyChart(canvas, labels, metaValues, realValues) {
     const { ctx, width, height } = setupCanvas(canvas, 300);
-    const p = { l: 36, r: 20, t: 18, b: 32 };
+    const p = { l: 44, r: 18, t: 16, b: 34 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
 
     const allValues = [...metaValues, ...realValues].filter((n) => n != null);
     const max = Math.max(1, ...allValues) * 1.1;
+    const ticks = 5;
 
-    ctx.strokeStyle = '#d9e4ff';
-    ctx.beginPath();
-    ctx.moveTo(p.l, p.t);
-    ctx.lineTo(p.l, height - p.b);
-    ctx.lineTo(width - p.r, height - p.b);
-    ctx.stroke();
+    for (let i = 0; i <= ticks; i += 1) {
+      const y = p.t + (chartH / ticks) * i;
+      ctx.strokeStyle = i === ticks ? '#c8d6f2' : '#e4ecfb';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(p.l, y);
+      ctx.lineTo(width - p.r, y);
+      ctx.stroke();
+
+      const tickValue = ((ticks - i) / ticks) * max;
+      ctx.fillStyle = '#8c9dbe';
+      ctx.font = '11px Arial';
+      ctx.fillText(formatNumber(Math.round(tickValue)), 6, y + 3);
+    }
 
     const xStep = chartW / Math.max(1, labels.length - 1);
+    const barW = Math.max(10, Math.min(28, xStep * 0.58));
 
     function pointY(value) {
       return p.t + chartH - (value / max) * chartH;
+    }
+
+    realValues.forEach((v, i) => {
+      if (v == null) return;
+      const x = p.l + i * xStep;
+      const y = pointY(v);
+      ctx.fillStyle = '#a8bcd9';
+      ctx.fillRect(x - barW / 2, y, barW, height - p.b - y);
+    });
+
+    const targetValues = metaValues.filter((v) => v != null);
+    const target = targetValues.length ? targetValues.reduce((acc, n) => acc + n, 0) / targetValues.length : 0;
+    if (target > 0) {
+      const y = pointY(target);
+      ctx.setLineDash([8, 4]);
+      ctx.strokeStyle = '#3f69ad';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(p.l, y);
+      ctx.lineTo(width - p.r, y);
+      ctx.stroke();
+      ctx.setLineDash([]);
     }
 
     function drawLine(values, color) {
@@ -262,47 +294,67 @@
         const y = pointY(v);
         ctx.beginPath();
         ctx.fillStyle = color;
-        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.arc(x, y, 3.4, 0, Math.PI * 2);
         ctx.fill();
+        ctx.stroke();
       });
     }
 
-    drawLine(metaValues, '#8aa4ff');
-    drawLine(realValues, '#f48fb1');
+    drawLine(realValues, '#e24b62');
 
     ctx.fillStyle = '#5f6f92';
     ctx.font = '11px Arial';
     labels.forEach((label, i) => {
       if (i % 2 !== 0) return;
       const x = p.l + i * xStep;
-      ctx.fillText(label, x - 5, height - 10);
+      ctx.fillText(label, x - 5, height - 9);
     });
   }
 
   function drawHistoryBars(canvas, labels, values) {
-    const { ctx, width, height } = setupCanvas(canvas, 240);
-    const p = 24;
-    const chartW = width - p * 2;
-    const chartH = height - p * 2;
-    const max = Math.max(1, ...values) * 1.1;
+    const { ctx, width, height } = setupCanvas(canvas, 230);
+    const p = { l: 34, r: 16, t: 18, b: 30 };
+    const chartW = width - p.l - p.r;
+    const chartH = height - p.t - p.b;
+    const max = Math.max(1, ...values) * 1.12;
     const gap = chartW / Math.max(1, values.length);
-    const barW = Math.max(20, gap * 0.55);
-    const colors = ['#d2e8ff', '#f9d9e7', '#d9f4e7', '#ffe9cc'];
+    const barW = Math.max(20, Math.min(46, gap * 0.56));
+    const colors = ['#8eb0d7', '#d3a9be', '#9cccb7', '#e6c897'];
+
+    for (let i = 0; i <= 4; i += 1) {
+      const y = Math.round(p.t + (chartH / 4) * i) + 0.5;
+      ctx.strokeStyle = i === 4 ? '#d4e0f7' : '#edf2ff';
+      ctx.beginPath();
+      ctx.moveTo(p.l, y);
+      ctx.lineTo(width - p.r, y);
+      ctx.stroke();
+    }
 
     values.forEach((v, i) => {
-      const h = (v / max) * chartH;
-      const x = p + i * gap + (gap - barW) / 2;
-      const y = height - p - h;
-      ctx.fillStyle = colors[i % colors.length];
-      ctx.strokeStyle = '#c8d8ff';
-      ctx.lineWidth = 1;
-      ctx.fillRect(x, y, barW, h);
-      ctx.strokeRect(x, y, barW, h);
+      const h = Math.max(2, (v / max) * chartH);
+      const x = Math.round(p.l + i * gap + (gap - barW) / 2);
+      const y = Math.round(height - p.b - h);
 
-      ctx.fillStyle = '#6a7da7';
-      ctx.font = '11px Arial';
-      ctx.fillText(labels[i], x, height - 6);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fillRect(x, y, barW, h);
+
+      ctx.strokeStyle = '#d2def3';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x + 0.5, y + 0.5, barW - 1, h - 1);
+
+      ctx.fillStyle = '#4f6289';
+      ctx.font = '700 11px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(labels[i], Math.round(x + barW / 2), height - 9);
+
+      ctx.fillStyle = '#7388ae';
+      ctx.font = '600 10px Arial';
+      ctx.fillText(formatNumber(v), Math.round(x + barW / 2), y - 7);
     });
+
+    ctx.textAlign = 'start';
   }
 
   function monthLabelFromKey(key) {
@@ -359,35 +411,40 @@
       const previousReal = Number(previous?.real || 0);
       const delta = currentReal - previousReal;
       const pct = previousReal ? (delta / previousReal) * 100 : 0;
+      const target = Number(current?.target || previous?.target || db.metas[line.id] || 0);
+      const cumplimiento = target ? (currentReal / target) * 100 : 0;
+      const impulse = Math.min(100, Math.abs(pct));
 
       let cls = 'trend-flat';
-      let icon = '➖';
       let text = 'Sin cambio';
       if (delta > 0) {
         cls = 'trend-up';
-        icon = '📈';
         text = 'Aumento';
       } else if (delta < 0) {
         cls = 'trend-down';
-        icon = '📉';
         text = 'Decremento';
       }
 
       const item = document.createElement('div');
       item.className = `compare-item ${cls}`;
       item.innerHTML = `
-        <h4>${line.name}</h4>
+        <div class="compare-title-row">
+          <h4>${line.name}</h4>
+          <span class="trend-pill">${text}</span>
+        </div>
         <div class="compare-values">
-          <span>Día ${COMPARE_PREVIOUS_DAY}: <strong>${formatNumber(previousReal)}</strong></span>
-          <span>Día ${COMPARE_CURRENT_DAY}: <strong>${formatNumber(currentReal)}</strong></span>
+          <div class="metric-tile"><span>Día ${COMPARE_PREVIOUS_DAY}</span><strong>${formatNumber(previousReal)}</strong></div>
+          <div class="metric-tile"><span>Día ${COMPARE_CURRENT_DAY}</span><strong>${formatNumber(currentReal)}</strong></div>
+          <div class="metric-tile"><span>Meta día ${COMPARE_CURRENT_DAY}</span><strong>${formatNumber(target)}</strong></div>
         </div>
         <div class="compare-kpi">
-          <span class="big-icon">${icon}</span>
-          <div>
-            <p class="compare-delta">${text}: <strong>${formatNumber(Math.abs(delta))}</strong></p>
-            <p class="compare-pct">${pct >= 0 ? '+' : ''}${formatNumber(pct)}%</p>
-          </div>
+          <div class="kpi-chip"><span>Delta absoluto</span><strong>${delta >= 0 ? '+' : ''}${formatNumber(delta)}</strong></div>
+          <div class="kpi-chip"><span>Variación %</span><strong>${pct >= 0 ? '+' : ''}${formatNumber(pct)}%</strong></div>
+          <div class="kpi-chip"><span>Cumplimiento</span><strong>${formatNumber(cumplimiento)}%</strong></div>
         </div>
+        <p class="progress-label">Impulso del día</p>
+        <div class="compare-progress"><div style="width:${impulse}%"></div></div>
+        <p class="compare-pct">${formatNumber(impulse)}%</p>
       `;
       grid.append(item);
     });
@@ -450,7 +507,12 @@
             </table>
           </div>
           <div class="chart-card chart-card-daily">
-            <p class="muted">Comportamiento diario (sin sábados ni domingos)</p>
+            <p class="chart-title">Comportamiento diario (solo días hábiles)</p>
+            <div class="chart-legend">
+              <span><i class="legend-dot legend-target"></i>Meta</span>
+              <span><i class="legend-dot legend-bars"></i>Barras reales</span>
+              <span><i class="legend-dot legend-real"></i>Tendencia real</span>
+            </div>
             <canvas data-chart="daily"></canvas>
           </div>
         </div>
@@ -495,7 +557,7 @@
             <span class="pill pill-down">Min: ${formatNumber(min)}</span>
           </div>
         </div>
-        <canvas class="history-canvas"></canvas>
+        <canvas class="history-canvas" aria-label="Histórico mensual"></canvas>
         <table class="avg-table">
           <thead><tr><th>Mes</th>${labels.map((l) => `<th>${l}</th>`).join('')}</tr></thead>
           <tbody>

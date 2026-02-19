@@ -6,406 +6,93 @@
     { id: 'wire_bond', name: 'Wire Bond' },
   ];
 
-  const DB_KEY = 'trend_salida_db_v2';
-  const LEGACY_RECORDS_KEY = 'trend_salida_records_v1';
+  const DB_KEY = 'trend_salida_db_v3';
+  const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAY = 2;
   const COMPARE_CURRENT_DAY = 18;
   const COMPARE_PREVIOUS_DAY = 17;
 
   const SEED_DB = {
-  "metas": {
-    "montado_ceramica": 2287,
-    "montado_chip": 2610,
-    "alineacion_chip": 3859,
-    "wire_bond": 2346
-  },
-  "records": [
-    {
-      "lineId": "alineacion_chip",
-      "date": "2025-10-01",
-      "target": 3859,
-      "real": 1580
+    metas: {
+      montado_ceramica: 2287,
+      montado_chip: 2610,
+      alineacion_chip: 3859,
+      wire_bond: 2346,
     },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2025-11-01",
-      "target": 3859,
-      "real": 1508
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2025-12-01",
-      "target": 3859,
-      "real": 1536
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-01-01",
-      "target": 3859,
-      "real": 2145
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-10-01",
-      "target": 2346,
-      "real": 1205
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-11-01",
-      "target": 2346,
-      "real": 1651
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-12-01",
-      "target": 2346,
-      "real": 4883
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-01-01",
-      "target": 2346,
-      "real": 2002
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-10-01",
-      "target": 2287,
-      "real": 2035
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-11-01",
-      "target": 2287,
-      "real": 2085
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-12-01",
-      "target": 2287,
-      "real": 1869
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-01-01",
-      "target": 2287,
-      "real": 1321
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-10-01",
-      "target": 2610,
-      "real": 1973
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-11-01",
-      "target": 2610,
-      "real": 2059
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-12-01",
-      "target": 2610,
-      "real": 1904
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-01-01",
-      "target": 2610,
-      "real": 2066
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-03",
-      "target": 3859,
-      "real": 1600
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-04",
-      "target": 3859,
-      "real": 1630
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-05",
-      "target": 3859,
-      "real": 1600
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-06",
-      "target": 3859,
-      "real": 1720
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-09",
-      "target": 3859,
-      "real": 1244
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-10",
-      "target": 3859,
-      "real": 1800
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-11",
-      "target": 3859,
-      "real": 1767
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-12",
-      "target": 3859,
-      "real": 1826
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-13",
-      "target": 3859,
-      "real": 1580
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-16",
-      "target": 3859,
-      "real": 1425
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-17",
-      "target": 3859,
-      "real": 940
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-03",
-      "target": 2346,
-      "real": 1700
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-04",
-      "target": 2346,
-      "real": 1790
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-05",
-      "target": 2346,
-      "real": 1540
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-06",
-      "target": 2346,
-      "real": 1605
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-09",
-      "target": 2346,
-      "real": 1730
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-10",
-      "target": 2346,
-      "real": 1750
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-11",
-      "target": 2346,
-      "real": 1700
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-12",
-      "target": 2346,
-      "real": 1605
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-13",
-      "target": 2346,
-      "real": 1595
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-16",
-      "target": 2346,
-      "real": 400
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-17",
-      "target": 2346,
-      "real": 600
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-03",
-      "target": 2287,
-      "real": 2222
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-04",
-      "target": 2287,
-      "real": 2223
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-05",
-      "target": 2287,
-      "real": 1753
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-06",
-      "target": 2287,
-      "real": 2873
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-09",
-      "target": 2287,
-      "real": 2263
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-10",
-      "target": 2287,
-      "real": 2296
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-11",
-      "target": 2287,
-      "real": 2167
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-12",
-      "target": 2287,
-      "real": 2263
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-13",
-      "target": 2287,
-      "real": 2259
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-16",
-      "target": 2287,
-      "real": 1800
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-17",
-      "target": 2287,
-      "real": 2208
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-03",
-      "target": 2610,
-      "real": 2155
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-04",
-      "target": 2610,
-      "real": 2000
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-05",
-      "target": 2610,
-      "real": 1900
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-06",
-      "target": 2610,
-      "real": 2164
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-09",
-      "target": 2610,
-      "real": 1998
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-10",
-      "target": 2610,
-      "real": 2217
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-11",
-      "target": 2610,
-      "real": 2114
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-12",
-      "target": 2610,
-      "real": 1912
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-13",
-      "target": 2610,
-      "real": 1944
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-16",
-      "target": 2610,
-      "real": 1990
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-17",
-      "target": 2610,
-      "real": 2172
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-18",
-      "target": 2287,
-      "real": 3254
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-18",
-      "target": 2610,
-      "real": 2198
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-18",
-      "target": 3859,
-      "real": 1660
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-18",
-      "target": 2346,
-      "real": 1575
-    }
-  ]
-};
+    records: [
+      // Alineación de Chip
+      { lineId: 'alineacion_chip', date: '2025-10-01', target: 3859, real: 1580 },
+      { lineId: 'alineacion_chip', date: '2025-11-01', target: 3859, real: 1508 },
+      { lineId: 'alineacion_chip', date: '2025-12-01', target: 3859, real: 1536 },
+      { lineId: 'alineacion_chip', date: '2026-01-01', target: 3859, real: 2145 },
+      { lineId: 'alineacion_chip', date: '2026-02-03', target: 3859, real: 1600 },
+      { lineId: 'alineacion_chip', date: '2026-02-04', target: 3859, real: 1630 },
+      { lineId: 'alineacion_chip', date: '2026-02-05', target: 3859, real: 1600 },
+      { lineId: 'alineacion_chip', date: '2026-02-06', target: 3859, real: 1720 },
+      { lineId: 'alineacion_chip', date: '2026-02-09', target: 3859, real: 1244 },
+      { lineId: 'alineacion_chip', date: '2026-02-10', target: 3859, real: 1800 },
+      { lineId: 'alineacion_chip', date: '2026-02-11', target: 3859, real: 1767 },
+      { lineId: 'alineacion_chip', date: '2026-02-12', target: 3859, real: 1826 },
+      { lineId: 'alineacion_chip', date: '2026-02-13', target: 3859, real: 1580 },
+      { lineId: 'alineacion_chip', date: '2026-02-16', target: 3859, real: 1425 },
+      { lineId: 'alineacion_chip', date: '2026-02-17', target: 3859, real: 940 },
+      { lineId: 'alineacion_chip', date: '2026-02-18', target: 3859, real: 1660 },
+
+      // Wire Bond
+      { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
+      { lineId: 'wire_bond', date: '2025-11-01', target: 2346, real: 1651 },
+      { lineId: 'wire_bond', date: '2025-12-01', target: 2346, real: 4883 },
+      { lineId: 'wire_bond', date: '2026-01-01', target: 2346, real: 2002 },
+      { lineId: 'wire_bond', date: '2026-02-03', target: 2346, real: 1700 },
+      { lineId: 'wire_bond', date: '2026-02-04', target: 2346, real: 1790 },
+      { lineId: 'wire_bond', date: '2026-02-05', target: 2346, real: 1540 },
+      { lineId: 'wire_bond', date: '2026-02-06', target: 2346, real: 1605 },
+      { lineId: 'wire_bond', date: '2026-02-09', target: 2346, real: 1730 },
+      { lineId: 'wire_bond', date: '2026-02-10', target: 2346, real: 1750 },
+      { lineId: 'wire_bond', date: '2026-02-11', target: 2346, real: 1700 },
+      { lineId: 'wire_bond', date: '2026-02-12', target: 2346, real: 1605 },
+      { lineId: 'wire_bond', date: '2026-02-13', target: 2346, real: 1595 },
+      { lineId: 'wire_bond', date: '2026-02-16', target: 2346, real: 400 },
+      { lineId: 'wire_bond', date: '2026-02-17', target: 2346, real: 600 },
+      { lineId: 'wire_bond', date: '2026-02-18', target: 2346, real: 1575 },
+
+      // Montado de Cerámica
+      { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
+      { lineId: 'montado_ceramica', date: '2025-11-01', target: 2287, real: 2085 },
+      { lineId: 'montado_ceramica', date: '2025-12-01', target: 2287, real: 1869 },
+      { lineId: 'montado_ceramica', date: '2026-01-01', target: 2287, real: 1321 },
+      { lineId: 'montado_ceramica', date: '2026-02-03', target: 2287, real: 2222 },
+      { lineId: 'montado_ceramica', date: '2026-02-04', target: 2287, real: 2223 },
+      { lineId: 'montado_ceramica', date: '2026-02-05', target: 2287, real: 1753 },
+      { lineId: 'montado_ceramica', date: '2026-02-06', target: 2287, real: 2873 },
+      { lineId: 'montado_ceramica', date: '2026-02-09', target: 2287, real: 2263 },
+      { lineId: 'montado_ceramica', date: '2026-02-10', target: 2287, real: 2296 },
+      { lineId: 'montado_ceramica', date: '2026-02-11', target: 2287, real: 2167 },
+      { lineId: 'montado_ceramica', date: '2026-02-12', target: 2287, real: 2263 },
+      { lineId: 'montado_ceramica', date: '2026-02-13', target: 2287, real: 2259 },
+      { lineId: 'montado_ceramica', date: '2026-02-16', target: 2287, real: 1800 },
+      { lineId: 'montado_ceramica', date: '2026-02-17', target: 2287, real: 2208 },
+      { lineId: 'montado_ceramica', date: '2026-02-18', target: 2287, real: 3254 },
+
+      // Montado de Chip
+      { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
+      { lineId: 'montado_chip', date: '2025-11-01', target: 2610, real: 2059 },
+      { lineId: 'montado_chip', date: '2025-12-01', target: 2610, real: 1904 },
+      { lineId: 'montado_chip', date: '2026-01-01', target: 2610, real: 2066 },
+      { lineId: 'montado_chip', date: '2026-02-03', target: 2610, real: 2155 },
+      { lineId: 'montado_chip', date: '2026-02-04', target: 2610, real: 2000 },
+      { lineId: 'montado_chip', date: '2026-02-05', target: 2610, real: 1900 },
+      { lineId: 'montado_chip', date: '2026-02-06', target: 2610, real: 2164 },
+      { lineId: 'montado_chip', date: '2026-02-09', target: 2610, real: 1998 },
+      { lineId: 'montado_chip', date: '2026-02-10', target: 2610, real: 2217 },
+      { lineId: 'montado_chip', date: '2026-02-11', target: 2610, real: 2114 },
+      { lineId: 'montado_chip', date: '2026-02-12', target: 2610, real: 1912 },
+      { lineId: 'montado_chip', date: '2026-02-13', target: 2610, real: 1944 },
+      { lineId: 'montado_chip', date: '2026-02-16', target: 2610, real: 1990 },
+      { lineId: 'montado_chip', date: '2026-02-17', target: 2610, real: 2172 },
+      { lineId: 'montado_chip', date: '2026-02-18', target: 2610, real: 2198 },
+    ],
+  };
 
   const monthSelect = document.querySelector('#monthSelect');
   const yearSelect = document.querySelector('#yearSelect');
@@ -420,16 +107,16 @@
   const realInput = document.querySelector('#realInput');
   const entryForm = document.querySelector('#entryForm');
   const entryFeedback = document.querySelector('#entryFeedback');
-
   const goalsForm = document.querySelector('#goalsForm');
   const goalsFeedback = document.querySelector('#goalsFeedback');
 
   const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
   const screens = Array.from(document.querySelectorAll('.screen'));
 
-  const now = new Date();
-  let selectedMonth = now.getMonth();
-  let selectedYear = now.getFullYear();
+  const START_MONTH = 1;
+  const START_YEAR = 2026;
+  let selectedMonth = START_MONTH;
+  let selectedYear = START_YEAR;
   let db = loadDB();
 
   function getDaysInMonth(year, monthIndex) {
@@ -437,31 +124,20 @@
   }
 
   function getBusinessDaysInMonth(year, monthIndex) {
-    const days = getDaysInMonth(year, monthIndex);
-    const businessDays = [];
-
-    for (let day = 1; day <= days; day += 1) {
-      const weekday = new Date(year, monthIndex, day).getDay();
-      if (weekday !== 0 && weekday !== 6) businessDays.push(day);
-    }
-
-    return businessDays;
-  }
-
-  function formatDateISO(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-  }
-
-  function monthName(index) {
-    return new Date(2025, index, 1).toLocaleString('es-MX', { month: 'long' });
+    return Array.from({ length: getDaysInMonth(year, monthIndex) }, (_, i) => i + 1)
+      .filter((day) => {
+        const weekday = new Date(year, monthIndex, day).getDay();
+        return weekday !== 0 && weekday !== 6;
+      });
   }
 
   function formatNumber(value) {
     if (value == null || Number.isNaN(value)) return '—';
-    return Number(value).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return Number(value).toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+
+  function monthName(index) {
+    return new Date(2026, index, 1).toLocaleString('es-MX', { month: 'long' });
   }
 
   function keyFromDate(dateStr) {
@@ -469,38 +145,20 @@
     return `${year}-${month}`;
   }
 
-  function parseSeedDb() {
+  function parseSeed() {
     return JSON.parse(JSON.stringify(SEED_DB));
   }
 
   function loadDB() {
     try {
-      const rawDb = localStorage.getItem(DB_KEY);
-      if (rawDb) {
-        const parsed = JSON.parse(rawDb);
-        return {
-          metas: parsed.metas || {},
-          records: Array.isArray(parsed.records) ? parsed.records : [],
-        };
-      }
-
-      const legacyRaw = localStorage.getItem(LEGACY_RECORDS_KEY);
-      if (legacyRaw) {
-        const legacyRecords = JSON.parse(legacyRaw);
-        const seeded = parseSeedDb();
-        const migrated = {
-          metas: seeded.metas,
-          records: Array.isArray(legacyRecords) ? legacyRecords : [],
-        };
-        localStorage.setItem(DB_KEY, JSON.stringify(migrated));
-        return migrated;
-      }
-
-      const seeded = parseSeedDb();
+      const raw = localStorage.getItem(DB_KEY);
+      if (raw) return JSON.parse(raw);
+      const seeded = parseSeed();
       localStorage.setItem(DB_KEY, JSON.stringify(seeded));
+      LEGACY_DB_KEYS.forEach((key) => localStorage.removeItem(key));
       return seeded;
-    } catch (error) {
-      return parseSeedDb();
+    } catch (_) {
+      return parseSeed();
     }
   }
 
@@ -508,34 +166,26 @@
     localStorage.setItem(DB_KEY, JSON.stringify(db));
   }
 
-  function upsertRecord(nextRecord) {
-    const idx = db.records.findIndex((item) => item.lineId === nextRecord.lineId && item.date === nextRecord.date);
-    if (idx >= 0) db.records[idx] = nextRecord;
-    else db.records.push(nextRecord);
-  }
-
-  function setupMonthYearSelectors() {
+  function setupSelectors() {
     monthSelect.innerHTML = '';
     yearSelect.innerHTML = '';
 
-    for (let i = 0; i < 12; i += 1) {
+    for (let m = 0; m < 12; m += 1) {
       const op = document.createElement('option');
-      op.value = i;
-      op.textContent = monthName(i);
-      if (i === selectedMonth) op.selected = true;
+      op.value = String(m);
+      op.textContent = monthName(m);
+      if (m === selectedMonth) op.selected = true;
       monthSelect.append(op);
     }
 
-    for (let y = selectedYear - 3; y <= selectedYear + 2; y += 1) {
+    for (let y = 2025; y <= 2026; y += 1) {
       const op = document.createElement('option');
-      op.value = y;
-      op.textContent = y;
+      op.value = String(y);
+      op.textContent = String(y);
       if (y === selectedYear) op.selected = true;
       yearSelect.append(op);
     }
-  }
 
-  function setupLineSelector() {
     lineSelect.innerHTML = '';
     LINES.forEach((line) => {
       const op = document.createElement('option');
@@ -543,22 +193,333 @@
       op.textContent = line.name;
       lineSelect.append(op);
     });
+    targetInput.value = db.metas[lineSelect.value] || '';
   }
 
-  function syncEntryTargetWithGoal() {
-    const goal = db.metas[lineSelect.value] || 0;
-    targetInput.value = goal > 0 ? goal : '';
+  function summarize(metaValues, realValues) {
+    const meta = metaValues.reduce((acc, n) => acc + (Number(n) || 0), 0);
+    const real = realValues.reduce((acc, n) => acc + (Number(n) || 0), 0);
+    const cumplimiento = meta > 0 ? (real / meta) * 100 : 0;
+    return { meta, real, cumplimiento };
+  }
+
+  function setupCanvas(canvas, minHeight = 260) {
+    const ratio = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(320, Math.floor(rect.width));
+    const height = Math.max(minHeight, Math.floor(rect.height));
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+    return { ctx, width, height };
+  }
+
+  function drawDailyChart(canvas, labels, metaValues, realValues) {
+    const { ctx, width, height } = setupCanvas(canvas, 300);
+    const p = { l: 36, r: 20, t: 18, b: 32 };
+    const chartW = width - p.l - p.r;
+    const chartH = height - p.t - p.b;
+
+    const allValues = [...metaValues, ...realValues].filter((n) => n != null);
+    const max = Math.max(1, ...allValues) * 1.1;
+
+    ctx.strokeStyle = '#d9e4ff';
+    ctx.beginPath();
+    ctx.moveTo(p.l, p.t);
+    ctx.lineTo(p.l, height - p.b);
+    ctx.lineTo(width - p.r, height - p.b);
+    ctx.stroke();
+
+    const xStep = chartW / Math.max(1, labels.length - 1);
+
+    function pointY(value) {
+      return p.t + chartH - (value / max) * chartH;
+    }
+
+    function drawLine(values, color) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.4;
+      let started = false;
+      values.forEach((v, i) => {
+        if (v == null) return;
+        const x = p.l + i * xStep;
+        const y = pointY(v);
+        if (!started) {
+          ctx.moveTo(x, y);
+          started = true;
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      ctx.stroke();
+
+      values.forEach((v, i) => {
+        if (v == null) return;
+        const x = p.l + i * xStep;
+        const y = pointY(v);
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    drawLine(metaValues, '#8aa4ff');
+    drawLine(realValues, '#f48fb1');
+
+    ctx.fillStyle = '#5f6f92';
+    ctx.font = '11px Arial';
+    labels.forEach((label, i) => {
+      if (i % 2 !== 0) return;
+      const x = p.l + i * xStep;
+      ctx.fillText(label, x - 5, height - 10);
+    });
+  }
+
+  function drawHistoryBars(canvas, labels, values) {
+    const { ctx, width, height } = setupCanvas(canvas, 240);
+    const p = 24;
+    const chartW = width - p * 2;
+    const chartH = height - p * 2;
+    const max = Math.max(1, ...values) * 1.1;
+    const gap = chartW / Math.max(1, values.length);
+    const barW = Math.max(20, gap * 0.55);
+    const colors = ['#d2e8ff', '#f9d9e7', '#d9f4e7', '#ffe9cc'];
+
+    values.forEach((v, i) => {
+      const h = (v / max) * chartH;
+      const x = p + i * gap + (gap - barW) / 2;
+      const y = height - p - h;
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.strokeStyle = '#c8d8ff';
+      ctx.lineWidth = 1;
+      ctx.fillRect(x, y, barW, h);
+      ctx.strokeRect(x, y, barW, h);
+
+      ctx.fillStyle = '#6a7da7';
+      ctx.font = '11px Arial';
+      ctx.fillText(labels[i], x, height - 6);
+    });
+  }
+
+  function monthLabelFromKey(key) {
+    const [y, m] = key.split('-').map(Number);
+    return `${monthName(m - 1).slice(0, 3).toUpperCase()} ${y}`;
+  }
+
+  function recordsByLineAndMonth(lineId, year, month) {
+    return db.records.filter((item) => {
+      if (item.lineId !== lineId) return false;
+      const date = new Date(`${item.date}T00:00:00`);
+      return date.getFullYear() === year && date.getMonth() === month;
+    });
+  }
+
+  function monthlyStats(lineId, excludeCurrent = true) {
+    const map = new Map();
+    db.records.forEach((item) => {
+      if (item.lineId !== lineId) return;
+      const key = keyFromDate(item.date);
+      if (excludeCurrent && key === `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`) return;
+      const prev = map.get(key) || { sum: 0, count: 0, target: 0 };
+      prev.sum += Number(item.real) || 0;
+      prev.target += Number(item.target) || 0;
+      prev.count += 1;
+      map.set(key, prev);
+    });
+
+    return Array.from(map.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([key, val]) => ({
+        key,
+        avg: val.count ? val.sum / val.count : 0,
+        cumplimiento: val.target ? (val.sum / val.target) * 100 : 0,
+      }));
+  }
+
+  function renderDailyComparison() {
+    const panel = document.createElement('article');
+    panel.className = 'panel compare-panel';
+    panel.innerHTML = `
+      <h2>Comparativo diario PRO (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2>
+      <p class="muted">Incluye variación absoluta y porcentaje de cambio por sección.</p>
+    `;
+
+    const grid = document.createElement('div');
+    grid.className = 'compare-grid';
+
+    LINES.forEach((line) => {
+      const current = recordsByLineAndMonth(line.id, selectedYear, selectedMonth).find((r) => Number(r.date.slice(-2)) === COMPARE_CURRENT_DAY);
+      const previous = recordsByLineAndMonth(line.id, selectedYear, selectedMonth).find((r) => Number(r.date.slice(-2)) === COMPARE_PREVIOUS_DAY);
+
+      const currentReal = Number(current?.real || 0);
+      const previousReal = Number(previous?.real || 0);
+      const delta = currentReal - previousReal;
+      const pct = previousReal ? (delta / previousReal) * 100 : 0;
+
+      let cls = 'trend-flat';
+      let icon = '➖';
+      let text = 'Sin cambio';
+      if (delta > 0) {
+        cls = 'trend-up';
+        icon = '📈';
+        text = 'Aumento';
+      } else if (delta < 0) {
+        cls = 'trend-down';
+        icon = '📉';
+        text = 'Decremento';
+      }
+
+      const item = document.createElement('div');
+      item.className = `compare-item ${cls}`;
+      item.innerHTML = `
+        <h4>${line.name}</h4>
+        <div class="compare-values">
+          <span>Día ${COMPARE_PREVIOUS_DAY}: <strong>${formatNumber(previousReal)}</strong></span>
+          <span>Día ${COMPARE_CURRENT_DAY}: <strong>${formatNumber(currentReal)}</strong></span>
+        </div>
+        <div class="compare-kpi">
+          <span class="big-icon">${icon}</span>
+          <div>
+            <p class="compare-delta">${text}: <strong>${formatNumber(Math.abs(delta))}</strong></p>
+            <p class="compare-pct">${pct >= 0 ? '+' : ''}${formatNumber(pct)}%</p>
+          </div>
+        </div>
+      `;
+      grid.append(item);
+    });
+
+    panel.append(grid);
+    sectionsContainer.append(panel);
+  }
+
+  function renderSections() {
+    sectionsContainer.innerHTML = '';
+    const businessDays = getBusinessDaysInMonth(selectedYear, selectedMonth);
+    const chartRefs = [];
+
+    LINES.forEach((line) => {
+      const monthRecords = recordsByLineAndMonth(line.id, selectedYear, selectedMonth);
+      const defaultTarget = Number(db.metas[line.id] || 0);
+      const metaByDay = businessDays.map((day) => {
+        if (day === INHABIL_DAY) return null;
+        const rec = monthRecords.find((r) => Number(r.date.slice(-2)) === day);
+        return Number(rec?.target ?? defaultTarget);
+      });
+      const realByDay = businessDays.map((day) => {
+        if (day === INHABIL_DAY) return null;
+        const rec = monthRecords.find((r) => Number(r.date.slice(-2)) === day);
+        return rec ? Number(rec.real) : null;
+      });
+
+      const resume = summarize(metaByDay, realByDay);
+      const headers = businessDays
+        .map((day) => `<th class="${day === INHABIL_DAY ? 'inhabil-col' : ''}">${day === INHABIL_DAY ? `${day}<br><small>INHÁBIL</small>` : day}</th>`)
+        .join('');
+
+      const metaCells = businessDays
+        .map((day, idx) => (day === INHABIL_DAY ? '<td class="inhabil-col">INHÁBIL</td>' : `<td>${formatNumber(metaByDay[idx])}</td>`))
+        .join('');
+
+      const realCells = businessDays
+        .map((day, idx) => (day === INHABIL_DAY ? '<td class="inhabil-col">INHÁBIL</td>' : `<td>${formatNumber(realByDay[idx])}</td>`))
+        .join('');
+
+      const card = document.createElement('article');
+      card.className = 'section-card';
+      card.innerHTML = `
+        <div class="section-header">
+          <strong>${line.name}</strong>
+          <div class="badges">
+            <span class="badge">Meta: ${formatNumber(resume.meta)}</span>
+            <span class="badge">Real: ${formatNumber(resume.real)}</span>
+            <span class="badge">Cumplimiento: ${formatNumber(resume.cumplimiento)}%</span>
+          </div>
+        </div>
+        <div class="section-content">
+          <div class="table-wrap">
+            <table class="month-table">
+              <thead><tr><th>Día</th>${headers}</tr></thead>
+              <tbody>
+                <tr><td class="label-cell">META (CAP INST.)</td>${metaCells}</tr>
+                <tr><td class="label-cell">REAL (CAP. 1 EST.)</td>${realCells}</tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="chart-card chart-card-daily">
+            <p class="muted">Comportamiento diario (sin sábados ni domingos)</p>
+            <canvas data-chart="daily"></canvas>
+          </div>
+        </div>
+      `;
+
+      sectionsContainer.append(card);
+      chartRefs.push({
+        canvas: card.querySelector('[data-chart="daily"]'),
+        labels: businessDays.map((d) => String(d)),
+        metaByDay,
+        realByDay,
+      });
+    });
+
+    return chartRefs;
+  }
+
+  function renderCombinedHistory() {
+    historyContainer.innerHTML = '';
+    monthlyAveragesContainer.innerHTML = `
+      <h3>Histórico + Promedios mensuales (sin febrero)</h3>
+      <p class="muted">Se combinan datos históricos y promedio mensual real para una vista ejecutiva.</p>
+    `;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'avg-combined-grid';
+
+    LINES.forEach((line) => {
+      const series = monthlyStats(line.id, true);
+      const labels = series.map((s) => monthLabelFromKey(s.key));
+      const values = series.map((s) => s.avg);
+      const max = Math.max(0, ...values);
+      const min = Math.min(...values.length ? values : [0]);
+
+      const card = document.createElement('article');
+      card.className = 'avg-card avg-card-pro';
+      card.innerHTML = `
+        <div class="avg-head">
+          <h4>${line.name}</h4>
+          <div class="avg-pills">
+            <span class="pill pill-up">Top: ${formatNumber(max)}</span>
+            <span class="pill pill-down">Min: ${formatNumber(min)}</span>
+          </div>
+        </div>
+        <canvas class="history-canvas"></canvas>
+        <table class="avg-table">
+          <thead><tr><th>Mes</th>${labels.map((l) => `<th>${l}</th>`).join('')}</tr></thead>
+          <tbody>
+            <tr><td>Prom. Real</td>${values.map((v) => `<td>${formatNumber(v)}</td>`).join('')}</tr>
+            <tr><td>Cump. %</td>${series.map((s) => `<td>${formatNumber(s.cumplimiento)}%</td>`).join('')}</tr>
+          </tbody>
+        </table>
+      `;
+
+      wrap.append(card);
+      drawHistoryBars(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values);
+    });
+
+    monthlyAveragesContainer.append(wrap);
   }
 
   function renderGoalsForm() {
     goalsForm.innerHTML = '';
-
     LINES.forEach((line) => {
       const item = document.createElement('div');
       item.className = 'goal-item';
       item.innerHTML = `
         <label for="goal_${line.id}">${line.name}</label>
-        <input id="goal_${line.id}" type="number" step="0.01" min="0" data-goal-input="${line.id}" value="${db.metas[line.id] || ''}" required />
+        <input id="goal_${line.id}" type="number" min="0" step="1" data-goal-input="${line.id}" value="${db.metas[line.id] || ''}" required />
       `;
       goalsForm.append(item);
     });
@@ -569,418 +530,16 @@
     goalsForm.append(actions);
   }
 
-  function setupCanvas(canvas) {
-    const ratio = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    const width = Math.max(320, Math.floor(rect.width));
-    const height = Math.max(180, Math.floor(rect.height));
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-    const ctx = canvas.getContext('2d');
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    ctx.clearRect(0, 0, width, height);
-    return { ctx, width, height };
-  }
-
-  function drawAxes(ctx, width, height, padding) {
-    ctx.strokeStyle = '#dce9ff';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, height - padding);
-    ctx.lineTo(width - padding, height - padding);
-    ctx.stroke();
-  }
-
-  function drawDailyChart(canvas, labels, targetValues, realValues) {
-    const { ctx, width, height } = setupCanvas(canvas);
-    const paddingLeft = 34;
-    const paddingRight = 18;
-    const paddingTop = 20;
-    const paddingBottom = 28;
-    const chartW = width - paddingLeft - paddingRight;
-    const chartH = height - paddingTop - paddingBottom;
-
-    const allValues = targetValues.concat(realValues).filter((v) => v != null);
-    const maxRaw = allValues.length ? Math.max.apply(null, allValues) : 1;
-    const max = Math.max(1, Math.ceil(maxRaw / 200) * 200);
-    const stepX = chartW / Math.max(1, labels.length - 1);
-
-    ctx.strokeStyle = '#dce9ff';
-    ctx.lineWidth = 1;
-    for (let i = 0; i <= 5; i += 1) {
-      const y = paddingTop + (chartH / 5) * i;
-      ctx.beginPath();
-      ctx.moveTo(paddingLeft, y);
-      ctx.lineTo(width - paddingRight, y);
-      ctx.stroke();
-
-      const referenceValue = Math.round(max - (max / 5) * i);
-      ctx.fillStyle = '#6c81a1';
-      ctx.font = '10px Arial';
-      ctx.textAlign = 'right';
-      ctx.fillText(referenceValue.toLocaleString('es-MX'), paddingLeft - 6, y + 3);
-    }
-    ctx.textAlign = 'start';
-
-    labels.forEach((label, idx) => {
-      const x = paddingLeft + idx * stepX;
-      ctx.fillStyle = '#6c81a1';
-      ctx.font = '10px Arial';
-      ctx.fillText(label, x - 6, height - 8);
-    });
-
-    // Barras de real diario (nuevo diseño)
-    const barW = Math.max(4, stepX * 0.55);
-    realValues.forEach((value, idx) => {
-      if (value == null) return;
-      const x = paddingLeft + idx * stepX - barW / 2;
-      const barH = (value / max) * chartH;
-      const y = paddingTop + chartH - barH;
-      ctx.fillStyle = 'rgba(46,127,231,0.35)';
-      ctx.fillRect(x, y, barW, barH);
-    });
-
-    // Línea meta (referencia)
-    ctx.strokeStyle = '#0b4f9c';
-    ctx.lineWidth = 3;
-    ctx.setLineDash([8, 5]);
-    ctx.beginPath();
-    let startedMeta = false;
-    targetValues.forEach((value, idx) => {
-      if (value == null) return;
-      const x = paddingLeft + idx * stepX;
-      const y = paddingTop + chartH - (value / max) * chartH;
-      if (!startedMeta) {
-        ctx.moveTo(x, y);
-        startedMeta = true;
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Línea trend real super visible
-    ctx.strokeStyle = '#f05a2b';
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    let started = false;
-    realValues.forEach((value, idx) => {
-      if (value == null) return;
-      const x = paddingLeft + idx * stepX;
-      const y = paddingTop + chartH - (value / max) * chartH;
-      if (!started) {
-        ctx.moveTo(x, y);
-        started = true;
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
-    ctx.stroke();
-
-    realValues.forEach((value, idx) => {
-      if (value == null) return;
-      const x = paddingLeft + idx * stepX;
-      const y = paddingTop + chartH - (value / max) * chartH;
-      ctx.fillStyle = '#f05a2b';
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    });
-
-    ctx.fillStyle = '#4f6282';
-    ctx.font = '11px Arial';
-    ctx.fillText('Meta', paddingLeft, 14);
-    ctx.strokeStyle = '#0b4f9c';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(paddingLeft + 34, 10);
-    ctx.lineTo(paddingLeft + 52, 10);
-    ctx.stroke();
-    ctx.fillStyle = '#4f6282';
-    ctx.fillText('Trend real', paddingLeft + 62, 14);
-    ctx.fillStyle = '#f05a2b';
-    ctx.beginPath();
-    ctx.arc(paddingLeft + 132, 10, 4, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  function drawMonthlyBars(canvas, labels, values) {
-    const { ctx, width, height } = setupCanvas(canvas);
-    const padding = 26;
-    drawAxes(ctx, width, height, padding);
-
-    const max = values.length ? Math.max.apply(null, values) * 1.15 : 1;
-    const chartWidth = width - padding * 2;
-    const barSpace = chartWidth / Math.max(1, values.length);
-    const barWidth = Math.max(8, barSpace * 0.5);
-
-    values.forEach((value, idx) => {
-      const x = padding + idx * barSpace + (barSpace - barWidth) / 2;
-      const barHeight = (value / max) * (height - padding * 2);
-      const y = height - padding - barHeight;
-      ctx.fillStyle = '#1458b3';
-      ctx.fillRect(x, y, barWidth, barHeight);
-
-      ctx.fillStyle = '#1b2a41';
-      ctx.font = '10px Arial';
-      ctx.fillText(Number(value).toLocaleString('es-MX', { maximumFractionDigits: 0 }), x, y - 6);
-
-      if (labels[idx]) {
-        ctx.fillStyle = '#5c7092';
-        ctx.font = '10px Arial';
-        ctx.fillText(labels[idx], x, height - 8);
-      }
-    });
-  }
-
-  function summarize(metaByDay, realByDay) {
-    const meta = metaByDay.reduce((acc, item) => acc + (item || 0), 0);
-    const real = realByDay.reduce((acc, item) => acc + (item || 0), 0);
-    const cumplimiento = meta > 0 ? (real / meta) * 100 : 0;
-    return { meta, real, cumplimiento };
-  }
-
-
-  function getLineRecordForDay(lineId, year, monthIndex, day) {
-    const isoDate = `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    return db.records.find((item) => item.lineId === lineId && item.date === isoDate) || null;
-  }
-
-  function renderDailyComparison() {
-    const panel = document.createElement('article');
-    panel.className = 'panel compare-panel';
-    panel.innerHTML = `<h2>Comparativo diario (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2><p class="muted">Tendencia del día actual contra el día anterior por sección.</p>`;
-
-    const grid = document.createElement('div');
-    grid.className = 'compare-grid';
-
-    LINES.forEach((line) => {
-      const current = getLineRecordForDay(line.id, selectedYear, selectedMonth, COMPARE_CURRENT_DAY);
-      const previous = getLineRecordForDay(line.id, selectedYear, selectedMonth, COMPARE_PREVIOUS_DAY);
-      const currentReal = current ? Number(current.real || 0) : 0;
-      const previousReal = previous ? Number(previous.real || 0) : 0;
-      const diff = currentReal - previousReal;
-
-      let trendClass = 'trend-flat';
-      let arrow = '→';
-      let trendText = 'Sin cambio';
-      if (diff > 0) {
-        trendClass = 'trend-up';
-        arrow = '↑';
-        trendText = 'Aumento';
-      } else if (diff < 0) {
-        trendClass = 'trend-down';
-        arrow = '↓';
-        trendText = 'Decremento';
-      }
-
-      const card = document.createElement('div');
-      card.className = `compare-item ${trendClass}`;
-      card.innerHTML = `
-        <h4>${line.name}</h4>
-        <div class="compare-values">
-          <span>Día ${COMPARE_PREVIOUS_DAY}: <strong>${formatNumber(previousReal)}</strong></span>
-          <span>Día ${COMPARE_CURRENT_DAY}: <strong>${formatNumber(currentReal)}</strong></span>
-        </div>
-        <p class="compare-delta">
-          <span class="arrow">${arrow}</span>
-          ${trendText}: <strong>${formatNumber(Math.abs(diff))}</strong>
-        </p>
-      `;
-      grid.append(card);
-    });
-
-    panel.append(grid);
-    sectionsContainer.append(panel);
-  }
-
-  function renderSectionCards() {
-    sectionsContainer.innerHTML = '';
-    const days = getDaysInMonth(selectedYear, selectedMonth);
-    const businessDays = getBusinessDaysInMonth(selectedYear, selectedMonth);
-    const chartRefs = [];
-
-    LINES.forEach((line) => {
-      const goal = Number(db.metas[line.id] || 0);
-
-      const lineMonthRecords = db.records.filter((item) => {
-        if (item.lineId !== line.id) return false;
-        const d = new Date(`${item.date}T00:00:00`);
-        return d.getFullYear() === selectedYear && d.getMonth() === selectedMonth;
-      });
-
-      const metaByDay = Array(days).fill(goal > 0 ? goal : null);
-      const realByDay = Array(days).fill(null);
-      lineMonthRecords.forEach((item) => {
-        const day = Number(item.date.split('-')[2]) - 1;
-        if (item.target != null) metaByDay[day] = item.target;
-        realByDay[day] = item.real;
-      });
-
-      const visibleMetaByDay = businessDays.map((day) => (day === INHABIL_DAY ? null : metaByDay[day - 1]));
-      const visibleRealByDay = businessDays.map((day) => (day === INHABIL_DAY ? null : realByDay[day - 1]));
-
-      const resume = summarize(visibleMetaByDay, visibleRealByDay);
-      const headers = businessDays.map((day) => `<th class="${day === INHABIL_DAY ? 'inhabil-col' : ''}">${day === INHABIL_DAY ? `${day}<br><small>INHÁBIL</small>` : day}</th>`).join('');
-      const rowMeta = visibleMetaByDay.map((n, idx) => {
-        const day = businessDays[idx];
-        if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
-        return `<td>${formatNumber(n)}</td>`;
-      }).join('');
-      const rowReal = visibleRealByDay.map((n, idx) => {
-        const day = businessDays[idx];
-        if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
-        return `<td>${formatNumber(n)}</td>`;
-      }).join('');
-
-      const card = document.createElement('article');
-      card.className = 'section-card';
-      card.innerHTML = `
-        <div class="section-header">
-          <strong>${line.name}</strong>
-          <div class="badges">
-            <span class="badge">Meta: ${formatNumber(resume.meta)}</span>
-            <span class="badge">Cantidad: ${formatNumber(resume.real)}</span>
-            <span class="badge">Cumplimiento: ${formatNumber(resume.cumplimiento)}%</span>
-          </div>
-        </div>
-        <div class="section-content">
-          <div class="table-wrap">
-            <table class="month-table">
-              <thead><tr><th>Día</th>${headers}</tr></thead>
-              <tbody>
-                <tr><td class="label-cell">META (CAP INST.)</td>${rowMeta}</tr>
-                <tr><td class="label-cell">REAL (CAP. 1 EST.)</td>${rowReal}</tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="charts-row">
-            <div class="chart-card chart-card-daily"><p class="muted">Comportamiento diario (solo días hábiles)</p><canvas data-chart="daily"></canvas></div>
-          </div>
-        </div>
-      `;
-
-      sectionsContainer.append(card);
-      chartRefs.push({
-        daily: card.querySelector('[data-chart="daily"]'),
-        labels: businessDays.map((day) => String(day)),
-        metaByDay: visibleMetaByDay,
-        realByDay: visibleRealByDay,
-      });
-    });
-
-    return chartRefs;
-  }
-
-
-  function toMonthSeries(lineId) {
-    const map = new Map();
-    db.records.forEach((item) => {
-      if (item.lineId !== lineId) return;
-      const key = keyFromDate(item.date);
-      const prev = map.get(key) || 0;
-      map.set(key, prev + item.real);
-    });
-
-    const sorted = Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
-    return {
-      labels: sorted.map((entry) => {
-        const parts = entry[0].split('-');
-        return `${parts[1]}/${parts[0].slice(2)}`;
-      }),
-      values: sorted.map((entry) => entry[1]),
-    };
-  }
-
-
-  function monthLabelFromKey(key) {
-    const parts = key.split('-');
-    const year = Number(parts[0]);
-    const month = Number(parts[1]) - 1;
-    return `${monthName(month).toUpperCase()} ${year}`;
-  }
-
-  function monthlyAveragesByLine(lineId) {
-    const map = new Map();
-    db.records.forEach((item) => {
-      if (item.lineId !== lineId) return;
-      const key = keyFromDate(item.date);
-      const prev = map.get(key) || { sum: 0, count: 0 };
-      prev.sum += item.real;
-      prev.count += 1;
-      map.set(key, prev);
-    });
-
-    return Array.from(map.entries())
-      .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([key, v]) => ({ key, avg: v.count ? v.sum / v.count : 0 }));
-  }
-
-  function renderMonthlyAverages() {
-    monthlyAveragesContainer.innerHTML = '<h3>Promedios mensuales reales</h3><p class="muted">Resumen visual por sección con mejor y menor desempeño.</p>';
-
-    LINES.forEach((line) => {
-      const series = monthlyAveragesByLine(line.id);
-      const months = series.map((m) => `<th>${monthLabelFromKey(m.key)}</th>`).join('');
-      const values = series.map((m) => `<td>${formatNumber(m.avg)}</td>`).join('');
-      const avgs = series.map((m) => m.avg);
-      const maxAvg = avgs.length ? Math.max.apply(null, avgs) : 0;
-      const minAvg = avgs.length ? Math.min.apply(null, avgs) : 0;
-
-      const card = document.createElement('div');
-      card.className = 'avg-card';
-      card.innerHTML = `
-        <div class="avg-head">
-          <h4>${line.name}</h4>
-          <div class="avg-pills">
-            <span class="pill pill-up">Mejor: ${formatNumber(maxAvg)}</span>
-            <span class="pill pill-down">Menor: ${formatNumber(minAvg)}</span>
-          </div>
-        </div>
-        <table class="avg-table">
-          <thead><tr>${months}</tr></thead>
-          <tbody><tr>${values}</tr></tbody>
-        </table>
-      `;
-      monthlyAveragesContainer.append(card);
-    });
-  }
-
-
-  function renderHistoryCards() {
-    historyContainer.innerHTML = '';
-    LINES.forEach((line) => {
-      const series = monthlyAveragesByLine(line.id);
-      const labels = series.map((sItem) => monthLabelFromKey(sItem.key));
-      const values = series.map((sItem) => sItem.avg);
-
-      const item = document.createElement('div');
-      item.className = 'history-item';
-      item.innerHTML = `<h3>${line.name}</h3><p class="muted">Trend de promedio mensual real</p><canvas></canvas>`;
-      historyContainer.append(item);
-
-      drawMonthlyBars(item.querySelector('canvas'), labels, values);
-    });
-  }
-
   function setCurrentMonthLabel() {
     currentMonthLabel.textContent = `${monthName(selectedMonth)} ${selectedYear}`;
   }
 
   function renderDashboard() {
     setCurrentMonthLabel();
-    const refs = renderSectionCards();
-    refs.forEach((ref) => {
-      drawDailyChart(ref.daily, ref.labels, ref.metaByDay, ref.realByDay);
-    });
+    const chartRefs = renderSections();
+    chartRefs.forEach((ref) => drawDailyChart(ref.canvas, ref.labels, ref.metaByDay, ref.realByDay));
     renderDailyComparison();
-    renderHistoryCards();
-    renderMonthlyAverages();
+    renderCombinedHistory();
   }
 
   function activateScreen(screenId) {
@@ -988,9 +547,7 @@
     navButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.screen === screenId));
   }
 
-  navButtons.forEach((btn) => {
-    btn.addEventListener('click', () => activateScreen(btn.dataset.screen));
-  });
+  navButtons.forEach((btn) => btn.addEventListener('click', () => activateScreen(btn.dataset.screen)));
 
   monthSelect.addEventListener('change', (e) => {
     selectedMonth = Number(e.target.value);
@@ -1002,55 +559,51 @@
     renderDashboard();
   });
 
-  lineSelect.addEventListener('change', syncEntryTargetWithGoal);
+  lineSelect.addEventListener('change', () => {
+    targetInput.value = db.metas[lineSelect.value] || '';
+  });
 
   goalsForm.addEventListener('submit', (e) => {
     e.preventDefault();
-
     LINES.forEach((line) => {
       const input = goalsForm.querySelector(`[data-goal-input="${line.id}"]`);
       db.metas[line.id] = Number(input.value || 0);
     });
-
     saveDB();
-    syncEntryTargetWithGoal();
+    targetInput.value = db.metas[lineSelect.value] || '';
     goalsFeedback.textContent = 'Metas actualizadas correctamente.';
     renderDashboard();
   });
 
   entryForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const record = {
-      lineId: lineSelect.value,
-      date: dateInput.value,
-      target: Number(targetInput.value || db.metas[lineSelect.value] || 0),
-      real: Number(realInput.value),
+    const lineId = lineSelect.value;
+    const date = dateInput.value;
+    const nextRecord = {
+      lineId,
+      date,
+      target: Number(targetInput.value || db.metas[lineId] || 0),
+      real: Number(realInput.value || 0),
     };
 
-    upsertRecord(record);
-    saveDB();
+    const idx = db.records.findIndex((r) => r.lineId === lineId && r.date === date);
+    if (idx >= 0) db.records[idx] = nextRecord;
+    else db.records.push(nextRecord);
 
-    const d = new Date(`${record.date}T00:00:00`);
+    const d = new Date(`${date}T00:00:00`);
     selectedMonth = d.getMonth();
     selectedYear = d.getFullYear();
-    monthSelect.value = String(selectedMonth);
-    yearSelect.value = String(selectedYear);
-
+    setupSelectors();
+    saveDB();
+    entryFeedback.textContent = 'Dato guardado correctamente.';
     entryForm.reset();
-    dateInput.value = formatDateISO(new Date());
-    syncEntryTargetWithGoal();
-    entryFeedback.textContent = 'Registro guardado correctamente.';
-
+    targetInput.value = db.metas[lineSelect.value] || '';
     renderDashboard();
-    activateScreen('dashboardScreen');
   });
 
   window.addEventListener('resize', renderDashboard);
 
-  setupMonthYearSelectors();
-  setupLineSelector();
+  setupSelectors();
   renderGoalsForm();
-  dateInput.value = formatDateISO(now);
-  syncEntryTargetWithGoal();
   renderDashboard();
 })();

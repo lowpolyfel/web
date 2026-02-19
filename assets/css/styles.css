@@ -314,16 +314,17 @@ canvas { width: 100%; height: 300px; display: block; }
 }
 
 .avg-card {
-  border: 1px solid #e8efff;
+  border: 1px solid #d9e5ff;
   border-radius: 14px;
   padding: 12px;
-  background: linear-gradient(180deg, #ffffff, #fbfcff);
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(45, 88, 170, .08);
 }
 
-.avg-card-pro:nth-child(4n+1) { box-shadow: inset 0 0 0 999px color-mix(in oklab, var(--chip-1) 30%, transparent); }
-.avg-card-pro:nth-child(4n+2) { box-shadow: inset 0 0 0 999px color-mix(in oklab, var(--chip-2) 26%, transparent); }
-.avg-card-pro:nth-child(4n+3) { box-shadow: inset 0 0 0 999px color-mix(in oklab, var(--chip-3) 30%, transparent); }
-.avg-card-pro:nth-child(4n+4) { box-shadow: inset 0 0 0 999px color-mix(in oklab, var(--chip-4) 30%, transparent); }
+.avg-card-pro:nth-child(4n+1) { border-top: 4px solid #80aee8; }
+.avg-card-pro:nth-child(4n+2) { border-top: 4px solid #dca2b9; }
+.avg-card-pro:nth-child(4n+3) { border-top: 4px solid #88c9ae; }
+.avg-card-pro:nth-child(4n+4) { border-top: 4px solid #e3bf87; }
 
 .avg-head {
   display: flex;
@@ -344,9 +345,29 @@ canvas { width: 100%; height: 300px; display: block; }
 .pill-up { background: #e8fff3; color: #0f7c57; border: 1px solid #b3edcf; }
 .pill-down { background: #fff2ef; color: #a94135; border: 1px solid #ffd2c8; }
 
-.history-canvas { height: 230px; }
+.history-canvas {
+  height: 210px;
+  margin-top: 4px;
+}
+
+.avg-table {
+  margin-top: 8px;
+  border: 1px solid #e6edff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .avg-table th,
-.avg-table td { padding: 5px 4px; font-size: .72rem; }
+.avg-table td {
+  padding: 6px 4px;
+  font-size: .74rem;
+  border-color: #e6edff;
+}
+
+.avg-table th {
+  color: #334f82;
+  background: #f4f7ff;
+}
 
 .entry-form,
 .goals-grid {

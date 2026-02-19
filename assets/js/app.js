@@ -314,29 +314,47 @@
   }
 
   function drawHistoryBars(canvas, labels, values) {
-    const { ctx, width, height } = setupCanvas(canvas, 240);
-    const p = 24;
-    const chartW = width - p * 2;
-    const chartH = height - p * 2;
-    const max = Math.max(1, ...values) * 1.1;
+    const { ctx, width, height } = setupCanvas(canvas, 230);
+    const p = { l: 34, r: 16, t: 18, b: 30 };
+    const chartW = width - p.l - p.r;
+    const chartH = height - p.t - p.b;
+    const max = Math.max(1, ...values) * 1.12;
     const gap = chartW / Math.max(1, values.length);
-    const barW = Math.max(20, gap * 0.55);
-    const colors = ['#d2e8ff', '#f9d9e7', '#d9f4e7', '#ffe9cc'];
+    const barW = Math.max(20, Math.min(46, gap * 0.56));
+    const colors = ['#8eb0d7', '#d3a9be', '#9cccb7', '#e6c897'];
+
+    for (let i = 0; i <= 4; i += 1) {
+      const y = Math.round(p.t + (chartH / 4) * i) + 0.5;
+      ctx.strokeStyle = i === 4 ? '#d4e0f7' : '#edf2ff';
+      ctx.beginPath();
+      ctx.moveTo(p.l, y);
+      ctx.lineTo(width - p.r, y);
+      ctx.stroke();
+    }
 
     values.forEach((v, i) => {
-      const h = (v / max) * chartH;
-      const x = p + i * gap + (gap - barW) / 2;
-      const y = height - p - h;
-      ctx.fillStyle = colors[i % colors.length];
-      ctx.strokeStyle = '#c8d8ff';
-      ctx.lineWidth = 1;
-      ctx.fillRect(x, y, barW, h);
-      ctx.strokeRect(x, y, barW, h);
+      const h = Math.max(2, (v / max) * chartH);
+      const x = Math.round(p.l + i * gap + (gap - barW) / 2);
+      const y = Math.round(height - p.b - h);
 
-      ctx.fillStyle = '#6a7da7';
-      ctx.font = '11px Arial';
-      ctx.fillText(labels[i], x, height - 6);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fillRect(x, y, barW, h);
+
+      ctx.strokeStyle = '#d2def3';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x + 0.5, y + 0.5, barW - 1, h - 1);
+
+      ctx.fillStyle = '#4f6289';
+      ctx.font = '700 11px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(labels[i], Math.round(x + barW / 2), height - 9);
+
+      ctx.fillStyle = '#7388ae';
+      ctx.font = '600 10px Arial';
+      ctx.fillText(formatNumber(v), Math.round(x + barW / 2), y - 7);
     });
+
+    ctx.textAlign = 'start';
   }
 
   function monthLabelFromKey(key) {
@@ -539,7 +557,7 @@
             <span class="pill pill-down">Min: ${formatNumber(min)}</span>
           </div>
         </div>
-        <canvas class="history-canvas"></canvas>
+        <canvas class="history-canvas" aria-label="Histórico mensual"></canvas>
         <table class="avg-table">
           <thead><tr><th>Mes</th>${labels.map((l) => `<th>${l}</th>`).join('')}</tr></thead>
           <tbody>

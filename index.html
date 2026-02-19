@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control de Producción</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div>
+          <p class="kicker">Sistema de producción</p>
+          <h1>Control diario por secciones</h1>
+        </div>
+        <nav class="nav">
+          <button class="nav-btn active" data-screen="dashboardScreen">Mes actual</button>
+          <button class="nav-btn" data-screen="entryScreen">Registrar datos</button>
+          <button class="nav-btn" data-screen="goalsScreen">Configurar metas</button>
+        </nav>
+      </header>
+
+      <main>
+        <section id="dashboardScreen" class="screen active">
+          <article class="panel month-panel">
+            <div class="month-head">
+              <div>
+                <h2>Mes actual</h2>
+                <p id="currentMonthLabel"></p>
+              </div>
+              <div class="selectors">
+                <div>
+                  <label for="monthSelect">Mes</label>
+                  <select id="monthSelect"></select>
+                </div>
+                <div>
+                  <label for="yearSelect">Año</label>
+                  <select id="yearSelect"></select>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <section id="sectionsContainer" class="sections"></section>
+
+          <article class="panel">
+            <h2>Histórico de meses</h2>
+            <p class="muted">Promedios mensuales reales por sección (gráfica + tabla).</p>
+            <div id="historyContainer" class="history-grid"></div>
+            <div id="monthlyAveragesContainer" class="monthly-averages"></div>
+          </article>
+        </section>
+
+        <section id="entryScreen" class="screen">
+          <article class="panel">
+            <h2>Registrar dato diario</h2>
+            <p class="muted">La meta se precarga desde la pantalla de configuración de metas.</p>
+
+            <form id="entryForm" class="entry-form">
+              <div class="field">
+                <label for="lineSelect">Sección</label>
+                <select id="lineSelect" required></select>
+              </div>
+              <div class="field">
+                <label for="dateInput">Fecha</label>
+                <input type="date" id="dateInput" required />
+              </div>
+              <div class="field">
+                <label for="targetInput">Meta</label>
+                <input type="number" id="targetInput" step="0.01" min="0" required />
+              </div>
+              <div class="field">
+                <label for="realInput">Cantidad real</label>
+                <input type="number" id="realInput" step="0.01" min="0" required />
+              </div>
+              <button type="submit" class="btn-primary">Guardar registro</button>
+            </form>
+
+            <div id="entryFeedback" class="feedback" aria-live="polite"></div>
+          </article>
+        </section>
+
+        <section id="goalsScreen" class="screen">
+          <article class="panel">
+            <h2>Metas por tarea</h2>
+            <p class="muted">BD temporal simulada: <code>data/mock-db.txt</code>. Puedes ajustar las metas base aquí.</p>
+
+            <form id="goalsForm" class="goals-grid"></form>
+            <div id="goalsFeedback" class="feedback" aria-live="polite"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

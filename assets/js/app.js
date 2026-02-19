@@ -222,9 +222,9 @@
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
 
-    const allValues = [...metaValues, ...realValues].filter((n) => n != null);
-    const max = Math.max(1, ...allValues) * 1.1;
-    const ticks = 5;
+    const max = 5000;
+    const step = 1000;
+    const ticks = max / step;
 
     for (let i = 0; i <= ticks; i += 1) {
       const y = p.t + (chartH / ticks) * i;
@@ -235,17 +235,18 @@
       ctx.lineTo(width - p.r, y);
       ctx.stroke();
 
-      const tickValue = ((ticks - i) / ticks) * max;
+      const tickValue = max - i * step;
       ctx.fillStyle = '#8c9dbe';
       ctx.font = '11px Arial';
-      ctx.fillText(formatNumber(Math.round(tickValue)), 6, y + 3);
+      ctx.fillText(formatNumber(tickValue), 6, y + 3);
     }
 
     const xStep = chartW / Math.max(1, labels.length - 1);
     const barW = Math.max(10, Math.min(28, xStep * 0.58));
 
     function pointY(value) {
-      return p.t + chartH - (value / max) * chartH;
+      const safeValue = Math.max(0, Math.min(max, value));
+      return p.t + chartH - (safeValue / max) * chartH;
     }
 
     realValues.forEach((v, i) => {
@@ -307,9 +308,8 @@
     ctx.fillStyle = '#5f6f92';
     ctx.font = '11px Arial';
     labels.forEach((label, i) => {
-      if (i % 2 !== 0) return;
       const x = p.l + i * xStep;
-      ctx.fillText(label, x - 5, height - 9);
+      ctx.fillText(label, x - 4, height - 9);
     });
   }
 
@@ -397,7 +397,6 @@
     panel.className = 'panel compare-panel';
     panel.innerHTML = `
       <h2>Comparativo diario PRO (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2>
-      <p class="muted">Incluye variación absoluta y porcentaje de cambio por sección.</p>
     `;
 
     const grid = document.createElement('div');
@@ -507,7 +506,7 @@
             </table>
           </div>
           <div class="chart-card chart-card-daily">
-            <p class="chart-title">Comportamiento diario (solo días hábiles)</p>
+            <p class="chart-title">Comportamiento diario</p>
             <div class="chart-legend">
               <span><i class="legend-dot legend-target"></i>Meta</span>
               <span><i class="legend-dot legend-bars"></i>Barras reales</span>
@@ -533,8 +532,7 @@
   function renderCombinedHistory() {
     historyContainer.innerHTML = '';
     monthlyAveragesContainer.innerHTML = `
-      <h3>Histórico + Promedios mensuales (sin febrero)</h3>
-      <p class="muted">Se combinan datos históricos y promedio mensual real para una vista ejecutiva.</p>
+      <h3>Histórico mensual</h3>
     `;
 
     const wrap = document.createElement('div');

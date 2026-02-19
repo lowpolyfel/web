@@ -18,6 +18,54 @@
   },
   "records": [
     {
+      "lineId": "alineacion_chip",
+      "date": "2025-10-01",
+      "target": 3859,
+      "real": 1580
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2025-11-01",
+      "target": 3859,
+      "real": 1508
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2025-12-01",
+      "target": 3859,
+      "real": 1536
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-01-01",
+      "target": 3859,
+      "real": 2145
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2025-10-01",
+      "target": 2346,
+      "real": 1205
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2025-11-01",
+      "target": 2346,
+      "real": 1651
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2025-12-01",
+      "target": 2346,
+      "real": 4883
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-01-01",
+      "target": 2346,
+      "real": 2002
+    },
+    {
       "lineId": "montado_ceramica",
       "date": "2025-10-01",
       "target": 2287,
@@ -67,51 +115,135 @@
     },
     {
       "lineId": "alineacion_chip",
-      "date": "2025-10-01",
+      "date": "2026-02-03",
+      "target": 3859,
+      "real": 1600
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-04",
+      "target": 3859,
+      "real": 1630
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-05",
+      "target": 3859,
+      "real": 1600
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-06",
+      "target": 3859,
+      "real": 1720
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-09",
+      "target": 3859,
+      "real": 1244
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-10",
+      "target": 3859,
+      "real": 1800
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-11",
+      "target": 3859,
+      "real": 1767
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-12",
+      "target": 3859,
+      "real": 1826
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-13",
       "target": 3859,
       "real": 1580
     },
     {
       "lineId": "alineacion_chip",
-      "date": "2025-11-01",
+      "date": "2026-02-16",
       "target": 3859,
-      "real": 1508
+      "real": 1425
     },
     {
       "lineId": "alineacion_chip",
-      "date": "2025-12-01",
+      "date": "2026-02-17",
       "target": 3859,
-      "real": 1536
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-01-01",
-      "target": 3859,
-      "real": 2145
+      "real": 940
     },
     {
       "lineId": "wire_bond",
-      "date": "2025-10-01",
+      "date": "2026-02-03",
       "target": 2346,
-      "real": 1205
+      "real": 1700
     },
     {
       "lineId": "wire_bond",
-      "date": "2025-11-01",
+      "date": "2026-02-04",
       "target": 2346,
-      "real": 1651
+      "real": 1790
     },
     {
       "lineId": "wire_bond",
-      "date": "2025-12-01",
+      "date": "2026-02-05",
       "target": 2346,
-      "real": 4883
+      "real": 1540
     },
     {
       "lineId": "wire_bond",
-      "date": "2026-01-01",
+      "date": "2026-02-06",
       "target": 2346,
-      "real": 2002
+      "real": 1605
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-09",
+      "target": 2346,
+      "real": 1730
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-10",
+      "target": 2346,
+      "real": 1750
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-11",
+      "target": 2346,
+      "real": 1700
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-12",
+      "target": 2346,
+      "real": 1605
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-13",
+      "target": 2346,
+      "real": 1595
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-16",
+      "target": 2346,
+      "real": 400
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-17",
+      "target": 2346,
+      "real": 600
     },
     {
       "lineId": "montado_ceramica",
@@ -174,6 +306,12 @@
       "real": 1800
     },
     {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-17",
+      "target": 2287,
+      "real": 2208
+    },
+    {
       "lineId": "montado_chip",
       "date": "2026-02-03",
       "target": 2610,
@@ -228,100 +366,16 @@
       "real": 1944
     },
     {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-03",
-      "target": 3859,
-      "real": 1600
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-04",
-      "target": 3859,
-      "real": 1630
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-05",
-      "target": 3859,
-      "real": 1600
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-06",
-      "target": 3859,
-      "real": 1720
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-09",
-      "target": 3859,
-      "real": 1244
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-10",
-      "target": 3859,
-      "real": 1800
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-03",
-      "target": 2346,
-      "real": 1700
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-04",
-      "target": 2346,
-      "real": 1790
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-05",
-      "target": 2346,
-      "real": 1540
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-06",
-      "target": 2346,
-      "real": 1605
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-09",
-      "target": 2346,
-      "real": 1730
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-10",
-      "target": 2346,
-      "real": 1750
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-11",
-      "target": 2346,
-      "real": 1700
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-12",
-      "target": 2346,
-      "real": 1605
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-13",
-      "target": 2346,
-      "real": 1595
-    },
-    {
-      "lineId": "wire_bond",
+      "lineId": "montado_chip",
       "date": "2026-02-16",
-      "target": 2346,
-      "real": 1720
+      "target": 2610,
+      "real": 1990
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-17",
+      "target": 2610,
+      "real": 2172
     }
   ]
 };
@@ -353,6 +407,18 @@
 
   function getDaysInMonth(year, monthIndex) {
     return new Date(year, monthIndex + 1, 0).getDate();
+  }
+
+  function getBusinessDaysInMonth(year, monthIndex) {
+    const days = getDaysInMonth(year, monthIndex);
+    const businessDays = [];
+
+    for (let day = 1; day <= days; day += 1) {
+      const weekday = new Date(year, monthIndex, day).getDay();
+      if (weekday !== 0 && weekday !== 6) businessDays.push(day);
+    }
+
+    return businessDays;
   }
 
   function formatDateISO(date) {
@@ -655,6 +721,7 @@
   function renderSectionCards() {
     sectionsContainer.innerHTML = '';
     const days = getDaysInMonth(selectedYear, selectedMonth);
+    const businessDays = getBusinessDaysInMonth(selectedYear, selectedMonth);
     const chartRefs = [];
 
     LINES.forEach((line) => {
@@ -674,10 +741,13 @@
         realByDay[day] = item.real;
       });
 
-      const resume = summarize(metaByDay, realByDay);
-      const headers = Array.from({ length: days }, (_, i) => `<th>${i + 1}</th>`).join('');
-      const rowMeta = metaByDay.map((n) => `<td>${formatNumber(n)}</td>`).join('');
-      const rowReal = realByDay.map((n) => `<td>${formatNumber(n)}</td>`).join('');
+      const visibleMetaByDay = businessDays.map((day) => metaByDay[day - 1]);
+      const visibleRealByDay = businessDays.map((day) => realByDay[day - 1]);
+
+      const resume = summarize(visibleMetaByDay, visibleRealByDay);
+      const headers = businessDays.map((day) => `<th>${day}</th>`).join('');
+      const rowMeta = visibleMetaByDay.map((n) => `<td>${formatNumber(n)}</td>`).join('');
+      const rowReal = visibleRealByDay.map((n) => `<td>${formatNumber(n)}</td>`).join('');
 
       const card = document.createElement('article');
       card.className = 'section-card';

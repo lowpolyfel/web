@@ -7,390 +7,6 @@
   },
   "records": [
     {
-      "lineId": "montado_ceramica",
-      "date": "2025-10-01",
-      "target": 2287,
-      "real": 2035
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-11-01",
-      "target": 2287,
-      "real": 2085
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-12-01",
-      "target": 2287,
-      "real": 1869
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-01-01",
-      "target": 2287,
-      "real": 1321
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-01",
-      "target": 2287,
-      "real": 2210
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-02",
-      "target": 2287,
-      "real": 2230
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-03",
-      "target": 2287,
-      "real": 2222
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-04",
-      "target": 2287,
-      "real": 2223
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-05",
-      "target": 2287,
-      "real": 1753
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-06",
-      "target": 2287,
-      "real": 2873
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-07",
-      "target": 2287,
-      "real": 2300
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-08",
-      "target": 2287,
-      "real": 2285
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-09",
-      "target": 2287,
-      "real": 2263
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-10",
-      "target": 2287,
-      "real": 2296
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-11",
-      "target": 2287,
-      "real": 2310
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-12",
-      "target": 2287,
-      "real": 2275
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-13",
-      "target": 2287,
-      "real": 2250
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-14",
-      "target": 2287,
-      "real": 2268
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-15",
-      "target": 2287,
-      "real": 2290
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-16",
-      "target": 2287,
-      "real": 2287
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-17",
-      "target": 2287,
-      "real": 2270
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-18",
-      "target": 2287,
-      "real": 2264
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-19",
-      "target": 2287,
-      "real": 2282
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-20",
-      "target": 2287,
-      "real": 2295
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-21",
-      "target": 2287,
-      "real": 2302
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-22",
-      "target": 2287,
-      "real": 2278
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-23",
-      "target": 2287,
-      "real": 2269
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-24",
-      "target": 2287,
-      "real": 2281
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-25",
-      "target": 2287,
-      "real": 2290
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-26",
-      "target": 2287,
-      "real": 2275
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-27",
-      "target": 2287,
-      "real": 2268
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-02-28",
-      "target": 2287,
-      "real": 2287
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-10-01",
-      "target": 2610,
-      "real": 1973
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-11-01",
-      "target": 2610,
-      "real": 2059
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-12-01",
-      "target": 2610,
-      "real": 1904
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-01-01",
-      "target": 2610,
-      "real": 2066
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-01",
-      "target": 2610,
-      "real": 2100
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-02",
-      "target": 2610,
-      "real": 2088
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-03",
-      "target": 2610,
-      "real": 2155
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-04",
-      "target": 2610,
-      "real": 2000
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-05",
-      "target": 2610,
-      "real": 1900
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-06",
-      "target": 2610,
-      "real": 2154
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-07",
-      "target": 2610,
-      "real": 2055
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-08",
-      "target": 2610,
-      "real": 2022
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-09",
-      "target": 2610,
-      "real": 1998
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-10",
-      "target": 2610,
-      "real": 2217
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-11",
-      "target": 2610,
-      "real": 2180
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-12",
-      "target": 2610,
-      "real": 2140
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-13",
-      "target": 2610,
-      "real": 2105
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-14",
-      "target": 2610,
-      "real": 2130
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-15",
-      "target": 2610,
-      "real": 2160
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-16",
-      "target": 2610,
-      "real": 2120
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-17",
-      "target": 2610,
-      "real": 2095
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-18",
-      "target": 2610,
-      "real": 2110
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-19",
-      "target": 2610,
-      "real": 2148
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-20",
-      "target": 2610,
-      "real": 2175
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-21",
-      "target": 2610,
-      "real": 2138
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-22",
-      "target": 2610,
-      "real": 2102
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-23",
-      "target": 2610,
-      "real": 2080
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-24",
-      "target": 2610,
-      "real": 2099
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-25",
-      "target": 2610,
-      "real": 2118
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-26",
-      "target": 2610,
-      "real": 2130
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-27",
-      "target": 2610,
-      "real": 2122
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-02-28",
-      "target": 2610,
-      "real": 2140
-    },
-    {
       "lineId": "alineacion_chip",
       "date": "2025-10-01",
       "target": 3859,
@@ -415,16 +31,76 @@
       "real": 2145
     },
     {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-01",
-      "target": 3859,
-      "real": 1620
+      "lineId": "wire_bond",
+      "date": "2025-10-01",
+      "target": 2346,
+      "real": 1205
     },
     {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-02",
-      "target": 3859,
-      "real": 1590
+      "lineId": "wire_bond",
+      "date": "2025-11-01",
+      "target": 2346,
+      "real": 1651
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2025-12-01",
+      "target": 2346,
+      "real": 4883
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-01-01",
+      "target": 2346,
+      "real": 2002
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2025-10-01",
+      "target": 2287,
+      "real": 2035
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2025-11-01",
+      "target": 2287,
+      "real": 2085
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2025-12-01",
+      "target": 2287,
+      "real": 1869
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-01-01",
+      "target": 2287,
+      "real": 1321
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2025-10-01",
+      "target": 2610,
+      "real": 1973
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2025-11-01",
+      "target": 2610,
+      "real": 2059
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2025-12-01",
+      "target": 2610,
+      "real": 1904
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-01-01",
+      "target": 2610,
+      "real": 2066
     },
     {
       "lineId": "alineacion_chip",
@@ -452,18 +128,6 @@
     },
     {
       "lineId": "alineacion_chip",
-      "date": "2026-02-07",
-      "target": 3859,
-      "real": 1680
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-08",
-      "target": 3859,
-      "real": 1650
-    },
-    {
-      "lineId": "alineacion_chip",
       "date": "2026-02-09",
       "target": 3859,
       "real": 1244
@@ -478,145 +142,31 @@
       "lineId": "alineacion_chip",
       "date": "2026-02-11",
       "target": 3859,
-      "real": 1770
+      "real": 1767
     },
     {
       "lineId": "alineacion_chip",
       "date": "2026-02-12",
       "target": 3859,
-      "real": 1705
+      "real": 1826
     },
     {
       "lineId": "alineacion_chip",
       "date": "2026-02-13",
       "target": 3859,
-      "real": 1698
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-14",
-      "target": 3859,
-      "real": 1710
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-15",
-      "target": 3859,
-      "real": 1740
+      "real": 1580
     },
     {
       "lineId": "alineacion_chip",
       "date": "2026-02-16",
       "target": 3859,
-      "real": 1725
+      "real": 1425
     },
     {
       "lineId": "alineacion_chip",
       "date": "2026-02-17",
       "target": 3859,
-      "real": 1688
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-18",
-      "target": 3859,
-      "real": 1660
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-19",
-      "target": 3859,
-      "real": 1700
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-20",
-      "target": 3859,
-      "real": 1735
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-21",
-      "target": 3859,
-      "real": 1750
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-22",
-      "target": 3859,
-      "real": 1720
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-23",
-      "target": 3859,
-      "real": 1695
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-24",
-      "target": 3859,
-      "real": 1712
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-25",
-      "target": 3859,
-      "real": 1730
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-26",
-      "target": 3859,
-      "real": 1744
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-27",
-      "target": 3859,
-      "real": 1728
-    },
-    {
-      "lineId": "alineacion_chip",
-      "date": "2026-02-28",
-      "target": 3859,
-      "real": 1705
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-10-01",
-      "target": 2346,
-      "real": 1205
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-11-01",
-      "target": 2346,
-      "real": 1651
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-12-01",
-      "target": 2346,
-      "real": 4883
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-01-01",
-      "target": 2346,
-      "real": 2002
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-01",
-      "target": 2346,
-      "real": 1680
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-02",
-      "target": 2346,
-      "real": 1660
+      "real": 940
     },
     {
       "lineId": "wire_bond",
@@ -644,18 +194,6 @@
     },
     {
       "lineId": "wire_bond",
-      "date": "2026-02-07",
-      "target": 2346,
-      "real": 1650
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-08",
-      "target": 2346,
-      "real": 1690
-    },
-    {
-      "lineId": "wire_bond",
       "date": "2026-02-09",
       "target": 2346,
       "real": 1730
@@ -670,109 +208,163 @@
       "lineId": "wire_bond",
       "date": "2026-02-11",
       "target": 2346,
-      "real": 1785
+      "real": 1700
     },
     {
       "lineId": "wire_bond",
       "date": "2026-02-12",
       "target": 2346,
-      "real": 1720
+      "real": 1605
     },
     {
       "lineId": "wire_bond",
       "date": "2026-02-13",
       "target": 2346,
-      "real": 1685
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-14",
-      "target": 2346,
-      "real": 1702
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-15",
-      "target": 2346,
-      "real": 1718
+      "real": 1595
     },
     {
       "lineId": "wire_bond",
       "date": "2026-02-16",
       "target": 2346,
-      "real": 1734
+      "real": 400
     },
     {
       "lineId": "wire_bond",
       "date": "2026-02-17",
       "target": 2346,
-      "real": 1760
+      "real": 600
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-18",
-      "target": 2346,
-      "real": 1748
+      "lineId": "montado_ceramica",
+      "date": "2026-02-03",
+      "target": 2287,
+      "real": 2222
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-19",
-      "target": 2346,
-      "real": 1726
+      "lineId": "montado_ceramica",
+      "date": "2026-02-04",
+      "target": 2287,
+      "real": 2223
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-20",
-      "target": 2346,
-      "real": 1710
+      "lineId": "montado_ceramica",
+      "date": "2026-02-05",
+      "target": 2287,
+      "real": 1753
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-21",
-      "target": 2346,
-      "real": 1700
+      "lineId": "montado_ceramica",
+      "date": "2026-02-06",
+      "target": 2287,
+      "real": 2873
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-22",
-      "target": 2346,
-      "real": 1690
+      "lineId": "montado_ceramica",
+      "date": "2026-02-09",
+      "target": 2287,
+      "real": 2263
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-23",
-      "target": 2346,
-      "real": 1680
+      "lineId": "montado_ceramica",
+      "date": "2026-02-10",
+      "target": 2287,
+      "real": 2296
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-24",
-      "target": 2346,
-      "real": 1670
+      "lineId": "montado_ceramica",
+      "date": "2026-02-11",
+      "target": 2287,
+      "real": 2167
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-25",
-      "target": 2346,
-      "real": 1665
+      "lineId": "montado_ceramica",
+      "date": "2026-02-12",
+      "target": 2287,
+      "real": 2263
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-26",
-      "target": 2346,
-      "real": 1658
+      "lineId": "montado_ceramica",
+      "date": "2026-02-13",
+      "target": 2287,
+      "real": 2259
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-27",
-      "target": 2346,
-      "real": 1648
+      "lineId": "montado_ceramica",
+      "date": "2026-02-16",
+      "target": 2287,
+      "real": 1800
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-28",
-      "target": 2346,
-      "real": 1635
+      "lineId": "montado_ceramica",
+      "date": "2026-02-17",
+      "target": 2287,
+      "real": 2208
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-03",
+      "target": 2610,
+      "real": 2155
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-04",
+      "target": 2610,
+      "real": 2000
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-05",
+      "target": 2610,
+      "real": 1900
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-06",
+      "target": 2610,
+      "real": 2164
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-09",
+      "target": 2610,
+      "real": 1998
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-10",
+      "target": 2610,
+      "real": 2217
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-11",
+      "target": 2610,
+      "real": 2114
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-12",
+      "target": 2610,
+      "real": 1912
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-13",
+      "target": 2610,
+      "real": 1944
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-16",
+      "target": 2610,
+      "real": 1990
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-17",
+      "target": 2610,
+      "real": 2172
     }
   ]
 }

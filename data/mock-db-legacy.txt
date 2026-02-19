@@ -31,78 +31,6 @@
       "real": 2145
     },
     {
-      "lineId": "wire_bond",
-      "date": "2025-10-01",
-      "target": 2346,
-      "real": 1205
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-11-01",
-      "target": 2346,
-      "real": 1651
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2025-12-01",
-      "target": 2346,
-      "real": 4883
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-01-01",
-      "target": 2346,
-      "real": 2002
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-10-01",
-      "target": 2287,
-      "real": 2035
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-11-01",
-      "target": 2287,
-      "real": 2085
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2025-12-01",
-      "target": 2287,
-      "real": 1869
-    },
-    {
-      "lineId": "montado_ceramica",
-      "date": "2026-01-01",
-      "target": 2287,
-      "real": 1321
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-10-01",
-      "target": 2610,
-      "real": 1973
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-11-01",
-      "target": 2610,
-      "real": 2059
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2025-12-01",
-      "target": 2610,
-      "real": 1904
-    },
-    {
-      "lineId": "montado_chip",
-      "date": "2026-01-01",
-      "target": 2610,
-      "real": 2066
-    },
-    {
       "lineId": "alineacion_chip",
       "date": "2026-02-03",
       "target": 3859,
@@ -169,70 +97,34 @@
       "real": 940
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-03",
-      "target": 2346,
-      "real": 1700
+      "lineId": "alineacion_chip",
+      "date": "2026-02-18",
+      "target": 3859,
+      "real": 1660
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-04",
-      "target": 2346,
-      "real": 1790
+      "lineId": "montado_ceramica",
+      "date": "2025-10-01",
+      "target": 2287,
+      "real": 2035
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-05",
-      "target": 2346,
-      "real": 1540
+      "lineId": "montado_ceramica",
+      "date": "2025-11-01",
+      "target": 2287,
+      "real": 2085
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-06",
-      "target": 2346,
-      "real": 1605
+      "lineId": "montado_ceramica",
+      "date": "2025-12-01",
+      "target": 2287,
+      "real": 1869
     },
     {
-      "lineId": "wire_bond",
-      "date": "2026-02-09",
-      "target": 2346,
-      "real": 1730
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-10",
-      "target": 2346,
-      "real": 1750
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-11",
-      "target": 2346,
-      "real": 1700
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-12",
-      "target": 2346,
-      "real": 1605
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-13",
-      "target": 2346,
-      "real": 1595
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-16",
-      "target": 2346,
-      "real": 400
-    },
-    {
-      "lineId": "wire_bond",
-      "date": "2026-02-17",
-      "target": 2346,
-      "real": 600
+      "lineId": "montado_ceramica",
+      "date": "2026-01-01",
+      "target": 2287,
+      "real": 1321
     },
     {
       "lineId": "montado_ceramica",
@@ -301,6 +193,36 @@
       "real": 2208
     },
     {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-18",
+      "target": 2287,
+      "real": 3254
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2025-10-01",
+      "target": 2610,
+      "real": 1973
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2025-11-01",
+      "target": 2610,
+      "real": 2059
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2025-12-01",
+      "target": 2610,
+      "real": 1904
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-01-01",
+      "target": 2610,
+      "real": 2066
+    },
+    {
       "lineId": "montado_chip",
       "date": "2026-02-03",
       "target": 2610,
@@ -365,6 +287,108 @@
       "date": "2026-02-17",
       "target": 2610,
       "real": 2172
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-18",
+      "target": 2610,
+      "real": 2198
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-10",
+      "target": 2346,
+      "real": 1750
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-11",
+      "target": 2346,
+      "real": 1700
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-12",
+      "target": 2346,
+      "real": 1605
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-13",
+      "target": 2346,
+      "real": 1595
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-03",
+      "target": 2287,
+      "real": 2222
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-04",
+      "target": 2287,
+      "real": 2223
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-05",
+      "target": 2287,
+      "real": 1753
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-06",
+      "target": 2346,
+      "real": 1605
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-09",
+      "target": 2287,
+      "real": 2263
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-10",
+      "target": 2287,
+      "real": 2296
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-11",
+      "target": 2346,
+      "real": 1700
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-12",
+      "target": 2346,
+      "real": 1605
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-13",
+      "target": 2346,
+      "real": 1595
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-16",
+      "target": 2346,
+      "real": 400
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-17",
+      "target": 2346,
+      "real": 600
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-18",
+      "target": 2346,
+      "real": 1575
     }
   ]
 }

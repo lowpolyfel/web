@@ -8,6 +8,9 @@
 
   const DB_KEY = 'trend_salida_db_v2';
   const LEGACY_RECORDS_KEY = 'trend_salida_records_v1';
+  const INHABIL_DAY = 2;
+  const COMPARE_CURRENT_DAY = 18;
+  const COMPARE_PREVIOUS_DAY = 17;
 
   const SEED_DB = {
   "metas": {
@@ -376,6 +379,30 @@
       "date": "2026-02-17",
       "target": 2610,
       "real": 2172
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-02-18",
+      "target": 2287,
+      "real": 3254
+    },
+    {
+      "lineId": "montado_chip",
+      "date": "2026-02-18",
+      "target": 2610,
+      "real": 2198
+    },
+    {
+      "lineId": "alineacion_chip",
+      "date": "2026-02-18",
+      "target": 3859,
+      "real": 1660
+    },
+    {
+      "lineId": "wire_bond",
+      "date": "2026-02-18",
+      "target": 2346,
+      "real": 1575
     }
   ]
 };
@@ -596,11 +623,11 @@
     }
     ctx.textAlign = 'start';
 
-    labels.forEach((_, idx) => {
+    labels.forEach((label, idx) => {
       const x = paddingLeft + idx * stepX;
       ctx.fillStyle = '#6c81a1';
       ctx.font = '10px Arial';
-      ctx.fillText(String(idx + 1), x - 4, height - 8);
+      ctx.fillText(label, x - 6, height - 8);
     });
 
     // Barras de real diario (nuevo diseño)
@@ -718,6 +745,60 @@
     return { meta, real, cumplimiento };
   }
 
+
+  function getLineRecordForDay(lineId, year, monthIndex, day) {
+    const isoDate = `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    return db.records.find((item) => item.lineId === lineId && item.date === isoDate) || null;
+  }
+
+  function renderDailyComparison() {
+    const panel = document.createElement('article');
+    panel.className = 'panel compare-panel';
+    panel.innerHTML = `<h2>Comparativo diario (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2><p class="muted">Tendencia del día actual contra el día anterior por sección.</p>`;
+
+    const grid = document.createElement('div');
+    grid.className = 'compare-grid';
+
+    LINES.forEach((line) => {
+      const current = getLineRecordForDay(line.id, selectedYear, selectedMonth, COMPARE_CURRENT_DAY);
+      const previous = getLineRecordForDay(line.id, selectedYear, selectedMonth, COMPARE_PREVIOUS_DAY);
+      const currentReal = current ? Number(current.real || 0) : 0;
+      const previousReal = previous ? Number(previous.real || 0) : 0;
+      const diff = currentReal - previousReal;
+
+      let trendClass = 'trend-flat';
+      let arrow = '→';
+      let trendText = 'Sin cambio';
+      if (diff > 0) {
+        trendClass = 'trend-up';
+        arrow = '↑';
+        trendText = 'Aumento';
+      } else if (diff < 0) {
+        trendClass = 'trend-down';
+        arrow = '↓';
+        trendText = 'Decremento';
+      }
+
+      const card = document.createElement('div');
+      card.className = `compare-item ${trendClass}`;
+      card.innerHTML = `
+        <h4>${line.name}</h4>
+        <div class="compare-values">
+          <span>Día ${COMPARE_PREVIOUS_DAY}: <strong>${formatNumber(previousReal)}</strong></span>
+          <span>Día ${COMPARE_CURRENT_DAY}: <strong>${formatNumber(currentReal)}</strong></span>
+        </div>
+        <p class="compare-delta">
+          <span class="arrow">${arrow}</span>
+          ${trendText}: <strong>${formatNumber(Math.abs(diff))}</strong>
+        </p>
+      `;
+      grid.append(card);
+    });
+
+    panel.append(grid);
+    sectionsContainer.append(panel);
+  }
+
   function renderSectionCards() {
     sectionsContainer.innerHTML = '';
     const days = getDaysInMonth(selectedYear, selectedMonth);
@@ -741,13 +822,21 @@
         realByDay[day] = item.real;
       });
 
-      const visibleMetaByDay = businessDays.map((day) => metaByDay[day - 1]);
-      const visibleRealByDay = businessDays.map((day) => realByDay[day - 1]);
+      const visibleMetaByDay = businessDays.map((day) => (day === INHABIL_DAY ? null : metaByDay[day - 1]));
+      const visibleRealByDay = businessDays.map((day) => (day === INHABIL_DAY ? null : realByDay[day - 1]));
 
       const resume = summarize(visibleMetaByDay, visibleRealByDay);
-      const headers = businessDays.map((day) => `<th>${day}</th>`).join('');
-      const rowMeta = visibleMetaByDay.map((n) => `<td>${formatNumber(n)}</td>`).join('');
-      const rowReal = visibleRealByDay.map((n) => `<td>${formatNumber(n)}</td>`).join('');
+      const headers = businessDays.map((day) => `<th class="${day === INHABIL_DAY ? 'inhabil-col' : ''}">${day === INHABIL_DAY ? `${day}<br><small>INHÁBIL</small>` : day}</th>`).join('');
+      const rowMeta = visibleMetaByDay.map((n, idx) => {
+        const day = businessDays[idx];
+        if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
+        return `<td>${formatNumber(n)}</td>`;
+      }).join('');
+      const rowReal = visibleRealByDay.map((n, idx) => {
+        const day = businessDays[idx];
+        if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
+        return `<td>${formatNumber(n)}</td>`;
+      }).join('');
 
       const card = document.createElement('article');
       card.className = 'section-card';
@@ -765,13 +854,13 @@
             <table class="month-table">
               <thead><tr><th>Día</th>${headers}</tr></thead>
               <tbody>
-                <tr><td class="label-cell">Meta</td>${rowMeta}</tr>
-                <tr><td class="label-cell">Cantidad real</td>${rowReal}</tr>
+                <tr><td class="label-cell">META (CAP INST.)</td>${rowMeta}</tr>
+                <tr><td class="label-cell">REAL (CAP. 1 EST.)</td>${rowReal}</tr>
               </tbody>
             </table>
           </div>
           <div class="charts-row">
-            <div class="chart-card chart-card-daily"><p class="muted">Comportamiento diario alineado por día</p><canvas data-chart="daily"></canvas></div>
+            <div class="chart-card chart-card-daily"><p class="muted">Comportamiento diario (solo días hábiles)</p><canvas data-chart="daily"></canvas></div>
           </div>
         </div>
       `;
@@ -779,13 +868,15 @@
       sectionsContainer.append(card);
       chartRefs.push({
         daily: card.querySelector('[data-chart="daily"]'),
-        metaByDay,
-        realByDay,
+        labels: businessDays.map((day) => String(day)),
+        metaByDay: visibleMetaByDay,
+        realByDay: visibleRealByDay,
       });
     });
 
     return chartRefs;
   }
+
 
   function toMonthSeries(lineId) {
     const map = new Map();
@@ -831,17 +922,26 @@
   }
 
   function renderMonthlyAverages() {
-    monthlyAveragesContainer.innerHTML = '<h3>Promedios mensuales reales</h3>';
+    monthlyAveragesContainer.innerHTML = '<h3>Promedios mensuales reales</h3><p class="muted">Resumen visual por sección con mejor y menor desempeño.</p>';
 
     LINES.forEach((line) => {
       const series = monthlyAveragesByLine(line.id);
       const months = series.map((m) => `<th>${monthLabelFromKey(m.key)}</th>`).join('');
       const values = series.map((m) => `<td>${formatNumber(m.avg)}</td>`).join('');
+      const avgs = series.map((m) => m.avg);
+      const maxAvg = avgs.length ? Math.max.apply(null, avgs) : 0;
+      const minAvg = avgs.length ? Math.min.apply(null, avgs) : 0;
 
       const card = document.createElement('div');
       card.className = 'avg-card';
       card.innerHTML = `
-        <h4>${line.name}</h4>
+        <div class="avg-head">
+          <h4>${line.name}</h4>
+          <div class="avg-pills">
+            <span class="pill pill-up">Mejor: ${formatNumber(maxAvg)}</span>
+            <span class="pill pill-down">Menor: ${formatNumber(minAvg)}</span>
+          </div>
+        </div>
         <table class="avg-table">
           <thead><tr>${months}</tr></thead>
           <tbody><tr>${values}</tr></tbody>
@@ -850,6 +950,7 @@
       monthlyAveragesContainer.append(card);
     });
   }
+
 
   function renderHistoryCards() {
     historyContainer.innerHTML = '';
@@ -875,9 +976,9 @@
     setCurrentMonthLabel();
     const refs = renderSectionCards();
     refs.forEach((ref) => {
-      const labels = Array.from({ length: ref.metaByDay.length }, (_, i) => String(i + 1));
-      drawDailyChart(ref.daily, labels, ref.metaByDay, ref.realByDay);
+      drawDailyChart(ref.daily, ref.labels, ref.metaByDay, ref.realByDay);
     });
+    renderDailyComparison();
     renderHistoryCards();
     renderMonthlyAverages();
   }

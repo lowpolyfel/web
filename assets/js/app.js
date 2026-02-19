@@ -222,9 +222,9 @@
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
 
-    const allValues = [...metaValues, ...realValues].filter((n) => n != null);
-    const max = Math.max(1, ...allValues) * 1.1;
-    const ticks = 5;
+    const max = 5000;
+    const step = 1000;
+    const ticks = max / step;
 
     for (let i = 0; i <= ticks; i += 1) {
       const y = p.t + (chartH / ticks) * i;
@@ -235,17 +235,18 @@
       ctx.lineTo(width - p.r, y);
       ctx.stroke();
 
-      const tickValue = ((ticks - i) / ticks) * max;
+      const tickValue = max - i * step;
       ctx.fillStyle = '#8c9dbe';
       ctx.font = '11px Arial';
-      ctx.fillText(formatNumber(Math.round(tickValue)), 6, y + 3);
+      ctx.fillText(formatNumber(tickValue), 6, y + 3);
     }
 
     const xStep = chartW / Math.max(1, labels.length - 1);
     const barW = Math.max(10, Math.min(28, xStep * 0.58));
 
     function pointY(value) {
-      return p.t + chartH - (value / max) * chartH;
+      const safeValue = Math.max(0, Math.min(max, value));
+      return p.t + chartH - (safeValue / max) * chartH;
     }
 
     realValues.forEach((v, i) => {
@@ -307,25 +308,23 @@
     ctx.fillStyle = '#5f6f92';
     ctx.font = '11px Arial';
     labels.forEach((label, i) => {
-      if (i % 2 !== 0) return;
       const x = p.l + i * xStep;
-      ctx.fillText(label, x - 5, height - 9);
+      ctx.fillText(label, x - 4, height - 9);
     });
   }
 
-  function drawHistoryBars(canvas, labels, values) {
+  function drawHistoryBars(canvas, labels, values, maxIdx, minIdx) {
     const { ctx, width, height } = setupCanvas(canvas, 230);
-    const p = { l: 34, r: 16, t: 18, b: 30 };
+    const p = { l: 36, r: 16, t: 18, b: 30 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
-    const max = Math.max(1, ...values) * 1.12;
+    const max = Math.max(1, ...values) * 1.1;
     const gap = chartW / Math.max(1, values.length);
-    const barW = Math.max(20, Math.min(46, gap * 0.56));
-    const colors = ['#8eb0d7', '#d3a9be', '#9cccb7', '#e6c897'];
+    const barW = Math.max(20, Math.min(48, gap * 0.62));
 
     for (let i = 0; i <= 4; i += 1) {
       const y = Math.round(p.t + (chartH / 4) * i) + 0.5;
-      ctx.strokeStyle = i === 4 ? '#d4e0f7' : '#edf2ff';
+      ctx.strokeStyle = i === 4 ? '#cbdaf5' : '#e9f0ff';
       ctx.beginPath();
       ctx.moveTo(p.l, y);
       ctx.lineTo(width - p.r, y);
@@ -336,22 +335,30 @@
       const h = Math.max(2, (v / max) * chartH);
       const x = Math.round(p.l + i * gap + (gap - barW) / 2);
       const y = Math.round(height - p.b - h);
+      const isMarked = i === maxIdx || i === minIdx;
 
-      ctx.fillStyle = colors[i % colors.length];
+      ctx.fillStyle = '#8fb3ea';
       ctx.fillRect(x, y, barW, h);
 
-      ctx.strokeStyle = '#d2def3';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = isMarked ? '#d95a5a' : '#c6d7f5';
+      ctx.lineWidth = isMarked ? 1.8 : 1;
       ctx.strokeRect(x + 0.5, y + 0.5, barW - 1, h - 1);
+
+      if (isMarked) {
+        ctx.fillStyle = '#d95a5a';
+        ctx.font = '700 9px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(i === maxIdx ? 'MEJOR' : 'PEOR', Math.round(x + barW / 2), y - 16);
+      }
 
       ctx.fillStyle = '#4f6289';
       ctx.font = '700 11px Arial';
       ctx.textAlign = 'center';
       ctx.fillText(labels[i], Math.round(x + barW / 2), height - 9);
 
-      ctx.fillStyle = '#7388ae';
+      ctx.fillStyle = '#6a82ab';
       ctx.font = '600 10px Arial';
-      ctx.fillText(formatNumber(v), Math.round(x + barW / 2), y - 7);
+      ctx.fillText(formatNumber(v), Math.round(x + barW / 2), y - 4);
     });
 
     ctx.textAlign = 'start';
@@ -397,7 +404,6 @@
     panel.className = 'panel compare-panel';
     panel.innerHTML = `
       <h2>Comparativo diario PRO (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2>
-      <p class="muted">Incluye variación absoluta y porcentaje de cambio por sección.</p>
     `;
 
     const grid = document.createElement('div');
@@ -507,7 +513,7 @@
             </table>
           </div>
           <div class="chart-card chart-card-daily">
-            <p class="chart-title">Comportamiento diario (solo días hábiles)</p>
+            <p class="chart-title">Comportamiento diario</p>
             <div class="chart-legend">
               <span><i class="legend-dot legend-target"></i>Meta</span>
               <span><i class="legend-dot legend-bars"></i>Barras reales</span>
@@ -533,8 +539,7 @@
   function renderCombinedHistory() {
     historyContainer.innerHTML = '';
     monthlyAveragesContainer.innerHTML = `
-      <h3>Histórico + Promedios mensuales (sin febrero)</h3>
-      <p class="muted">Se combinan datos históricos y promedio mensual real para una vista ejecutiva.</p>
+      <h3>Histórico mensual</h3>
     `;
 
     const wrap = document.createElement('div');
@@ -546,6 +551,8 @@
       const values = series.map((s) => s.avg);
       const max = Math.max(0, ...values);
       const min = Math.min(...values.length ? values : [0]);
+      const maxIdx = values.findIndex((v) => v === max);
+      const minIdx = values.findIndex((v) => v === min);
 
       const card = document.createElement('article');
       card.className = 'avg-card avg-card-pro';
@@ -553,8 +560,8 @@
         <div class="avg-head">
           <h4>${line.name}</h4>
           <div class="avg-pills">
-            <span class="pill pill-up">Top: ${formatNumber(max)}</span>
-            <span class="pill pill-down">Min: ${formatNumber(min)}</span>
+            <span class="pill">Mejor: ${formatNumber(max)}</span>
+            <span class="pill">Peor: ${formatNumber(min)}</span>
           </div>
         </div>
         <canvas class="history-canvas" aria-label="Histórico mensual"></canvas>
@@ -568,7 +575,7 @@
       `;
 
       wrap.append(card);
-      drawHistoryBars(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values);
+      drawHistoryBars(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values, maxIdx, minIdx);
     });
 
     monthlyAveragesContainer.append(wrap);

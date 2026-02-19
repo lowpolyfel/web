@@ -258,7 +258,61 @@ code {
 @media (max-width: 980px) {
   .header, .month-head { flex-direction: column; align-items: flex-start; }
   .selectors, .entry-form, .goals-grid { grid-template-columns: 1fr; display: grid; }
-  .charts-row, .history-grid { grid-template-columns: 1fr; }
+  .charts-row, .history-grid, .compare-grid { grid-template-columns: 1fr; }
   .btn-primary { grid-column: span 1; }
   .goals-actions { grid-column: span 1; }
 }
+
+
+.inhabil-col {
+  background: #ffe8a3 !important;
+  color: #5a4300;
+  font-weight: 700;
+}
+
+.compare-panel {
+  margin-top: 4px;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.compare-item {
+  border: 1px solid #d9e7ff;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fcfeff;
+}
+
+.compare-item h4 { margin: 0 0 8px; }
+.compare-values {
+  display: grid;
+  gap: 4px;
+  font-size: .85rem;
+}
+.compare-delta { margin: 8px 0 0; font-weight: 700; }
+.compare-delta .arrow { font-size: 1.1rem; margin-right: 4px; }
+.trend-up { border-color: #a7e8cf; background: #f2fff8; color: #0b6c4b; }
+.trend-down { border-color: #ffd0cc; background: #fff5f4; color: #9c2b21; }
+.trend-flat { border-color: #d9e7ff; background: #f6f9ff; color: #35527a; }
+
+.avg-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.avg-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.pill {
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: .72rem;
+  font-weight: 700;
+}
+.pill-up { background: #e8fff4; color: #0e7a55; border: 1px solid #b5ecd0; }
+.pill-down { background: #fff2f0; color: #a03b2f; border: 1px solid #ffd0c8; }

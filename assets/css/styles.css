@@ -314,11 +314,11 @@ canvas { width: 100%; height: 300px; display: block; }
 }
 
 .avg-card {
-  border: 1px solid var(--line);
+  border: 1px solid #dfe9ff;
   border-radius: 14px;
   padding: 12px;
-  background: var(--card);
-  box-shadow: var(--soft-shadow);
+  background: linear-gradient(180deg, #fdfefe, #f7faff);
+  box-shadow: 0 8px 20px rgba(72, 107, 180, .12);
 }
 
 .avg-card-pro {
@@ -331,7 +331,7 @@ canvas { width: 100%; height: 300px; display: block; }
   position: absolute;
   inset: 0 0 auto 0;
   height: 4px;
-  background: linear-gradient(120deg, var(--blue-900), var(--blue-500));
+  background: linear-gradient(120deg, #2d61bb, #7aa1f7);
 }
 
 .avg-head {
@@ -349,16 +349,17 @@ canvas { width: 100%; height: 300px; display: block; }
   padding: 4px 8px;
   font-size: .72rem;
   font-weight: 700;
+  color: #2f5f9f;
+  background: #eff5ff;
+  border: 1px solid #d2e2ff;
 }
-.pill-up { background: #e8fff3; color: #0f7c57; border: 1px solid #b3edcf; }
-.pill-down { background: #fff2ef; color: #a94135; border: 1px solid #ffd2c8; }
 
 .history-canvas {
   height: 210px;
   margin-top: 4px;
-  border: 1px solid #e5edff;
+  border: 1px solid #dce9ff;
   border-radius: 12px;
-  background: linear-gradient(180deg, #fdfefe, #f7faff);
+  background: #f7fbff;
 }
 
 .avg-table {

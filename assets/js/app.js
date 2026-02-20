@@ -211,8 +211,14 @@
     const rect = canvas.getBoundingClientRect();
     const width = Math.max(320, Math.floor(rect.width));
     const height = Math.max(minHeight, Math.floor(rect.height));
+    
     canvas.width = width * ratio;
     canvas.height = height * ratio;
+    
+    // Fijar el tamaño en CSS para que no se estire y pierda resolución
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
     const ctx = canvas.getContext('2d');
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     ctx.clearRect(0, 0, width, height);
@@ -575,6 +581,9 @@
 
     const wrap = document.createElement('div');
     wrap.className = 'avg-combined-grid';
+    
+    // El wrapper se inserta primero en el DOM para que los elementos dentro hereden el tamaño
+    monthlyAveragesContainer.append(wrap);
 
     LINES.forEach((line) => {
       const series = monthlyStats(line.id, false);
@@ -594,11 +603,10 @@
         <canvas class="history-canvas" aria-label="Promedio mensual"></canvas>
       `;
 
+      // Insertamos la tarjeta en el contenedor que ya está en el DOM
       wrap.append(card);
       drawMonthlyAverageLine(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values);
     });
-
-    monthlyAveragesContainer.append(wrap);
   }
 
   function renderGoalsForm() {

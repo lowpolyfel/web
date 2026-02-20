@@ -6,11 +6,11 @@
     { id: 'wire_bond', name: 'Wire Bond' },
   ];
 
-  const DB_KEY = 'trend_salida_db_v3';
+  const DB_KEY = 'trend_salida_db_v4';
   const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAY = 2;
-  const COMPARE_CURRENT_DAY = 18;
-  const COMPARE_PREVIOUS_DAY = 17;
+  const COMPARE_CURRENT_DAY = 19;
+  const COMPARE_PREVIOUS_DAY = 18;
 
   const SEED_DB = {
     metas: {
@@ -37,6 +37,7 @@
       { lineId: 'alineacion_chip', date: '2026-02-16', target: 3859, real: 1425 },
       { lineId: 'alineacion_chip', date: '2026-02-17', target: 3859, real: 940 },
       { lineId: 'alineacion_chip', date: '2026-02-18', target: 3859, real: 1660 },
+      { lineId: 'alineacion_chip', date: '2026-02-19', target: 3859, real: 1780 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -55,6 +56,7 @@
       { lineId: 'wire_bond', date: '2026-02-16', target: 2346, real: 400 },
       { lineId: 'wire_bond', date: '2026-02-17', target: 2346, real: 600 },
       { lineId: 'wire_bond', date: '2026-02-18', target: 2346, real: 1575 },
+      { lineId: 'wire_bond', date: '2026-02-19', target: 2346, real: 1645 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -73,6 +75,7 @@
       { lineId: 'montado_ceramica', date: '2026-02-16', target: 2287, real: 1800 },
       { lineId: 'montado_ceramica', date: '2026-02-17', target: 2287, real: 2208 },
       { lineId: 'montado_ceramica', date: '2026-02-18', target: 2287, real: 3254 },
+      { lineId: 'montado_ceramica', date: '2026-02-19', target: 2287, real: 3183 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -91,6 +94,7 @@
       { lineId: 'montado_chip', date: '2026-02-16', target: 2610, real: 1990 },
       { lineId: 'montado_chip', date: '2026-02-17', target: 2610, real: 2172 },
       { lineId: 'montado_chip', date: '2026-02-18', target: 2610, real: 2198 },
+      { lineId: 'montado_chip', date: '2026-02-19', target: 2610, real: 2185 },
     ],
   };
 
@@ -98,7 +102,6 @@
   const yearSelect = document.querySelector('#yearSelect');
   const currentMonthLabel = document.querySelector('#currentMonthLabel');
   const sectionsContainer = document.querySelector('#sectionsContainer');
-  const historyContainer = document.querySelector('#historyContainer');
   const monthlyAveragesContainer = document.querySelector('#monthlyAveragesContainer');
 
   const lineSelect = document.querySelector('#lineSelect');
@@ -313,52 +316,71 @@
     });
   }
 
-  function drawHistoryBars(canvas, labels, values, maxIdx, minIdx) {
+  function drawMonthlyAverageLine(canvas, labels, values) {
+    const safeValues = values.length ? values : [0];
+    const maxRaw = Math.max(...safeValues);
+    const minRaw = Math.min(...safeValues);
+    const range = Math.max(1, maxRaw - minRaw);
+    const yMin = Math.max(0, minRaw - range * 0.25);
+    const yMax = maxRaw + range * 0.25;
+
     const { ctx, width, height } = setupCanvas(canvas, 230);
-    const p = { l: 36, r: 16, t: 18, b: 30 };
+    const p = { l: 48, r: 16, t: 16, b: 34 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
-    const max = Math.max(1, ...values) * 1.1;
-    const gap = chartW / Math.max(1, values.length);
-    const barW = Math.max(20, Math.min(48, gap * 0.62));
+    const steps = 4;
 
-    for (let i = 0; i <= 4; i += 1) {
-      const y = Math.round(p.t + (chartH / 4) * i) + 0.5;
-      ctx.strokeStyle = i === 4 ? '#cbdaf5' : '#e9f0ff';
+    function yFromValue(value) {
+      const normalized = yMax === yMin ? 0 : (value - yMin) / (yMax - yMin);
+      return p.t + chartH - normalized * chartH;
+    }
+
+    for (let i = 0; i <= steps; i += 1) {
+      const y = Math.round(p.t + (chartH / steps) * i) + 0.5;
+      ctx.strokeStyle = '#e7efff';
       ctx.beginPath();
       ctx.moveTo(p.l, y);
       ctx.lineTo(width - p.r, y);
       ctx.stroke();
+
+      const tickValue = yMax - ((yMax - yMin) / steps) * i;
+      ctx.fillStyle = '#7c8fb2';
+      ctx.font = '11px Arial';
+      ctx.textAlign = 'right';
+      ctx.fillText(formatNumber(tickValue), p.l - 6, y + 3);
     }
 
-    values.forEach((v, i) => {
-      const h = Math.max(2, (v / max) * chartH);
-      const x = Math.round(p.l + i * gap + (gap - barW) / 2);
-      const y = Math.round(height - p.b - h);
-      const isMarked = i === maxIdx || i === minIdx;
+    const xStep = chartW / Math.max(1, labels.length - 1);
 
-      ctx.fillStyle = '#8fb3ea';
-      ctx.fillRect(x, y, barW, h);
+    ctx.beginPath();
+    ctx.strokeStyle = '#2a63c9';
+    ctx.lineWidth = 2.2;
+    values.forEach((value, index) => {
+      const x = p.l + xStep * index;
+      const y = yFromValue(value);
+      if (index === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
 
-      ctx.strokeStyle = isMarked ? '#d95a5a' : '#c6d7f5';
-      ctx.lineWidth = isMarked ? 1.8 : 1;
-      ctx.strokeRect(x + 0.5, y + 0.5, barW - 1, h - 1);
+    values.forEach((value, index) => {
+      const x = p.l + xStep * index;
+      const y = yFromValue(value);
+      const labelY = y < p.t + 14 ? y + 14 : y - 8;
 
-      if (isMarked) {
-        ctx.fillStyle = '#d95a5a';
-        ctx.font = '700 9px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(i === maxIdx ? 'MEJOR' : 'PEOR', Math.round(x + barW / 2), y - 16);
-      }
+      ctx.beginPath();
+      ctx.fillStyle = '#2a63c9';
+      ctx.arc(x, y, 3.8, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#355b9d';
+      ctx.font = '700 10px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(formatNumber(value), x, labelY);
 
       ctx.fillStyle = '#4f6289';
-      ctx.font = '700 11px Arial';
-      ctx.textAlign = 'center';
-      ctx.fillText(labels[i], Math.round(x + barW / 2), height - 9);
-
-      ctx.fillStyle = '#6a82ab';
-      ctx.font = '600 10px Arial';
-      ctx.fillText(formatNumber(v), Math.round(x + barW / 2), y - 4);
+      ctx.font = '700 10px Arial';
+      ctx.fillText(labels[index], x, height - 10);
     });
 
     ctx.textAlign = 'start';
@@ -537,45 +559,34 @@
   }
 
   function renderCombinedHistory() {
-    historyContainer.innerHTML = '';
     monthlyAveragesContainer.innerHTML = `
-      <h3>Histórico mensual</h3>
+      <h3>Promedio mensual por sección</h3>
+      <p class="muted">Gráfico simple: promedio real mensual con línea de tendencia.</p>
     `;
 
     const wrap = document.createElement('div');
     wrap.className = 'avg-combined-grid';
 
     LINES.forEach((line) => {
-      const series = monthlyStats(line.id, true);
+      const series = monthlyStats(line.id, false);
       const labels = series.map((s) => monthLabelFromKey(s.key));
       const values = series.map((s) => s.avg);
-      const max = Math.max(0, ...values);
-      const min = Math.min(...values.length ? values : [0]);
-      const maxIdx = values.findIndex((v) => v === max);
-      const minIdx = values.findIndex((v) => v === min);
+      const latest = values[values.length - 1] || 0;
 
       const card = document.createElement('article');
-      card.className = 'avg-card avg-card-pro';
+      card.className = 'avg-card avg-card-simple';
       card.innerHTML = `
         <div class="avg-head">
           <h4>${line.name}</h4>
           <div class="avg-pills">
-            <span class="pill">Mejor: ${formatNumber(max)}</span>
-            <span class="pill">Peor: ${formatNumber(min)}</span>
+            <span class="pill">Último prom.: ${formatNumber(latest)}</span>
           </div>
         </div>
-        <canvas class="history-canvas" aria-label="Histórico mensual"></canvas>
-        <table class="avg-table">
-          <thead><tr><th>Mes</th>${labels.map((l) => `<th>${l}</th>`).join('')}</tr></thead>
-          <tbody>
-            <tr><td>Prom. Real</td>${values.map((v) => `<td>${formatNumber(v)}</td>`).join('')}</tr>
-            <tr><td>Cump. %</td>${series.map((s) => `<td>${formatNumber(s.cumplimiento)}%</td>`).join('')}</tr>
-          </tbody>
-        </table>
+        <canvas class="history-canvas" aria-label="Promedio mensual"></canvas>
       `;
 
       wrap.append(card);
-      drawHistoryBars(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values, maxIdx, minIdx);
+      drawMonthlyAverageLine(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values);
     });
 
     monthlyAveragesContainer.append(wrap);

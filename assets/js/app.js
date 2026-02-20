@@ -6,7 +6,7 @@
     { id: 'wire_bond', name: 'Wire Bond' },
   ];
 
-  const DB_KEY = 'trend_salida_db_v3';
+  const DB_KEY = 'trend_salida_db_v4';
   const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAY = 2;
   const COMPARE_CURRENT_DAY = 19;
@@ -321,11 +321,11 @@
     const maxRaw = Math.max(...safeValues);
     const minRaw = Math.min(...safeValues);
     const range = Math.max(1, maxRaw - minRaw);
-    const yMin = Math.max(0, minRaw - range * 0.3);
-    const yMax = maxRaw + range * 0.4;
+    const yMin = Math.max(0, minRaw - range * 0.25);
+    const yMax = maxRaw + range * 0.25;
 
-    const { ctx, width, height } = setupCanvas(canvas, 250);
-    const p = { l: 52, r: 18, t: 20, b: 40 };
+    const { ctx, width, height } = setupCanvas(canvas, 230);
+    const p = { l: 48, r: 16, t: 16, b: 34 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
     const steps = 4;
@@ -337,7 +337,7 @@
 
     for (let i = 0; i <= steps; i += 1) {
       const y = Math.round(p.t + (chartH / steps) * i) + 0.5;
-      ctx.strokeStyle = i === steps ? '#d3def5' : '#eaf0ff';
+      ctx.strokeStyle = '#e7efff';
       ctx.beginPath();
       ctx.moveTo(p.l, y);
       ctx.lineTo(width - p.r, y);
@@ -347,23 +347,14 @@
       ctx.fillStyle = '#7c8fb2';
       ctx.font = '11px Arial';
       ctx.textAlign = 'right';
-      ctx.fillText(formatNumber(tickValue), p.l - 8, y + 3);
+      ctx.fillText(formatNumber(tickValue), p.l - 6, y + 3);
     }
 
     const xStep = chartW / Math.max(1, labels.length - 1);
-    const barW = Math.max(16, Math.min(34, xStep * 0.5));
-
-    values.forEach((value, index) => {
-      const x = p.l + xStep * index;
-      const y = yFromValue(value);
-      const h = Math.max(1, p.t + chartH - y);
-      ctx.fillStyle = 'rgba(93, 140, 244, 0.28)';
-      ctx.fillRect(x - barW / 2, y, barW, h);
-    });
 
     ctx.beginPath();
     ctx.strokeStyle = '#2a63c9';
-    ctx.lineWidth = 2.4;
+    ctx.lineWidth = 2.2;
     values.forEach((value, index) => {
       const x = p.l + xStep * index;
       const y = yFromValue(value);
@@ -375,24 +366,21 @@
     values.forEach((value, index) => {
       const x = p.l + xStep * index;
       const y = yFromValue(value);
-      const labelY = y < p.t + 16 ? y + 14 : y - 8;
+      const labelY = y < p.t + 14 ? y + 14 : y - 8;
 
       ctx.beginPath();
       ctx.fillStyle = '#2a63c9';
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2;
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.arc(x, y, 3.8, 0, Math.PI * 2);
       ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = '#4f6289';
-      ctx.font = '700 10px Arial';
-      ctx.textAlign = 'center';
-      ctx.fillText(labels[index], x, height - 12);
 
       ctx.fillStyle = '#355b9d';
       ctx.font = '700 10px Arial';
+      ctx.textAlign = 'center';
       ctx.fillText(formatNumber(value), x, labelY);
+
+      ctx.fillStyle = '#4f6289';
+      ctx.font = '700 10px Arial';
+      ctx.fillText(labels[index], x, height - 10);
     });
 
     ctx.textAlign = 'start';
@@ -571,7 +559,10 @@
   }
 
   function renderCombinedHistory() {
-    monthlyAveragesContainer.innerHTML = '<h3>Promedio mensual por sección</h3>';
+    monthlyAveragesContainer.innerHTML = `
+      <h3>Promedio mensual por sección</h3>
+      <p class="muted">Gráfico simple: promedio real mensual con línea de tendencia.</p>
+    `;
 
     const wrap = document.createElement('div');
     wrap.className = 'avg-combined-grid';

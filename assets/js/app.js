@@ -6,11 +6,11 @@
     { id: 'wire_bond', name: 'Wire Bond' },
   ];
 
-  const DB_KEY = 'trend_salida_db_v4';
+  const DB_KEY = 'trend_salida_db_v5';
   const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAY = 2;
-  const COMPARE_CURRENT_DAY = 19;
-  const COMPARE_PREVIOUS_DAY = 18;
+  const COMPARE_CURRENT_DAY = 20;
+  const COMPARE_PREVIOUS_DAY = 19;
 
   const SEED_DB = {
     metas: {
@@ -38,6 +38,7 @@
       { lineId: 'alineacion_chip', date: '2026-02-17', target: 3859, real: 940 },
       { lineId: 'alineacion_chip', date: '2026-02-18', target: 3859, real: 1660 },
       { lineId: 'alineacion_chip', date: '2026-02-19', target: 3859, real: 1780 },
+      { lineId: 'alineacion_chip', date: '2026-02-20', target: 3859, real: 1800 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -57,6 +58,7 @@
       { lineId: 'wire_bond', date: '2026-02-17', target: 2346, real: 600 },
       { lineId: 'wire_bond', date: '2026-02-18', target: 2346, real: 1575 },
       { lineId: 'wire_bond', date: '2026-02-19', target: 2346, real: 1645 },
+      { lineId: 'wire_bond', date: '2026-02-20', target: 2346, real: 1600 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -76,6 +78,7 @@
       { lineId: 'montado_ceramica', date: '2026-02-17', target: 2287, real: 2208 },
       { lineId: 'montado_ceramica', date: '2026-02-18', target: 2287, real: 3254 },
       { lineId: 'montado_ceramica', date: '2026-02-19', target: 2287, real: 3183 },
+      { lineId: 'montado_ceramica', date: '2026-02-20', target: 2287, real: 2278 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -95,6 +98,7 @@
       { lineId: 'montado_chip', date: '2026-02-17', target: 2610, real: 2172 },
       { lineId: 'montado_chip', date: '2026-02-18', target: 2610, real: 2198 },
       { lineId: 'montado_chip', date: '2026-02-19', target: 2610, real: 2185 },
+      { lineId: 'montado_chip', date: '2026-02-20', target: 2610, real: 1600 },
     ],
   };
 

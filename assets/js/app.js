@@ -357,6 +357,15 @@
     }
 
     const xStep = chartW / Math.max(1, labels.length - 1);
+    const barW = Math.max(12, Math.min(24, xStep * 0.45));
+
+    values.forEach((value, index) => {
+      const x = p.l + xStep * index;
+      const y = yFromValue(value);
+      const barHeight = p.t + chartH - y;
+      ctx.fillStyle = 'rgba(93, 140, 244, 0.28)';
+      ctx.fillRect(x - barW / 2, y, barW, barHeight);
+    });
 
     ctx.beginPath();
     ctx.strokeStyle = '#2a63c9';
@@ -567,7 +576,7 @@
   function renderCombinedHistory() {
     monthlyAveragesContainer.innerHTML = `
       <h3>Promedio mensual por sección</h3>
-      <p class="muted">Gráfico simple: promedio real mensual con línea de tendencia.</p>
+      <p class="muted">Gráfico doble simple: barras de promedio mensual + línea de tendencia.</p>
     `;
 
     const wrap = document.createElement('div');
@@ -596,8 +605,6 @@
 
       // Insertamos la tarjeta en el contenedor que ya está en el DOM
       wrap.append(card);
-      
-      // Dibujamos ahora que el canvas tiene medidas en pantalla
       drawMonthlyAverageLine(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values);
     });
   }

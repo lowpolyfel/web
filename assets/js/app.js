@@ -143,6 +143,11 @@
     return Number(value).toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
   }
 
+  function formatInteger(value) {
+    if (value == null || Number.isNaN(value)) return '—';
+    return Math.round(Number(value)).toLocaleString('es-MX');
+  }
+
   function monthName(index) {
     return new Date(2026, index, 1).toLocaleString('es-MX', { month: 'long' });
   }
@@ -251,7 +256,7 @@
       const tickValue = max - i * step;
       ctx.fillStyle = '#8c9dbe';
       ctx.font = '11px Arial';
-      ctx.fillText(formatNumber(tickValue), 6, y + 3);
+      ctx.fillText(formatInteger(tickValue), 6, y + 3);
     }
 
     const xStep = chartW / Math.max(1, labels.length - 1);
@@ -334,8 +339,8 @@
     const yMin = Math.max(0, minRaw - range * 0.25);
     const yMax = maxRaw + range * 0.25;
 
-    const { ctx, width, height } = setupCanvas(canvas, 230);
-    const p = { l: 48, r: 16, t: 16, b: 34 };
+    const { ctx, width, height } = setupCanvas(canvas, 240);
+    const p = { l: 62, r: 18, t: 18, b: 36 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
     const steps = 4;
@@ -357,7 +362,7 @@
       ctx.fillStyle = '#7c8fb2';
       ctx.font = '11px Arial';
       ctx.textAlign = 'right';
-      ctx.fillText(formatNumber(tickValue), p.l - 6, y + 3);
+      ctx.fillText(formatInteger(tickValue), p.l - 8, y + 3);
     }
 
     const xStep = chartW / Math.max(1, labels.length - 1);
@@ -385,20 +390,14 @@
     values.forEach((value, index) => {
       const x = p.l + xStep * index;
       const y = yFromValue(value);
-      const labelY = y < p.t + 14 ? y + 14 : y - 8;
-
       ctx.beginPath();
       ctx.fillStyle = '#2a63c9';
       ctx.arc(x, y, 3.8, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#355b9d';
-      ctx.font = '700 10px Arial';
-      ctx.textAlign = 'center';
-      ctx.fillText(formatNumber(value), x, labelY);
-
       ctx.fillStyle = '#4f6289';
       ctx.font = '700 10px Arial';
+      ctx.textAlign = 'center';
       ctx.fillText(labels[index], x, height - 10);
     });
 
@@ -444,7 +443,7 @@
     const panel = document.createElement('article');
     panel.className = 'panel compare-panel';
     panel.innerHTML = `
-      <h2>Comparativo diario PRO (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2>
+      <h2>Comparativo diario (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2>
     `;
 
     const grid = document.createElement('div');
@@ -578,10 +577,7 @@
   }
 
   function renderCombinedHistory() {
-    monthlyAveragesContainer.innerHTML = `
-      <h3>Promedio mensual por sección</h3>
-      <p class="muted">Gráfico doble simple: barras de promedio mensual + línea de tendencia.</p>
-    `;
+    monthlyAveragesContainer.innerHTML = '<h3>Promedio mensual por sección</h3>';
 
     const wrap = document.createElement('div');
     wrap.className = 'avg-combined-grid';

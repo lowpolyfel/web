@@ -334,35 +334,32 @@
   function drawMonthlyAverageLine(canvas, labels, values) {
     const safeValues = values.length ? values : [0];
     const maxRaw = Math.max(...safeValues);
-    const minRaw = Math.min(...safeValues);
-    const range = Math.max(1, maxRaw - minRaw);
-    const yMin = Math.max(0, minRaw - range * 0.25);
-    const yMax = maxRaw + range * 0.25;
+    const yStep = 1000;
+    const yMin = 0;
+    const yMax = Math.max(yStep, Math.ceil(maxRaw / yStep) * yStep);
 
     const { ctx, width, height } = setupCanvas(canvas, 240);
-    const p = { l: 62, r: 18, t: 18, b: 36 };
+    const p = { l: 76, r: 18, t: 18, b: 36 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
-    const steps = 4;
 
     function yFromValue(value) {
       const normalized = yMax === yMin ? 0 : (value - yMin) / (yMax - yMin);
       return p.t + chartH - normalized * chartH;
     }
 
-    for (let i = 0; i <= steps; i += 1) {
-      const y = Math.round(p.t + (chartH / steps) * i) + 0.5;
+    for (let tickValue = yMax; tickValue >= yMin; tickValue -= yStep) {
+      const y = Math.round(yFromValue(tickValue)) + 0.5;
       ctx.strokeStyle = '#e7efff';
       ctx.beginPath();
       ctx.moveTo(p.l, y);
       ctx.lineTo(width - p.r, y);
       ctx.stroke();
 
-      const tickValue = yMax - ((yMax - yMin) / steps) * i;
       ctx.fillStyle = '#7c8fb2';
       ctx.font = '11px Arial';
       ctx.textAlign = 'right';
-      ctx.fillText(formatInteger(tickValue), p.l - 8, y + 3);
+      ctx.fillText(formatInteger(tickValue), p.l - 12, y + 3);
     }
 
     const xStep = chartW / Math.max(1, labels.length - 1);

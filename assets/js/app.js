@@ -471,6 +471,7 @@
       const target = Number(current?.target || previous?.target || db.metas[line.id] || 0);
       const cumplimiento = target ? (currentReal / target) * 100 : 0;
       const impulse = Math.min(100, Math.abs(pct));
+      const impulseLabel = `${pct > 0 ? '+' : pct < 0 ? '-' : ''}${formatNumber(impulse)}%`;
 
       let cls = 'trend-flat';
       let text = 'Sin cambio';
@@ -501,7 +502,7 @@
         </div>
         <p class="progress-label">Impulso del día</p>
         <div class="compare-progress"><div style="width:${impulse}%"></div></div>
-        <p class="compare-pct">${formatNumber(impulse)}%</p>
+        <p class="compare-pct">${impulseLabel}</p>
       `;
       grid.append(item);
     });

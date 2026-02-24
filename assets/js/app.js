@@ -4,13 +4,15 @@
     { id: 'montado_chip', name: 'Montado de Chip' },
     { id: 'alineacion_chip', name: 'Alineación de Chip' },
     { id: 'wire_bond', name: 'Wire Bond' },
+    { id: 'wire_bond_hi_reel', name: 'Wire Bond (Nueva Maquina)' },
+    { id: 'alloy_hi_reel', name: 'Alloy (Nueva Maquina)' },
   ];
 
-  const DB_KEY = 'trend_salida_db_v5';
+  const DB_KEY = 'trend_salida_db_v6';
   const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAY = 2;
-  const COMPARE_CURRENT_DAY = 20;
-  const COMPARE_PREVIOUS_DAY = 19;
+  const COMPARE_CURRENT_DAY = 23;
+  const COMPARE_PREVIOUS_DAY = 20;
 
   const SEED_DB = {
     metas: {
@@ -18,6 +20,8 @@
       montado_chip: 2610,
       alineacion_chip: 3859,
       wire_bond: 2346,
+      wire_bond_hi_reel: 2346,
+      alloy_hi_reel: 2287,
     },
     records: [
       // Alineación de Chip
@@ -39,6 +43,7 @@
       { lineId: 'alineacion_chip', date: '2026-02-18', target: 3859, real: 1660 },
       { lineId: 'alineacion_chip', date: '2026-02-19', target: 3859, real: 1780 },
       { lineId: 'alineacion_chip', date: '2026-02-20', target: 3859, real: 1800 },
+      { lineId: 'alineacion_chip', date: '2026-02-23', target: 3859, real: 1600 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -59,6 +64,7 @@
       { lineId: 'wire_bond', date: '2026-02-18', target: 2346, real: 1575 },
       { lineId: 'wire_bond', date: '2026-02-19', target: 2346, real: 1645 },
       { lineId: 'wire_bond', date: '2026-02-20', target: 2346, real: 1600 },
+      { lineId: 'wire_bond', date: '2026-02-23', target: 2346, real: 1350 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -79,6 +85,7 @@
       { lineId: 'montado_ceramica', date: '2026-02-18', target: 2287, real: 3254 },
       { lineId: 'montado_ceramica', date: '2026-02-19', target: 2287, real: 3183 },
       { lineId: 'montado_ceramica', date: '2026-02-20', target: 2287, real: 2278 },
+      { lineId: 'montado_ceramica', date: '2026-02-23', target: 2287, real: 2213 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -99,6 +106,13 @@
       { lineId: 'montado_chip', date: '2026-02-18', target: 2610, real: 2198 },
       { lineId: 'montado_chip', date: '2026-02-19', target: 2610, real: 2185 },
       { lineId: 'montado_chip', date: '2026-02-20', target: 2610, real: 1600 },
+      { lineId: 'montado_chip', date: '2026-02-23', target: 2610, real: null },
+
+      // Wire Bond (Nueva Maquina)
+      { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
+
+      // Alloy (Nueva Maquina)
+      { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
     ],
   };
 
@@ -457,6 +471,7 @@
       const target = Number(current?.target || previous?.target || db.metas[line.id] || 0);
       const cumplimiento = target ? (currentReal / target) * 100 : 0;
       const impulse = Math.min(100, Math.abs(pct));
+      const impulseLabel = `${pct > 0 ? '+' : pct < 0 ? '-' : ''}${formatNumber(impulse)}%`;
 
       let cls = 'trend-flat';
       let text = 'Sin cambio';
@@ -481,13 +496,13 @@
           <div class="metric-tile"><span>Meta día ${COMPARE_CURRENT_DAY}</span><strong>${formatNumber(target)}</strong></div>
         </div>
         <div class="compare-kpi">
-          <div class="kpi-chip"><span>Delta absoluto</span><strong>${delta >= 0 ? '+' : ''}${formatNumber(delta)}</strong></div>
-          <div class="kpi-chip"><span>Variación %</span><strong>${pct >= 0 ? '+' : ''}${formatNumber(pct)}%</strong></div>
+          <div class="kpi-chip"><span>Delta absoluto</span><strong class="${delta < 0 ? 'neg-number' : ''}">${delta >= 0 ? '+' : ''}${formatNumber(delta)}</strong></div>
+          <div class="kpi-chip"><span>Variación %</span><strong class="${pct < 0 ? 'neg-number' : ''}">${pct >= 0 ? '+' : ''}${formatNumber(pct)}%</strong></div>
           <div class="kpi-chip"><span>Cumplimiento</span><strong>${formatNumber(cumplimiento)}%</strong></div>
         </div>
         <p class="progress-label">Impulso del día</p>
         <div class="compare-progress"><div style="width:${impulse}%"></div></div>
-        <p class="compare-pct">${formatNumber(impulse)}%</p>
+        <p class="compare-pct">${impulseLabel}</p>
       `;
       grid.append(item);
     });

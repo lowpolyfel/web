@@ -269,6 +269,10 @@ canvas { width: 100%; height: 300px; display: block; }
   font-size: 1rem;
 }
 
+.kpi-chip strong.neg-number {
+  color: var(--down);
+}
+
 .compare-progress {
   height: 8px;
   border-radius: 999px;

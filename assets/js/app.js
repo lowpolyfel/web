@@ -44,6 +44,7 @@
       { lineId: 'alineacion_chip', date: '2026-02-19', target: 3859, real: 1780 },
       { lineId: 'alineacion_chip', date: '2026-02-20', target: 3859, real: 1800 },
       { lineId: 'alineacion_chip', date: '2026-02-23', target: 3859, real: 1600 },
+      { lineId: 'alineacion_chip', date: '2026-02-24', target: 3859, real: 2048 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -65,6 +66,7 @@
       { lineId: 'wire_bond', date: '2026-02-19', target: 2346, real: 1645 },
       { lineId: 'wire_bond', date: '2026-02-20', target: 2346, real: 1600 },
       { lineId: 'wire_bond', date: '2026-02-23', target: 2346, real: 1350 },
+      { lineId: 'wire_bond', date: '2026-02-24', target: 2346, real: 1250 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -86,6 +88,7 @@
       { lineId: 'montado_ceramica', date: '2026-02-19', target: 2287, real: 3183 },
       { lineId: 'montado_ceramica', date: '2026-02-20', target: 2287, real: 2278 },
       { lineId: 'montado_ceramica', date: '2026-02-23', target: 2287, real: 2213 },
+      { lineId: 'montado_ceramica', date: '2026-02-24', target: 2287, real: 1760 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -106,13 +109,16 @@
       { lineId: 'montado_chip', date: '2026-02-18', target: 2610, real: 2198 },
       { lineId: 'montado_chip', date: '2026-02-19', target: 2610, real: 2185 },
       { lineId: 'montado_chip', date: '2026-02-20', target: 2610, real: 1600 },
-      { lineId: 'montado_chip', date: '2026-02-23', target: 2610, real: null },
+      { lineId: 'montado_chip', date: '2026-02-23', target: 2610, real: 1700 },
+      { lineId: 'montado_chip', date: '2026-02-24', target: 2610, real: 0 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-02-24', target: 2346, real: 3000 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
+      { lineId: 'alloy_hi_reel', date: '2026-02-24', target: 2287, real: 1000 },
     ],
   };
 

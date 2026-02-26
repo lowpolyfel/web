@@ -119,6 +119,7 @@
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
       { lineId: 'wire_bond_hi_reel', date: '2026-02-24', target: 2346, real: 3000 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-02-25', target: 2346, real: 1000 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },

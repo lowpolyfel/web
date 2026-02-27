@@ -11,8 +11,8 @@
   const DB_KEY = 'trend_salida_db_v6';
   const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAY = 2;
-  const COMPARE_CURRENT_DAY = 25;
-  const COMPARE_PREVIOUS_DAY = 24;
+  const FALLBACK_COMPARE_CURRENT_DAY = 26;
+  const FALLBACK_COMPARE_PREVIOUS_DAY = 25;
 
   const SEED_DB = {
     metas: {
@@ -46,6 +46,7 @@
       { lineId: 'alineacion_chip', date: '2026-02-23', target: 3859, real: 1600 },
       { lineId: 'alineacion_chip', date: '2026-02-24', target: 3859, real: 2048 },
       { lineId: 'alineacion_chip', date: '2026-02-25', target: 3859, real: 2364 },
+      { lineId: 'alineacion_chip', date: '2026-02-26', target: 3859, real: 1800 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -69,6 +70,7 @@
       { lineId: 'wire_bond', date: '2026-02-23', target: 2346, real: 1350 },
       { lineId: 'wire_bond', date: '2026-02-24', target: 2346, real: 1250 },
       { lineId: 'wire_bond', date: '2026-02-25', target: 2346, real: 1535 },
+      { lineId: 'wire_bond', date: '2026-02-26', target: 2346, real: 1500 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -92,6 +94,7 @@
       { lineId: 'montado_ceramica', date: '2026-02-23', target: 2287, real: 2213 },
       { lineId: 'montado_ceramica', date: '2026-02-24', target: 2287, real: 1760 },
       { lineId: 'montado_ceramica', date: '2026-02-25', target: 2287, real: 2718 },
+      { lineId: 'montado_ceramica', date: '2026-02-26', target: 2287, real: 2000 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -115,16 +118,19 @@
       { lineId: 'montado_chip', date: '2026-02-23', target: 2610, real: 1700 },
       { lineId: 'montado_chip', date: '2026-02-24', target: 2610, real: 0 },
       { lineId: 'montado_chip', date: '2026-02-25', target: 2610, real: 1997 },
+      { lineId: 'montado_chip', date: '2026-02-26', target: 2610, real: 1700 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
       { lineId: 'wire_bond_hi_reel', date: '2026-02-24', target: 2346, real: 3000 },
       { lineId: 'wire_bond_hi_reel', date: '2026-02-25', target: 2346, real: 1000 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-02-26', target: 2346, real: 0 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-02-24', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-02-25', target: 2287, real: 1000 },
+      { lineId: 'alloy_hi_reel', date: '2026-02-26', target: 2287, real: 0 },
     ],
   };
 
@@ -187,10 +193,41 @@
     return JSON.parse(JSON.stringify(SEED_DB));
   }
 
+  function mergeSeedRecords(existingRecords) {
+    const merged = Array.isArray(existingRecords) ? [...existingRecords] : [];
+    const indexByKey = new Map(merged.map((item, idx) => [`${item.lineId}__${item.date}`, idx]));
+
+    SEED_DB.records.forEach((seedRecord) => {
+      const key = `${seedRecord.lineId}__${seedRecord.date}`;
+      const existingIdx = indexByKey.get(key);
+
+      if (existingIdx == null) {
+        indexByKey.set(key, merged.length);
+        merged.push({ ...seedRecord });
+        return;
+      }
+
+      if (seedRecord.date === '2026-02-26') {
+        merged[existingIdx] = { ...merged[existingIdx], ...seedRecord };
+      }
+    });
+
+    return merged;
+  }
+
   function loadDB() {
     try {
       const raw = localStorage.getItem(DB_KEY);
-      if (raw) return JSON.parse(raw);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const normalized = {
+          metas: { ...SEED_DB.metas, ...(parsed?.metas || {}) },
+          records: mergeSeedRecords(parsed?.records),
+        };
+        localStorage.setItem(DB_KEY, JSON.stringify(normalized));
+        LEGACY_DB_KEYS.forEach((key) => localStorage.removeItem(key));
+        return normalized;
+      }
       const seeded = parseSeed();
       localStorage.setItem(DB_KEY, JSON.stringify(seeded));
       LEGACY_DB_KEYS.forEach((key) => localStorage.removeItem(key));
@@ -462,19 +499,44 @@
       }));
   }
 
+  function getComparisonDays() {
+    const monthKey = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+    const days = new Set();
+
+    db.records.forEach((record) => {
+      if (keyFromDate(record.date) !== monthKey) return;
+      days.add(Number(record.date.slice(-2)));
+    });
+
+    const sortedDays = Array.from(days).sort((a, b) => a - b);
+    if (sortedDays.length >= 2) {
+      return {
+        previousDay: sortedDays[sortedDays.length - 2],
+        currentDay: sortedDays[sortedDays.length - 1],
+      };
+    }
+
+    return {
+      previousDay: FALLBACK_COMPARE_PREVIOUS_DAY,
+      currentDay: FALLBACK_COMPARE_CURRENT_DAY,
+    };
+  }
+
   function renderDailyComparison() {
+    const { previousDay, currentDay } = getComparisonDays();
+
     const panel = document.createElement('article');
     panel.className = 'panel compare-panel';
     panel.innerHTML = `
-      <h2>Comparativo diario (${COMPARE_CURRENT_DAY} vs ${COMPARE_PREVIOUS_DAY})</h2>
+      <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
     `;
 
     const grid = document.createElement('div');
     grid.className = 'compare-grid';
 
     LINES.forEach((line) => {
-      const current = recordsByLineAndMonth(line.id, selectedYear, selectedMonth).find((r) => Number(r.date.slice(-2)) === COMPARE_CURRENT_DAY);
-      const previous = recordsByLineAndMonth(line.id, selectedYear, selectedMonth).find((r) => Number(r.date.slice(-2)) === COMPARE_PREVIOUS_DAY);
+      const current = recordsByLineAndMonth(line.id, selectedYear, selectedMonth).find((r) => Number(r.date.slice(-2)) === currentDay);
+      const previous = recordsByLineAndMonth(line.id, selectedYear, selectedMonth).find((r) => Number(r.date.slice(-2)) === previousDay);
 
       const currentReal = Number(current?.real || 0);
       const previousReal = Number(previous?.real || 0);
@@ -503,9 +565,9 @@
           <span class="trend-pill">${text}</span>
         </div>
         <div class="compare-values">
-          <div class="metric-tile"><span>Día ${COMPARE_PREVIOUS_DAY}</span><strong>${formatNumber(previousReal)}</strong></div>
-          <div class="metric-tile"><span>Día ${COMPARE_CURRENT_DAY}</span><strong>${formatNumber(currentReal)}</strong></div>
-          <div class="metric-tile"><span>Meta día ${COMPARE_CURRENT_DAY}</span><strong>${formatNumber(target)}</strong></div>
+          <div class="metric-tile"><span>Día ${previousDay}</span><strong>${formatNumber(previousReal)}</strong></div>
+          <div class="metric-tile"><span>Día ${currentDay}</span><strong>${formatNumber(currentReal)}</strong></div>
+          <div class="metric-tile"><span>Meta día ${currentDay}</span><strong>${formatNumber(target)}</strong></div>
         </div>
         <div class="compare-kpi">
           <div class="kpi-chip"><span>Delta absoluto</span><strong class="${delta < 0 ? 'neg-number' : ''}">${delta >= 0 ? '+' : ''}${formatNumber(delta)}</strong></div>

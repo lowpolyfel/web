@@ -11,8 +11,8 @@
   const DB_KEY = 'trend_salida_db_v6';
   const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAY = 2;
-  const FALLBACK_COMPARE_CURRENT_DAY = 26;
-  const FALLBACK_COMPARE_PREVIOUS_DAY = 25;
+  const FALLBACK_COMPARE_CURRENT_DAY = 27;
+  const FALLBACK_COMPARE_PREVIOUS_DAY = 26;
 
   const SEED_DB = {
     metas: {
@@ -47,6 +47,7 @@
       { lineId: 'alineacion_chip', date: '2026-02-24', target: 3859, real: 2048 },
       { lineId: 'alineacion_chip', date: '2026-02-25', target: 3859, real: 2364 },
       { lineId: 'alineacion_chip', date: '2026-02-26', target: 3859, real: 1800 },
+      { lineId: 'alineacion_chip', date: '2026-02-27', target: 3859, real: 1800 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -71,6 +72,7 @@
       { lineId: 'wire_bond', date: '2026-02-24', target: 2346, real: 1250 },
       { lineId: 'wire_bond', date: '2026-02-25', target: 2346, real: 1535 },
       { lineId: 'wire_bond', date: '2026-02-26', target: 2346, real: 1500 },
+      { lineId: 'wire_bond', date: '2026-02-27', target: 2346, real: 1500 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -95,6 +97,7 @@
       { lineId: 'montado_ceramica', date: '2026-02-24', target: 2287, real: 1760 },
       { lineId: 'montado_ceramica', date: '2026-02-25', target: 2287, real: 2718 },
       { lineId: 'montado_ceramica', date: '2026-02-26', target: 2287, real: 2000 },
+      { lineId: 'montado_ceramica', date: '2026-02-27', target: 2287, real: 1800 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -119,18 +122,21 @@
       { lineId: 'montado_chip', date: '2026-02-24', target: 2610, real: 0 },
       { lineId: 'montado_chip', date: '2026-02-25', target: 2610, real: 1997 },
       { lineId: 'montado_chip', date: '2026-02-26', target: 2610, real: 1700 },
+      { lineId: 'montado_chip', date: '2026-02-27', target: 2610, real: 0 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
       { lineId: 'wire_bond_hi_reel', date: '2026-02-24', target: 2346, real: 3000 },
       { lineId: 'wire_bond_hi_reel', date: '2026-02-25', target: 2346, real: 1000 },
       { lineId: 'wire_bond_hi_reel', date: '2026-02-26', target: 2346, real: 0 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-02-27', target: 2346, real: 0 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-02-24', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-02-25', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-02-26', target: 2287, real: 0 },
+      { lineId: 'alloy_hi_reel', date: '2026-02-27', target: 2287, real: 0 },
     ],
   };
 
@@ -139,6 +145,7 @@
   const currentMonthLabel = document.querySelector('#currentMonthLabel');
   const sectionsContainer = document.querySelector('#sectionsContainer');
   const monthlyAveragesContainer = document.querySelector('#monthlyAveragesContainer');
+  const monthlySummaryContainer = document.querySelector('#monthlySummaryContainer');
 
   const lineSelect = document.querySelector('#lineSelect');
   const dateInput = document.querySelector('#dateInput');
@@ -157,6 +164,27 @@
   let selectedMonth = START_MONTH;
   let selectedYear = START_YEAR;
   let db = loadDB();
+
+
+
+  const COMBINED_AVERAGE_GROUPS = {
+    montado_ceramica: ['montado_ceramica', 'alloy_hi_reel'],
+    wire_bond: ['wire_bond', 'wire_bond_hi_reel'],
+  };
+
+  function lineIdsForAverage(lineId) {
+    return COMBINED_AVERAGE_GROUPS[lineId] || [lineId];
+  }
+
+
+  const COMBINED_AVERAGE_LABELS = {
+    montado_ceramica: 'Montado de Cerámica + Alloy',
+    wire_bond: 'Wire Bond (2 máquinas)',
+  };
+
+  function averageLabel(line) {
+    return COMBINED_AVERAGE_LABELS[line.id] || line.name;
+  }
 
   function getDaysInMonth(year, monthIndex) {
     return new Date(year, monthIndex + 1, 0).getDate();
@@ -207,7 +235,7 @@
         return;
       }
 
-      if (seedRecord.date === '2026-02-26') {
+      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27') {
         merged[existingIdx] = { ...merged[existingIdx], ...seedRecord };
       }
     });
@@ -478,9 +506,10 @@
   }
 
   function monthlyStats(lineId, excludeCurrent = true) {
+    const lineIds = lineIdsForAverage(lineId);
     const map = new Map();
     db.records.forEach((item) => {
-      if (item.lineId !== lineId) return;
+      if (!lineIds.includes(item.lineId)) return;
       const key = keyFromDate(item.date);
       if (excludeCurrent && key === `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`) return;
       const prev = map.get(key) || { sum: 0, count: 0, target: 0 };
@@ -681,7 +710,7 @@
       card.className = 'avg-card avg-card-simple';
       card.innerHTML = `
         <div class="avg-head">
-          <h4>${line.name}</h4>
+          <h4>${averageLabel(line)}</h4>
           <div class="avg-pills">
             <span class="pill">Último prom.: ${formatNumber(latest)}</span>
           </div>
@@ -693,6 +722,72 @@
       wrap.append(card);
       drawMonthlyAverageLine(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values);
     });
+  }
+
+
+  function monthlySummaryByLine() {
+    const monthKey = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+    return LINES.map((line) => {
+      const records = db.records.filter((item) => item.lineId === line.id && keyFromDate(item.date) === monthKey);
+      const real = records.reduce((acc, item) => acc + (Number(item.real) || 0), 0);
+      const target = records.reduce((acc, item) => acc + (Number(item.target) || 0), 0);
+      const count = records.length;
+      const avg = count ? real / count : 0;
+      const cumplimiento = target ? (real / target) * 100 : 0;
+
+      return {
+        name: line.name,
+        real,
+        target,
+        avg,
+        cumplimiento,
+      };
+    });
+  }
+
+  function renderMonthlySummary() {
+    const summary = monthlySummaryByLine();
+    const totalReal = summary.reduce((acc, line) => acc + line.real, 0);
+    const totalTarget = summary.reduce((acc, line) => acc + line.target, 0);
+    const totalAvg = summary.length ? totalReal / summary.length : 0;
+    const totalCumplimiento = totalTarget ? (totalReal / totalTarget) * 100 : 0;
+
+    const rows = summary
+      .map(
+        (line) => `
+          <tr>
+            <td>${line.name}</td>
+            <td>${formatNumber(line.real)}</td>
+            <td>${formatNumber(line.target)}</td>
+            <td>${formatNumber(line.avg)}</td>
+            <td>${formatNumber(line.cumplimiento)}%</td>
+          </tr>
+        `,
+      )
+      .join('');
+
+    monthlySummaryContainer.innerHTML = `
+      <div class="month-kpi-grid">
+        <div class="month-kpi-card"><span>Real total del mes</span><strong>${formatNumber(totalReal)}</strong></div>
+        <div class="month-kpi-card"><span>Meta total del mes</span><strong>${formatNumber(totalTarget)}</strong></div>
+        <div class="month-kpi-card"><span>Promedio por sección</span><strong>${formatNumber(totalAvg)}</strong></div>
+        <div class="month-kpi-card"><span>Cumplimiento general</span><strong>${formatNumber(totalCumplimiento)}%</strong></div>
+      </div>
+      <div class="month-summary-table-wrap">
+        <table class="month-summary-table">
+          <thead>
+            <tr>
+              <th>Sección</th>
+              <th>Real mes</th>
+              <th>Meta mes</th>
+              <th>Promedio</th>
+              <th>Cumplimiento</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    `;
   }
 
   function renderGoalsForm() {
@@ -723,6 +818,7 @@
     chartRefs.forEach((ref) => drawDailyChart(ref.canvas, ref.labels, ref.metaByDay, ref.realByDay));
     renderDailyComparison();
     renderCombinedHistory();
+    renderMonthlySummary();
   }
 
   function activateScreen(screenId) {

@@ -347,6 +347,54 @@ canvas { width: 100%; height: 300px; display: block; }
   border: 1px solid #d2e2ff;
 }
 
+
+.monthly-summary {
+  display: grid;
+  gap: 10px;
+}
+
+.month-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.month-kpi-card {
+  border: 1px solid #dfe9ff;
+  border-radius: 12px;
+  padding: 10px;
+  background: linear-gradient(180deg, #fcfeff, #f2f7ff);
+}
+
+.month-kpi-card span {
+  display: block;
+  color: #60769f;
+  font-size: .78rem;
+  margin-bottom: 4px;
+}
+
+.month-kpi-card strong {
+  color: #274f96;
+  font-size: 1.2rem;
+}
+
+.month-summary-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e3ecff;
+  border-radius: 12px;
+}
+
+.month-summary-table th,
+.month-summary-table td {
+  font-size: .78rem;
+  padding: 8px;
+}
+
+.month-summary-table td:first-child {
+  text-align: left;
+  font-weight: 700;
+}
+
 .history-canvas {
   height: 230px;
   margin-top: 4px;
@@ -392,7 +440,8 @@ code { background: #eef4ff; border: 1px solid #d9e7ff; padding: 2px 6px; border-
   .compare-grid,
   .avg-combined-grid { display: grid; grid-template-columns: 1fr; }
   .compare-values,
-  .compare-kpi { grid-template-columns: 1fr; }
+  .compare-kpi,
+  .month-kpi-grid { grid-template-columns: 1fr; }
   .btn-primary,
   .goals-actions { grid-column: span 1; }
 }

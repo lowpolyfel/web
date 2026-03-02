@@ -122,7 +122,7 @@
       { lineId: 'montado_chip', date: '2026-02-24', target: 2610, real: 0 },
       { lineId: 'montado_chip', date: '2026-02-25', target: 2610, real: 1997 },
       { lineId: 'montado_chip', date: '2026-02-26', target: 2610, real: 1700 },
-      { lineId: 'montado_chip', date: '2026-02-27', target: 2610, real: 0 },
+      { lineId: 'montado_chip', date: '2026-02-27', target: 2610, real: 1600 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },

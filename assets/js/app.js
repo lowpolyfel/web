@@ -163,6 +163,8 @@
   const currentMonthLabel = document.querySelector('#currentMonthLabel');
   const sectionsContainer = document.querySelector('#sectionsContainer');
   const monthlySummaryContainer = document.querySelector('#monthlySummaryContainer');
+  const dashboardScreen = document.querySelector('#dashboardScreen');
+  const exportDashboardBtn = document.querySelector('#exportDashboardBtn');
 
   const lineSelect = document.querySelector('#lineSelect');
   const dateInput = document.querySelector('#dateInput');
@@ -626,7 +628,10 @@
     panel.className = 'panel compare-panel exportable-block';
     panel.dataset.exportName = 'comparativo-diario';
     panel.innerHTML = `
-      <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
+      <div class="panel-title-row">
+        <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
+        <button type="button" class="btn-secondary export-inline-btn">Exportar bloque (PNG)</button>
+      </div>
     `;
 
     const grid = document.createElement('div');
@@ -735,7 +740,7 @@
             <button type="button" class="btn-secondary export-inline-btn" data-export-name="${slugify(line.name)}-bloque-principal">Exportar bloque (PNG)</button>
           </div>
         </div>
-        <div class="section-content">
+        <div class="section-content exportable-block" data-export-name="${slugify(line.name)}-bloque-principal">
           <div class="table-wrap">
             <table class="month-table">
               <thead><tr><th>Día</th>${headers}</tr></thead>
@@ -746,7 +751,8 @@
             </table>
           </div>
           <div class="section-charts-grid">
-            <article class="avg-card avg-card-inline">
+            <article class="avg-card avg-card-inline exportable-block" data-export-name="${slugify(line.name)}-promedio-mensual">
+              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
               <div class="avg-head">
                 <h4>Promedio mensual</h4>
                 <div class="avg-pills">
@@ -755,7 +761,8 @@
               </div>
               <canvas class="history-canvas" aria-label="Promedio mensual de ${line.name}"></canvas>
             </article>
-            <div class="chart-card chart-card-daily">
+            <div class="chart-card chart-card-daily exportable-block" data-export-name="${slugify(line.name)}-comportamiento-diario">
+              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
               <p class="chart-title">Comportamiento diario</p>
               <div class="chart-legend">
                 <span><i class="legend-dot legend-target"></i>Meta</span>

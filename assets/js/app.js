@@ -49,7 +49,8 @@
       { lineId: 'alineacion_chip', date: '2026-02-26', target: 3859, real: 1800 },
       { lineId: 'alineacion_chip', date: '2026-02-27', target: 3859, real: 1800 },
       { lineId: 'alineacion_chip', date: '2026-03-02', target: 3859, real: 2300 },
-      { lineId: 'alineacion_chip', date: '2026-03-03', target: 3859, real: 400 },
+      { lineId: 'alineacion_chip', date: '2026-03-03', target: 3859, real: 2000 },
+      { lineId: 'alineacion_chip', date: '2026-03-04', target: 3859, real: 1000 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -77,6 +78,7 @@
       { lineId: 'wire_bond', date: '2026-02-27', target: 2346, real: 1500 },
       { lineId: 'wire_bond', date: '2026-03-02', target: 2346, real: 1400 },
       { lineId: 'wire_bond', date: '2026-03-03', target: 2346, real: 1490 },
+      { lineId: 'wire_bond', date: '2026-03-04', target: 2346, real: 1700 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -104,6 +106,7 @@
       { lineId: 'montado_ceramica', date: '2026-02-27', target: 2287, real: 1800 },
       { lineId: 'montado_ceramica', date: '2026-03-02', target: 2287, real: 600 },
       { lineId: 'montado_ceramica', date: '2026-03-03', target: 2287, real: 400 },
+      { lineId: 'montado_ceramica', date: '2026-03-04', target: 2287, real: 1900 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -131,6 +134,7 @@
       { lineId: 'montado_chip', date: '2026-02-27', target: 2610, real: 1600 },
       { lineId: 'montado_chip', date: '2026-03-02', target: 2610, real: 1800 },
       { lineId: 'montado_chip', date: '2026-03-03', target: 2610, real: 1800 },
+      { lineId: 'montado_chip', date: '2026-03-04', target: 2610, real: 1700 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
@@ -140,6 +144,7 @@
       { lineId: 'wire_bond_hi_reel', date: '2026-02-27', target: 2346, real: 0 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-02', target: 2346, real: 0 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-03', target: 2346, real: 300 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-04', target: 2346, real: 2000 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
@@ -149,6 +154,7 @@
       { lineId: 'alloy_hi_reel', date: '2026-02-27', target: 2287, real: 0 },
       { lineId: 'alloy_hi_reel', date: '2026-03-02', target: 2287, real: 2000 },
       { lineId: 'alloy_hi_reel', date: '2026-03-03', target: 2287, real: 3000 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-04', target: 2287, real: 1000 },
     ],
   };
 
@@ -156,7 +162,6 @@
   const yearSelect = document.querySelector('#yearSelect');
   const currentMonthLabel = document.querySelector('#currentMonthLabel');
   const sectionsContainer = document.querySelector('#sectionsContainer');
-  const monthlyAveragesContainer = document.querySelector('#monthlyAveragesContainer');
   const monthlySummaryContainer = document.querySelector('#monthlySummaryContainer');
 
   const lineSelect = document.querySelector('#lineSelect');
@@ -186,16 +191,6 @@
 
   function lineIdsForAverage(lineId) {
     return COMBINED_AVERAGE_GROUPS[lineId] || [lineId];
-  }
-
-
-  const COMBINED_AVERAGE_LABELS = {
-    montado_ceramica: 'Montado de Cerámica + Alloy',
-    wire_bond: 'Wire Bond (2 máquinas)',
-  };
-
-  function averageLabel(line) {
-    return COMBINED_AVERAGE_LABELS[line.id] || line.name;
   }
 
   function getDaysInMonth(year, monthIndex) {
@@ -247,7 +242,7 @@
         return;
       }
 
-      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03') {
+      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03' || seedRecord.date === '2026-03-04') {
         merged[existingIdx] = { ...merged[existingIdx], ...seedRecord };
       }
     });
@@ -658,6 +653,11 @@
         .map((day, idx) => (day === INHABIL_DAY ? '<td class="inhabil-col">INHÁBIL</td>' : `<td>${formatNumber(realByDay[idx])}</td>`))
         .join('');
 
+      const series = monthlyStats(line.id, false);
+      const monthlyLabels = series.map((s) => monthLabelFromKey(s.key).slice(0, 3));
+      const monthlyValues = series.map((s) => s.avg);
+      const latestMonthlyAverage = monthlyValues[monthlyValues.length - 1] || 0;
+
       const card = document.createElement('article');
       card.className = 'section-card';
       card.innerHTML = `
@@ -679,19 +679,31 @@
               </tbody>
             </table>
           </div>
-          <div class="chart-card chart-card-daily">
-            <p class="chart-title">Comportamiento diario</p>
-            <div class="chart-legend">
-              <span><i class="legend-dot legend-target"></i>Meta</span>
-              <span><i class="legend-dot legend-bars"></i>Barras reales</span>
-              <span><i class="legend-dot legend-real"></i>Tendencia real</span>
+          <div class="section-charts-grid">
+            <article class="avg-card avg-card-inline">
+              <div class="avg-head">
+                <h4>Promedio mensual</h4>
+                <div class="avg-pills">
+                  <span class="pill">Último prom.: ${formatNumber(latestMonthlyAverage)}</span>
+                </div>
+              </div>
+              <canvas class="history-canvas" aria-label="Promedio mensual de ${line.name}"></canvas>
+            </article>
+            <div class="chart-card chart-card-daily">
+              <p class="chart-title">Comportamiento diario</p>
+              <div class="chart-legend">
+                <span><i class="legend-dot legend-target"></i>Meta</span>
+                <span><i class="legend-dot legend-bars"></i>Barras reales</span>
+                <span><i class="legend-dot legend-real"></i>Tendencia real</span>
+              </div>
+              <canvas data-chart="daily"></canvas>
             </div>
-            <canvas data-chart="daily"></canvas>
           </div>
         </div>
       `;
 
       sectionsContainer.append(card);
+      drawMonthlyAverageLine(card.querySelector('.history-canvas'), monthlyLabels, monthlyValues);
       chartRefs.push({
         canvas: card.querySelector('[data-chart="daily"]'),
         labels: businessDays.map((d) => String(d)),
@@ -702,40 +714,6 @@
 
     return chartRefs;
   }
-
-  function renderCombinedHistory() {
-    monthlyAveragesContainer.innerHTML = '<h3>Promedio mensual por sección</h3>';
-
-    const wrap = document.createElement('div');
-    wrap.className = 'avg-combined-grid';
-    
-    // El wrapper se inserta primero en el DOM para que los elementos dentro hereden el tamaño
-    monthlyAveragesContainer.append(wrap);
-
-    LINES.forEach((line) => {
-      const series = monthlyStats(line.id, false);
-      const labels = series.map((s) => monthLabelFromKey(s.key));
-      const values = series.map((s) => s.avg);
-      const latest = values[values.length - 1] || 0;
-
-      const card = document.createElement('article');
-      card.className = 'avg-card avg-card-simple';
-      card.innerHTML = `
-        <div class="avg-head">
-          <h4>${averageLabel(line)}</h4>
-          <div class="avg-pills">
-            <span class="pill">Último prom.: ${formatNumber(latest)}</span>
-          </div>
-        </div>
-        <canvas class="history-canvas" aria-label="Promedio mensual"></canvas>
-      `;
-
-      // Insertamos la tarjeta en el contenedor que ya está en el DOM
-      wrap.append(card);
-      drawMonthlyAverageLine(card.querySelector('.history-canvas'), labels.map((l) => l.slice(0, 3)), values);
-    });
-  }
-
 
   function monthlySummaryByLine() {
     const monthKey = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
@@ -829,7 +807,6 @@
     const chartRefs = renderSections();
     chartRefs.forEach((ref) => drawDailyChart(ref.canvas, ref.labels, ref.metaByDay, ref.realByDay));
     renderDailyComparison();
-    renderCombinedHistory();
     renderMonthlySummary();
   }
 

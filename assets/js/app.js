@@ -222,7 +222,7 @@
       throw new Error('La librería html-to-image no está disponible.');
     }
 
-    const hiddenNodes = Array.from(node.querySelectorAll('.export-inline-btn, .summary-actions, .month-actions, .selectors'));
+    const hiddenNodes = Array.from(node.querySelectorAll('.export-inline-btn'));
     const scrollNodes = Array.from(node.querySelectorAll('.table-wrap, .month-summary-table-wrap'));
     const restoreHidden = hiddenNodes.map((el) => ({ el, display: el.style.display }));
     const restoreScroll = scrollNodes.map((el) => ({
@@ -836,9 +836,6 @@
         <div class="month-kpi-card"><span>Promedio por sección</span><strong>${formatNumber(totalAvg)}</strong></div>
         <div class="month-kpi-card"><span>Cumplimiento general</span><strong>${formatNumber(totalCumplimiento)}%</strong></div>
       </div>
-      <div class="summary-actions">
-        <button type="button" class="btn-secondary export-inline-btn" data-export-name="resumen-mensual">Exportar resumen (PNG)</button>
-      </div>
       <div class="month-summary-table-wrap exportable-block" data-export-name="resumen-mensual">
         <table class="month-summary-table">
           <thead>
@@ -886,25 +883,6 @@
     renderMonthlySummary();
   }
 
-  async function handleGlobalExport() {
-    if (!dashboardScreen) return;
-
-    const originalLabel = exportDashboardBtn.textContent;
-    exportDashboardBtn.disabled = true;
-    exportDashboardBtn.textContent = 'Exportando...';
-
-    try {
-      const monthToken = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
-      await exportNodeToPng(dashboardScreen, `dashboard-${monthToken}.png`);
-    } catch (error) {
-      console.error(error);
-      alert('No fue posible exportar el dashboard como PNG.');
-    } finally {
-      exportDashboardBtn.disabled = false;
-      exportDashboardBtn.textContent = originalLabel;
-    }
-  }
-
   async function handleBlockExport(event) {
     const btn = event.target.closest('.export-inline-btn');
     if (!btn) return;
@@ -937,10 +915,6 @@
   }
 
   navButtons.forEach((btn) => btn.addEventListener('click', () => activateScreen(btn.dataset.screen)));
-
-  if (exportDashboardBtn) {
-    exportDashboardBtn.addEventListener('click', handleGlobalExport);
-  }
 
   sectionsContainer.addEventListener('click', handleBlockExport);
   monthlySummaryContainer.addEventListener('click', handleBlockExport);

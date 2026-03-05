@@ -127,19 +127,6 @@ select, input {
   justify-content: flex-end;
 }
 
-.panel-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.summary-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .badges { display: flex; gap: 8px; flex-wrap: wrap; }
 .badge {
   background: rgba(255, 255, 255, .2);
@@ -512,8 +499,7 @@ code { background: #eef4ff; border: 1px solid #d9e7ff; padding: 2px 6px; border-
   .goals-grid,
   .compare-grid,
   .avg-combined-grid,
-  .section-header-actions,
-  .panel-title-row { display: grid; grid-template-columns: 1fr; }
+  .section-header-actions { display: grid; grid-template-columns: 1fr; }
   .compare-values,
   .compare-kpi,
   .month-kpi-grid { grid-template-columns: 1fr; }

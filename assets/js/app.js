@@ -215,6 +215,67 @@
     return Math.round(Number(value)).toLocaleString('es-MX');
   }
 
+  async function exportNodeToPng(node, filename) {
+    if (!window.htmlToImage) {
+      throw new Error('La librería html-to-image no está disponible.');
+    }
+
+    const hiddenNodes = Array.from(node.querySelectorAll('.export-inline-btn'));
+    const scrollNodes = Array.from(node.querySelectorAll('.table-wrap, .month-summary-table-wrap'));
+    const restoreHidden = hiddenNodes.map((el) => ({ el, display: el.style.display }));
+    const restoreScroll = scrollNodes.map((el) => ({
+      el,
+      overflow: el.style.overflow,
+      overflowX: el.style.overflowX,
+      overflowY: el.style.overflowY,
+    }));
+
+    try {
+      hiddenNodes.forEach((el) => {
+        el.style.display = 'none';
+      });
+
+      scrollNodes.forEach((el) => {
+        el.style.overflow = 'visible';
+        el.style.overflowX = 'visible';
+        el.style.overflowY = 'visible';
+      });
+
+      const dataUrl = await window.htmlToImage.toPng(node, {
+        pixelRatio: 2,
+        backgroundColor: '#ffffff',
+        cacheBust: true,
+      });
+
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = filename;
+      document.body.append(link);
+      link.click();
+      link.remove();
+    } finally {
+      restoreHidden.forEach(({ el, display }) => {
+        el.style.display = display;
+      });
+
+      restoreScroll.forEach(({ el, overflow, overflowX, overflowY }) => {
+        el.style.overflow = overflow;
+        el.style.overflowX = overflowX;
+        el.style.overflowY = overflowY;
+      });
+    }
+  }
+
+  function slugify(text) {
+    return String(text || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .slice(0, 80);
+  }
+
   function monthName(index) {
     return new Date(2026, index, 1).toLocaleString('es-MX', { month: 'long' });
   }
@@ -436,8 +497,8 @@
     const yMin = 0;
     const yMax = Math.max(yStep, Math.ceil(maxRaw / yStep) * yStep);
 
-    const { ctx, width, height } = setupCanvas(canvas, 240);
-    const p = { l: 76, r: 18, t: 18, b: 36 };
+    const { ctx, width, height } = setupCanvas(canvas, 260);
+    const p = { l: 76, r: 18, t: 18, b: 58 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
 
@@ -493,7 +554,11 @@
       ctx.fillStyle = '#4f6289';
       ctx.font = '700 10px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText(labels[index], x, height - 10);
+      ctx.fillText(labels[index], x, height - 24);
+
+      ctx.fillStyle = '#6f84ab';
+      ctx.font = '600 9px Arial';
+      ctx.fillText(formatInteger(value), x, height - 10);
     });
 
     ctx.textAlign = 'start';
@@ -562,7 +627,8 @@
     const { previousDay, currentDay } = getComparisonDays();
 
     const panel = document.createElement('article');
-    panel.className = 'panel compare-panel';
+    panel.className = 'panel compare-panel exportable-block';
+    panel.dataset.exportName = 'comparativo-diario';
     panel.innerHTML = `
       <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
     `;
@@ -659,14 +725,18 @@
       const latestMonthlyAverage = monthlyValues[monthlyValues.length - 1] || 0;
 
       const card = document.createElement('article');
-      card.className = 'section-card';
+      card.className = 'section-card exportable-block';
+      card.dataset.exportName = `${slugify(line.name)}-bloque-principal`;
       card.innerHTML = `
         <div class="section-header">
           <strong>${line.name}</strong>
-          <div class="badges">
-            <span class="badge">Meta: ${formatNumber(resume.meta)}</span>
-            <span class="badge">Real: ${formatNumber(resume.real)}</span>
-            <span class="badge">Cumplimiento: ${formatNumber(resume.cumplimiento)}%</span>
+          <div class="section-header-actions">
+            <div class="badges">
+              <span class="badge">Meta: ${formatNumber(resume.meta)}</span>
+              <span class="badge">Real: ${formatNumber(resume.real)}</span>
+              <span class="badge">Cumplimiento: ${formatNumber(resume.cumplimiento)}%</span>
+            </div>
+            <button type="button" class="btn-secondary export-inline-btn" data-export-name="${slugify(line.name)}-bloque-principal">Exportar bloque (PNG)</button>
           </div>
         </div>
         <div class="section-content">
@@ -763,7 +833,7 @@
         <div class="month-kpi-card"><span>Promedio por sección</span><strong>${formatNumber(totalAvg)}</strong></div>
         <div class="month-kpi-card"><span>Cumplimiento general</span><strong>${formatNumber(totalCumplimiento)}%</strong></div>
       </div>
-      <div class="month-summary-table-wrap">
+      <div class="month-summary-table-wrap exportable-block" data-export-name="resumen-mensual">
         <table class="month-summary-table">
           <thead>
             <tr>
@@ -810,12 +880,41 @@
     renderMonthlySummary();
   }
 
+  async function handleBlockExport(event) {
+    const btn = event.target.closest('.export-inline-btn');
+    if (!btn) return;
+
+    let block = btn.closest('.exportable-block');
+    if (!block && btn.dataset.exportName) {
+      block = document.querySelector(`.exportable-block[data-export-name="${btn.dataset.exportName}"]`);
+    }
+    if (!block) return;
+
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+      const name = block.dataset.exportName || `bloque-${Date.now()}`;
+      await exportNodeToPng(block, `${name}.png`);
+    } catch (error) {
+      console.error(error);
+      alert('No fue posible exportar este bloque como PNG.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+  }
+
   function activateScreen(screenId) {
     screens.forEach((screen) => screen.classList.toggle('active', screen.id === screenId));
     navButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.screen === screenId));
   }
 
   navButtons.forEach((btn) => btn.addEventListener('click', () => activateScreen(btn.dataset.screen)));
+
+  sectionsContainer.addEventListener('click', handleBlockExport);
+  monthlySummaryContainer.addEventListener('click', handleBlockExport);
 
   monthSelect.addEventListener('change', (e) => {
     selectedMonth = Number(e.target.value);

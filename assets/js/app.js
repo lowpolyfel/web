@@ -222,18 +222,50 @@
       throw new Error('La librería html-to-image no está disponible.');
     }
 
-    const dataUrl = await window.htmlToImage.toPng(node, {
-      pixelRatio: 2,
-      backgroundColor: '#ffffff',
-      cacheBust: true,
-    });
+    const hiddenNodes = Array.from(node.querySelectorAll('.export-inline-btn, .summary-actions, .month-actions, .selectors'));
+    const scrollNodes = Array.from(node.querySelectorAll('.table-wrap, .month-summary-table-wrap'));
+    const restoreHidden = hiddenNodes.map((el) => ({ el, display: el.style.display }));
+    const restoreScroll = scrollNodes.map((el) => ({
+      el,
+      overflow: el.style.overflow,
+      overflowX: el.style.overflowX,
+      overflowY: el.style.overflowY,
+    }));
 
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = filename;
-    document.body.append(link);
-    link.click();
-    link.remove();
+    try {
+      hiddenNodes.forEach((el) => {
+        el.style.display = 'none';
+      });
+
+      scrollNodes.forEach((el) => {
+        el.style.overflow = 'visible';
+        el.style.overflowX = 'visible';
+        el.style.overflowY = 'visible';
+      });
+
+      const dataUrl = await window.htmlToImage.toPng(node, {
+        pixelRatio: 2,
+        backgroundColor: '#ffffff',
+        cacheBust: true,
+      });
+
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = filename;
+      document.body.append(link);
+      link.click();
+      link.remove();
+    } finally {
+      restoreHidden.forEach(({ el, display }) => {
+        el.style.display = display;
+      });
+
+      restoreScroll.forEach(({ el, overflow, overflowX, overflowY }) => {
+        el.style.overflow = overflow;
+        el.style.overflowX = overflowX;
+        el.style.overflowY = overflowY;
+      });
+    }
   }
 
   function slugify(text) {
@@ -596,8 +628,10 @@
     panel.className = 'panel compare-panel exportable-block';
     panel.dataset.exportName = 'comparativo-diario';
     panel.innerHTML = `
-      <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
-      <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
+      <div class="panel-title-row">
+        <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
+        <button type="button" class="btn-secondary export-inline-btn" data-export-target="closest">Exportar bloque (PNG)</button>
+      </div>
     `;
 
     const grid = document.createElement('div');
@@ -696,15 +730,17 @@
       card.innerHTML = `
         <div class="section-header">
           <strong>${line.name}</strong>
-          <div class="badges">
-            <span class="badge">Meta: ${formatNumber(resume.meta)}</span>
-            <span class="badge">Real: ${formatNumber(resume.real)}</span>
-            <span class="badge">Cumplimiento: ${formatNumber(resume.cumplimiento)}%</span>
+          <div class="section-header-actions">
+            <div class="badges">
+              <span class="badge">Meta: ${formatNumber(resume.meta)}</span>
+              <span class="badge">Real: ${formatNumber(resume.real)}</span>
+              <span class="badge">Cumplimiento: ${formatNumber(resume.cumplimiento)}%</span>
+            </div>
+            <button type="button" class="btn-secondary export-inline-btn" data-export-target="closest" data-export-name="${slugify(line.name)}-bloque-principal">Exportar bloque (PNG)</button>
           </div>
         </div>
-        <div class="section-content">
-          <div class="table-wrap exportable-block" data-export-name="${slugify(line.name)}-tabla-mes">
-            <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
+        <div class="section-content exportable-block" data-export-name="${slugify(line.name)}-bloque-principal">
+          <div class="table-wrap">
             <table class="month-table">
               <thead><tr><th>Día</th>${headers}</tr></thead>
               <tbody>
@@ -799,8 +835,10 @@
         <div class="month-kpi-card"><span>Promedio por sección</span><strong>${formatNumber(totalAvg)}</strong></div>
         <div class="month-kpi-card"><span>Cumplimiento general</span><strong>${formatNumber(totalCumplimiento)}%</strong></div>
       </div>
+      <div class="summary-actions">
+        <button type="button" class="btn-secondary export-inline-btn" data-export-target="closest" data-export-name="resumen-mensual">Exportar resumen (PNG)</button>
+      </div>
       <div class="month-summary-table-wrap exportable-block" data-export-name="resumen-mensual">
-        <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
         <table class="month-summary-table">
           <thead>
             <tr>
@@ -867,10 +905,13 @@
   }
 
   async function handleBlockExport(event) {
-    const btn = event.target.closest('.export-block-btn');
+    const btn = event.target.closest('.export-inline-btn');
     if (!btn) return;
 
-    const block = btn.closest('.exportable-block');
+    let block = btn.closest('.exportable-block');
+    if (!block && btn.dataset.exportName) {
+      block = document.querySelector(`.exportable-block[data-export-name="${btn.dataset.exportName}"]`);
+    }
     if (!block) return;
 
     const originalLabel = btn.textContent;

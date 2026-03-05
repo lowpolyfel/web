@@ -630,7 +630,7 @@
     panel.innerHTML = `
       <div class="panel-title-row">
         <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
-        <button type="button" class="btn-secondary export-inline-btn" data-export-target="closest">Exportar bloque (PNG)</button>
+        <button type="button" class="btn-secondary export-inline-btn">Exportar bloque (PNG)</button>
       </div>
     `;
 
@@ -726,7 +726,8 @@
       const latestMonthlyAverage = monthlyValues[monthlyValues.length - 1] || 0;
 
       const card = document.createElement('article');
-      card.className = 'section-card';
+      card.className = 'section-card exportable-block';
+      card.dataset.exportName = `${slugify(line.name)}-bloque-principal`;
       card.innerHTML = `
         <div class="section-header">
           <strong>${line.name}</strong>
@@ -736,7 +737,7 @@
               <span class="badge">Real: ${formatNumber(resume.real)}</span>
               <span class="badge">Cumplimiento: ${formatNumber(resume.cumplimiento)}%</span>
             </div>
-            <button type="button" class="btn-secondary export-inline-btn" data-export-target="closest" data-export-name="${slugify(line.name)}-bloque-principal">Exportar bloque (PNG)</button>
+            <button type="button" class="btn-secondary export-inline-btn" data-export-name="${slugify(line.name)}-bloque-principal">Exportar bloque (PNG)</button>
           </div>
         </div>
         <div class="section-content exportable-block" data-export-name="${slugify(line.name)}-bloque-principal">
@@ -836,7 +837,7 @@
         <div class="month-kpi-card"><span>Cumplimiento general</span><strong>${formatNumber(totalCumplimiento)}%</strong></div>
       </div>
       <div class="summary-actions">
-        <button type="button" class="btn-secondary export-inline-btn" data-export-target="closest" data-export-name="resumen-mensual">Exportar resumen (PNG)</button>
+        <button type="button" class="btn-secondary export-inline-btn" data-export-name="resumen-mensual">Exportar resumen (PNG)</button>
       </div>
       <div class="month-summary-table-wrap exportable-block" data-export-name="resumen-mensual">
         <table class="month-summary-table">

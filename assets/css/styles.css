@@ -150,6 +150,23 @@ select, input {
 }
 
 .section-content { padding: 10px; }
+.exportable-block {
+  position: relative;
+}
+
+.block-toolbar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 5;
+}
+
+.export-block-btn {
+  font-size: .72rem;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
 .section-charts-grid {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);

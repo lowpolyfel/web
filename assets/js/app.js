@@ -750,7 +750,8 @@
             </table>
           </div>
           <div class="section-charts-grid">
-            <article class="avg-card avg-card-inline">
+            <article class="avg-card avg-card-inline exportable-block" data-export-name="${slugify(line.name)}-promedio-mensual">
+              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
               <div class="avg-head">
                 <h4>Promedio mensual</h4>
                 <div class="avg-pills">
@@ -759,7 +760,8 @@
               </div>
               <canvas class="history-canvas" aria-label="Promedio mensual de ${line.name}"></canvas>
             </article>
-            <div class="chart-card chart-card-daily">
+            <div class="chart-card chart-card-daily exportable-block" data-export-name="${slugify(line.name)}-comportamiento-diario">
+              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
               <p class="chart-title">Comportamiento diario</p>
               <div class="chart-legend">
                 <span><i class="legend-dot legend-target"></i>Meta</span>

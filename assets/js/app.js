@@ -499,8 +499,8 @@
     const yMin = 0;
     const yMax = Math.max(yStep, Math.ceil(maxRaw / yStep) * yStep);
 
-    const { ctx, width, height } = setupCanvas(canvas, 240);
-    const p = { l: 76, r: 18, t: 18, b: 36 };
+    const { ctx, width, height } = setupCanvas(canvas, 260);
+    const p = { l: 76, r: 18, t: 18, b: 58 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
 
@@ -556,7 +556,11 @@
       ctx.fillStyle = '#4f6289';
       ctx.font = '700 10px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText(labels[index], x, height - 10);
+      ctx.fillText(labels[index], x, height - 24);
+
+      ctx.fillStyle = '#6f84ab';
+      ctx.font = '600 9px Arial';
+      ctx.fillText(formatInteger(value), x, height - 10);
     });
 
     ctx.textAlign = 'start';

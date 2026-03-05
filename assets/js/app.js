@@ -376,7 +376,11 @@
     return { meta, real, cumplimiento };
   }
 
-  function setupCanvas(canvas, minHeight = 260) {
+function setupCanvas(canvas, minHeight = 260) {
+    // Liberar width pero quitar el height inline para que respete el CSS (evita que se estire demasiado)
+    canvas.style.width = '100%';
+    canvas.style.height = ''; 
+
     const ratio = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     const width = Math.max(320, Math.floor(rect.width));
@@ -385,7 +389,7 @@
     canvas.width = width * ratio;
     canvas.height = height * ratio;
     
-    // Fijar el tamaño en CSS para que no se estire y pierda resolución
+    // Fijar el tamaño final en CSS
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
@@ -395,9 +399,9 @@
     return { ctx, width, height };
   }
 
-  function drawDailyChart(canvas, labels, metaValues, realValues) {
+function drawDailyChart(canvas, labels, metaValues, realValues) {
     const { ctx, width, height } = setupCanvas(canvas, 300);
-    const p = { l: 44, r: 18, t: 16, b: 34 };
+    const p = { l: 50, r: 18, t: 16, b: 34 };
     const chartW = width - p.l - p.r;
     const chartH = height - p.t - p.b;
 
@@ -417,10 +421,11 @@
       const tickValue = max - i * step;
       ctx.fillStyle = '#8c9dbe';
       ctx.font = '11px Arial';
-      ctx.fillText(formatInteger(tickValue), 6, y + 3);
+      ctx.textAlign = 'right';
+      ctx.fillText(formatInteger(tickValue), p.l - 8, y + 3);
     }
 
-    const xStep = chartW / Math.max(1, labels.length - 1);
+    const xStep = chartW / Math.max(1, labels.length);
     const barW = Math.max(10, Math.min(28, xStep * 0.58));
 
     function pointY(value) {
@@ -430,7 +435,7 @@
 
     realValues.forEach((v, i) => {
       if (v == null) return;
-      const x = p.l + i * xStep;
+      const x = p.l + (i * xStep) + (xStep / 2);
       const y = pointY(v);
       ctx.fillStyle = '#a8bcd9';
       ctx.fillRect(x - barW / 2, y, barW, height - p.b - y);
@@ -457,7 +462,7 @@
       let started = false;
       values.forEach((v, i) => {
         if (v == null) return;
-        const x = p.l + i * xStep;
+        const x = p.l + (i * xStep) + (xStep / 2);
         const y = pointY(v);
         if (!started) {
           ctx.moveTo(x, y);
@@ -470,7 +475,7 @@
 
       values.forEach((v, i) => {
         if (v == null) return;
-        const x = p.l + i * xStep;
+        const x = p.l + (i * xStep) + (xStep / 2);
         const y = pointY(v);
         ctx.beginPath();
         ctx.fillStyle = color;
@@ -486,13 +491,15 @@
 
     ctx.fillStyle = '#5f6f92';
     ctx.font = '11px Arial';
+    ctx.textAlign = 'center';
     labels.forEach((label, i) => {
-      const x = p.l + i * xStep;
-      ctx.fillText(label, x - 4, height - 9);
+      const x = p.l + (i * xStep) + (xStep / 2);
+      ctx.fillText(label, x, height - 9);
     });
+    ctx.textAlign = 'left';
   }
 
-  function drawMonthlyAverageLine(canvas, labels, values) {
+ function drawMonthlyAverageLine(canvas, labels, values) {
     const safeValues = values.length ? values : [0];
     const maxRaw = Math.max(...safeValues);
     const yStep = 1000;
@@ -523,11 +530,11 @@
       ctx.fillText(formatInteger(tickValue), p.l - 12, y + 3);
     }
 
-    const xStep = chartW / Math.max(1, labels.length - 1);
+    const xStep = chartW / Math.max(1, labels.length);
     const barW = Math.max(12, Math.min(24, xStep * 0.45));
 
     values.forEach((value, index) => {
-      const x = p.l + xStep * index;
+      const x = p.l + (xStep * index) + (xStep / 2);
       const y = yFromValue(value);
       const barHeight = p.t + chartH - y;
       ctx.fillStyle = 'rgba(93, 140, 244, 0.28)';
@@ -538,7 +545,7 @@
     ctx.strokeStyle = '#2a63c9';
     ctx.lineWidth = 2.2;
     values.forEach((value, index) => {
-      const x = p.l + xStep * index;
+      const x = p.l + (xStep * index) + (xStep / 2);
       const y = yFromValue(value);
       if (index === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
@@ -546,7 +553,7 @@
     ctx.stroke();
 
     values.forEach((value, index) => {
-      const x = p.l + xStep * index;
+      const x = p.l + (xStep * index) + (xStep / 2);
       const y = yFromValue(value);
       ctx.beginPath();
       ctx.fillStyle = '#2a63c9';
@@ -755,8 +762,7 @@
             </table>
           </div>
           <div class="section-charts-grid">
-            <article class="avg-card avg-card-inline exportable-block" data-export-name="${slugify(line.name)}-promedio-mensual">
-              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
+<article class="avg-card avg-card-inline exportable-block" data-export-name="${slugify(line.name)}-promedio-mensual">
               <div class="avg-head">
                 <h4>Promedio mensual</h4>
                 <div class="avg-pills">
@@ -765,8 +771,7 @@
               </div>
               <canvas class="history-canvas" aria-label="Promedio mensual de ${line.name}"></canvas>
             </article>
-            <div class="chart-card chart-card-daily exportable-block" data-export-name="${slugify(line.name)}-comportamiento-diario">
-              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
+<div class="chart-card chart-card-daily exportable-block" data-export-name="${slugify(line.name)}-comportamiento-diario">
               <p class="chart-title">Comportamiento diario</p>
               <div class="chart-legend">
                 <span><i class="legend-dot legend-target"></i>Meta</span>

@@ -163,6 +163,8 @@
   const currentMonthLabel = document.querySelector('#currentMonthLabel');
   const sectionsContainer = document.querySelector('#sectionsContainer');
   const monthlySummaryContainer = document.querySelector('#monthlySummaryContainer');
+  const dashboardScreen = document.querySelector('#dashboardScreen');
+  const exportDashboardBtn = document.querySelector('#exportDashboardBtn');
 
   const lineSelect = document.querySelector('#lineSelect');
   const dateInput = document.querySelector('#dateInput');
@@ -213,6 +215,35 @@
   function formatInteger(value) {
     if (value == null || Number.isNaN(value)) return '—';
     return Math.round(Number(value)).toLocaleString('es-MX');
+  }
+
+  async function exportNodeToPng(node, filename) {
+    if (!window.htmlToImage) {
+      throw new Error('La librería html-to-image no está disponible.');
+    }
+
+    const dataUrl = await window.htmlToImage.toPng(node, {
+      pixelRatio: 2,
+      backgroundColor: '#ffffff',
+      cacheBust: true,
+    });
+
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+  }
+
+  function slugify(text) {
+    return String(text || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .slice(0, 80);
   }
 
   function monthName(index) {
@@ -562,8 +593,10 @@
     const { previousDay, currentDay } = getComparisonDays();
 
     const panel = document.createElement('article');
-    panel.className = 'panel compare-panel';
+    panel.className = 'panel compare-panel exportable-block';
+    panel.dataset.exportName = 'comparativo-diario';
     panel.innerHTML = `
+      <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
       <h2>Comparativo diario (${currentDay} vs ${previousDay})</h2>
     `;
 
@@ -670,7 +703,8 @@
           </div>
         </div>
         <div class="section-content">
-          <div class="table-wrap">
+          <div class="table-wrap exportable-block" data-export-name="${slugify(line.name)}-tabla-mes">
+            <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
             <table class="month-table">
               <thead><tr><th>Día</th>${headers}</tr></thead>
               <tbody>
@@ -680,7 +714,8 @@
             </table>
           </div>
           <div class="section-charts-grid">
-            <article class="avg-card avg-card-inline">
+            <article class="avg-card avg-card-inline exportable-block" data-export-name="${slugify(line.name)}-promedio-mensual">
+              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
               <div class="avg-head">
                 <h4>Promedio mensual</h4>
                 <div class="avg-pills">
@@ -689,7 +724,8 @@
               </div>
               <canvas class="history-canvas" aria-label="Promedio mensual de ${line.name}"></canvas>
             </article>
-            <div class="chart-card chart-card-daily">
+            <div class="chart-card chart-card-daily exportable-block" data-export-name="${slugify(line.name)}-comportamiento-diario">
+              <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
               <p class="chart-title">Comportamiento diario</p>
               <div class="chart-legend">
                 <span><i class="legend-dot legend-target"></i>Meta</span>
@@ -763,7 +799,8 @@
         <div class="month-kpi-card"><span>Promedio por sección</span><strong>${formatNumber(totalAvg)}</strong></div>
         <div class="month-kpi-card"><span>Cumplimiento general</span><strong>${formatNumber(totalCumplimiento)}%</strong></div>
       </div>
-      <div class="month-summary-table-wrap">
+      <div class="month-summary-table-wrap exportable-block" data-export-name="resumen-mensual">
+        <div class="block-toolbar"><button type="button" class="btn-secondary export-block-btn" data-export-target="closest">PNG</button></div>
         <table class="month-summary-table">
           <thead>
             <tr>
@@ -810,12 +847,61 @@
     renderMonthlySummary();
   }
 
+  async function handleGlobalExport() {
+    if (!dashboardScreen) return;
+
+    const originalLabel = exportDashboardBtn.textContent;
+    exportDashboardBtn.disabled = true;
+    exportDashboardBtn.textContent = 'Exportando...';
+
+    try {
+      const monthToken = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}`;
+      await exportNodeToPng(dashboardScreen, `dashboard-${monthToken}.png`);
+    } catch (error) {
+      console.error(error);
+      alert('No fue posible exportar el dashboard como PNG.');
+    } finally {
+      exportDashboardBtn.disabled = false;
+      exportDashboardBtn.textContent = originalLabel;
+    }
+  }
+
+  async function handleBlockExport(event) {
+    const btn = event.target.closest('.export-block-btn');
+    if (!btn) return;
+
+    const block = btn.closest('.exportable-block');
+    if (!block) return;
+
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+      const name = block.dataset.exportName || `bloque-${Date.now()}`;
+      await exportNodeToPng(block, `${name}.png`);
+    } catch (error) {
+      console.error(error);
+      alert('No fue posible exportar este bloque como PNG.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+  }
+
   function activateScreen(screenId) {
     screens.forEach((screen) => screen.classList.toggle('active', screen.id === screenId));
     navButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.screen === screenId));
   }
 
   navButtons.forEach((btn) => btn.addEventListener('click', () => activateScreen(btn.dataset.screen)));
+
+  if (exportDashboardBtn) {
+    exportDashboardBtn.addEventListener('click', handleGlobalExport);
+  }
+
+  sectionsContainer.addEventListener('click', handleBlockExport);
+  monthlySummaryContainer.addEventListener('click', handleBlockExport);
 
   monthSelect.addEventListener('change', (e) => {
     selectedMonth = Number(e.target.value);

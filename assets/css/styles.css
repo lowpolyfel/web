@@ -85,6 +85,10 @@ h2 { margin: 0 0 8px; font-size: 1.25rem; }
   gap: 12px;
 }
 
+.month-actions {
+  margin-left: auto;
+}
+
 #currentMonthLabel { margin: 0; color: var(--muted); font-weight: 600; }
 .selectors { display: flex; gap: 10px; }
 
@@ -125,6 +129,23 @@ select, input {
 }
 
 .section-content { padding: 10px; }
+.exportable-block {
+  position: relative;
+}
+
+.block-toolbar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 5;
+}
+
+.export-block-btn {
+  font-size: .72rem;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
 .section-charts-grid {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
@@ -431,6 +452,21 @@ canvas { width: 100%; height: 300px; display: block; }
   padding: 12px;
   cursor: pointer;
   grid-column: span 2;
+}
+
+.btn-secondary {
+  border: 1px solid #cfe0ff;
+  border-radius: 10px;
+  background: #f5f9ff;
+  color: #234f95;
+  font-weight: 700;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.btn-secondary:disabled {
+  opacity: .65;
+  cursor: wait;
 }
 .feedback { min-height: 24px; margin-top: 8px; color: #187f5b; font-weight: 700; }
 .goal-item {

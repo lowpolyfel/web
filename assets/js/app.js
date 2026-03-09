@@ -930,6 +930,27 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
     }
   }
 
+
+  async function handleDashboardExport() {
+    if (!exportDashboardBtn) return;
+
+    const originalLabel = exportDashboardBtn.textContent;
+    exportDashboardBtn.disabled = true;
+    exportDashboardBtn.textContent = 'Exportando...';
+
+    try {
+      const monthToken = String(selectedMonth + 1).padStart(2, '0');
+      const fileName = `dashboard-${selectedYear}-${monthToken}.png`;
+      await exportNodeToPng(dashboardScreen, fileName);
+    } catch (error) {
+      console.error(error);
+      alert('No fue posible exportar el dashboard completo como PNG.');
+    } finally {
+      exportDashboardBtn.disabled = false;
+      exportDashboardBtn.textContent = originalLabel;
+    }
+  }
+
   function activateScreen(screenId) {
     screens.forEach((screen) => screen.classList.toggle('active', screen.id === screenId));
     navButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.screen === screenId));
@@ -938,6 +959,7 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
   navButtons.forEach((btn) => btn.addEventListener('click', () => activateScreen(btn.dataset.screen)));
 
   sectionsContainer.addEventListener('click', handleBlockExport);
+  exportDashboardBtn?.addEventListener('click', handleDashboardExport);
   monthlySummaryContainer.addEventListener('click', handleBlockExport);
 
   monthSelect.addEventListener('change', (e) => {

@@ -52,6 +52,7 @@
       { lineId: 'alineacion_chip', date: '2026-03-03', target: 3859, real: 2000 },
       { lineId: 'alineacion_chip', date: '2026-03-04', target: 3859, real: 1000 },
       { lineId: 'alineacion_chip', date: '2026-03-05', target: 3859, real: 2600 },
+      { lineId: 'alineacion_chip', date: '2026-03-06', target: 3859, real: 2300 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -81,6 +82,7 @@
       { lineId: 'wire_bond', date: '2026-03-03', target: 2346, real: 1490 },
       { lineId: 'wire_bond', date: '2026-03-04', target: 2346, real: 1700 },
       { lineId: 'wire_bond', date: '2026-03-05', target: 2346, real: 1500 },
+      { lineId: 'wire_bond', date: '2026-03-06', target: 2346, real: 0 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -110,6 +112,7 @@
       { lineId: 'montado_ceramica', date: '2026-03-03', target: 2287, real: 400 },
       { lineId: 'montado_ceramica', date: '2026-03-04', target: 2287, real: 1900 },
       { lineId: 'montado_ceramica', date: '2026-03-05', target: 2287, real: 1800 },
+      { lineId: 'montado_ceramica', date: '2026-03-06', target: 2287, real: 1800 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -139,6 +142,7 @@
       { lineId: 'montado_chip', date: '2026-03-03', target: 2610, real: 1800 },
       { lineId: 'montado_chip', date: '2026-03-04', target: 2610, real: 1700 },
       { lineId: 'montado_chip', date: '2026-03-05', target: 2610, real: 1600 },
+      { lineId: 'montado_chip', date: '2026-03-06', target: 2610, real: 1600 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
@@ -150,6 +154,7 @@
       { lineId: 'wire_bond_hi_reel', date: '2026-03-03', target: 2346, real: 300 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-04', target: 2346, real: 2000 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-05', target: 2346, real: 0 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-06', target: 2346, real: 0 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
@@ -161,6 +166,7 @@
       { lineId: 'alloy_hi_reel', date: '2026-03-03', target: 2287, real: 3000 },
       { lineId: 'alloy_hi_reel', date: '2026-03-04', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-03-05', target: 2287, real: 1000 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-06', target: 2287, real: 0 },
     ],
   };
 
@@ -311,7 +317,7 @@
         return;
       }
 
-      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03' || seedRecord.date === '2026-03-04' || seedRecord.date === '2026-03-05') {
+      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03' || seedRecord.date === '2026-03-04' || seedRecord.date === '2026-03-05' || seedRecord.date === '2026-03-06') {
         merged[existingIdx] = { ...merged[existingIdx], ...seedRecord };
       }
     });
@@ -924,6 +930,27 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
     }
   }
 
+
+  async function handleDashboardExport() {
+    if (!exportDashboardBtn) return;
+
+    const originalLabel = exportDashboardBtn.textContent;
+    exportDashboardBtn.disabled = true;
+    exportDashboardBtn.textContent = 'Exportando...';
+
+    try {
+      const monthToken = String(selectedMonth + 1).padStart(2, '0');
+      const fileName = `dashboard-${selectedYear}-${monthToken}.png`;
+      await exportNodeToPng(dashboardScreen, fileName);
+    } catch (error) {
+      console.error(error);
+      alert('No fue posible exportar el dashboard completo como PNG.');
+    } finally {
+      exportDashboardBtn.disabled = false;
+      exportDashboardBtn.textContent = originalLabel;
+    }
+  }
+
   function activateScreen(screenId) {
     screens.forEach((screen) => screen.classList.toggle('active', screen.id === screenId));
     navButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.screen === screenId));
@@ -932,6 +959,7 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
   navButtons.forEach((btn) => btn.addEventListener('click', () => activateScreen(btn.dataset.screen)));
 
   sectionsContainer.addEventListener('click', handleBlockExport);
+  exportDashboardBtn?.addEventListener('click', handleDashboardExport);
   monthlySummaryContainer.addEventListener('click', handleBlockExport);
 
   monthSelect.addEventListener('change', (e) => {

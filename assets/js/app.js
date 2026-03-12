@@ -13,6 +13,9 @@
   const INHABIL_DAY = null;
   const FALLBACK_COMPARE_CURRENT_DAY = 2;
   const FALLBACK_COMPARE_PREVIOUS_DAY = 1;
+  const SPECIAL_INCLUDED_DAYS = {
+    '2026-03': [7],
+  };
 
   const SEED_DB = {
     metas: {
@@ -53,6 +56,8 @@
       { lineId: 'alineacion_chip', date: '2026-03-04', target: 3859, real: 1000 },
       { lineId: 'alineacion_chip', date: '2026-03-05', target: 3859, real: 2600 },
       { lineId: 'alineacion_chip', date: '2026-03-06', target: 3859, real: 2300 },
+      { lineId: 'alineacion_chip', date: '2026-03-09', target: 3859, real: 2050 },
+      { lineId: 'alineacion_chip', date: '2026-03-10', target: 3859, real: 1580 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -82,7 +87,9 @@
       { lineId: 'wire_bond', date: '2026-03-03', target: 2346, real: 1490 },
       { lineId: 'wire_bond', date: '2026-03-04', target: 2346, real: 1700 },
       { lineId: 'wire_bond', date: '2026-03-05', target: 2346, real: 1500 },
-      { lineId: 'wire_bond', date: '2026-03-06', target: 2346, real: 0 },
+      { lineId: 'wire_bond', date: '2026-03-06', target: 2346, real: 1600 },
+      { lineId: 'wire_bond', date: '2026-03-09', target: 2346, real: 0 },
+      { lineId: 'wire_bond', date: '2026-03-10', target: 2346, real: 1500 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -113,6 +120,8 @@
       { lineId: 'montado_ceramica', date: '2026-03-04', target: 2287, real: 1900 },
       { lineId: 'montado_ceramica', date: '2026-03-05', target: 2287, real: 1800 },
       { lineId: 'montado_ceramica', date: '2026-03-06', target: 2287, real: 1800 },
+      { lineId: 'montado_ceramica', date: '2026-03-09', target: 2287, real: 1900 },
+      { lineId: 'montado_ceramica', date: '2026-03-10', target: 2287, real: 1830 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -143,6 +152,8 @@
       { lineId: 'montado_chip', date: '2026-03-04', target: 2610, real: 1700 },
       { lineId: 'montado_chip', date: '2026-03-05', target: 2610, real: 1600 },
       { lineId: 'montado_chip', date: '2026-03-06', target: 2610, real: 1600 },
+      { lineId: 'montado_chip', date: '2026-03-09', target: 2610, real: 1600 },
+      { lineId: 'montado_chip', date: '2026-03-10', target: 2610, real: 1800 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
@@ -154,7 +165,10 @@
       { lineId: 'wire_bond_hi_reel', date: '2026-03-03', target: 2346, real: 300 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-04', target: 2346, real: 2000 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-05', target: 2346, real: 0 },
-      { lineId: 'wire_bond_hi_reel', date: '2026-03-06', target: 2346, real: 0 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-06', target: 2346, real: 2000 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-07', target: 2346, real: 2000 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-09', target: 2346, real: 0 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-10', target: 2346, real: 0 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
@@ -167,6 +181,9 @@
       { lineId: 'alloy_hi_reel', date: '2026-03-04', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-03-05', target: 2287, real: 1000 },
       { lineId: 'alloy_hi_reel', date: '2026-03-06', target: 2287, real: 0 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-07', target: 2287, real: 800 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-09', target: 2287, real: 400 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-10', target: 2287, real: 0 },
     ],
   };
 
@@ -212,11 +229,20 @@
   }
 
   function getBusinessDaysInMonth(year, monthIndex) {
-    return Array.from({ length: getDaysInMonth(year, monthIndex) }, (_, i) => i + 1)
+    const businessDays = Array.from({ length: getDaysInMonth(year, monthIndex) }, (_, i) => i + 1)
       .filter((day) => {
         const weekday = new Date(year, monthIndex, day).getDay();
         return weekday !== 0 && weekday !== 6;
       });
+
+    const specialDays = SPECIAL_INCLUDED_DAYS[`${year}-${String(monthIndex + 1).padStart(2, '0')}`] || [];
+    const allDays = new Set([...businessDays, ...specialDays]);
+    return Array.from(allDays).sort((a, b) => a - b);
+  }
+
+  function isSpecialIncludedDay(year, monthIndex, day) {
+    const key = `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
+    return (SPECIAL_INCLUDED_DAYS[key] || []).includes(day);
   }
 
   function formatNumber(value) {
@@ -317,7 +343,7 @@
         return;
       }
 
-      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03' || seedRecord.date === '2026-03-04' || seedRecord.date === '2026-03-05' || seedRecord.date === '2026-03-06') {
+      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03' || seedRecord.date === '2026-03-04' || seedRecord.date === '2026-03-05' || seedRecord.date === '2026-03-06' || seedRecord.date === '2026-03-07' || seedRecord.date === '2026-03-09' || seedRecord.date === '2026-03-10') {
         merged[existingIdx] = { ...merged[existingIdx], ...seedRecord };
       }
     });
@@ -732,15 +758,28 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
 
       const resume = summarize(metaByDay, realByDay);
       const headers = businessDays
-        .map((day) => `<th class="${day === INHABIL_DAY ? 'inhabil-col' : ''}">${day === INHABIL_DAY ? `${day}<br><small>INHÁBIL</small>` : day}</th>`)
+        .map((day) => {
+          const classes = [day === INHABIL_DAY ? 'inhabil-col' : '', isSpecialIncludedDay(selectedYear, selectedMonth, day) ? 'special-day-col' : '']
+            .filter(Boolean)
+            .join(' ');
+          return `<th class="${classes}">${day === INHABIL_DAY ? `${day}<br><small>INHÁBIL</small>` : day}</th>`;
+        })
         .join('');
 
       const metaCells = businessDays
-        .map((day, idx) => (day === INHABIL_DAY ? '<td class="inhabil-col">INHÁBIL</td>' : `<td>${formatNumber(metaByDay[idx])}</td>`))
+        .map((day, idx) => {
+          if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
+          const specialClass = isSpecialIncludedDay(selectedYear, selectedMonth, day) ? ' class="special-day-col"' : '';
+          return `<td${specialClass}>${formatNumber(metaByDay[idx])}</td>`;
+        })
         .join('');
 
       const realCells = businessDays
-        .map((day, idx) => (day === INHABIL_DAY ? '<td class="inhabil-col">INHÁBIL</td>' : `<td>${formatNumber(realByDay[idx])}</td>`))
+        .map((day, idx) => {
+          if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
+          const specialClass = isSpecialIncludedDay(selectedYear, selectedMonth, day) ? ' class="special-day-col"' : '';
+          return `<td${specialClass}>${formatNumber(realByDay[idx])}</td>`;
+        })
         .join('');
 
       const series = monthlyStats(line.id, false);

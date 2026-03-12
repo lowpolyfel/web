@@ -183,6 +183,12 @@ th { background: #f3f7ff; }
   font-weight: 800;
 }
 
+.special-day-col {
+  background: #eef7f2 !important;
+  color: #2f5d51;
+  font-weight: 700;
+}
+
 .chart-card {
   margin-top: 0;
   border: 1px solid #e5edff;

@@ -8,13 +8,15 @@
     { id: 'alloy_hi_reel', name: 'Alloy (Nueva Maquina)' },
   ];
 
-  const DB_KEY = 'trend_salida_db_v7';
-  const LEGACY_DB_KEYS = ['trend_salida_db_v2', 'trend_salida_records_v1'];
-  const INHABIL_DAY = null;
+  const DB_KEY = 'trend_salida_db_v9';
+  const LEGACY_DB_KEYS = ['trend_salida_db_v8', 'trend_salida_db_v7', 'trend_salida_db_v2', 'trend_salida_records_v1'];
+  const INHABIL_DAYS = {
+    '2026-03': [16],
+  };
   const FALLBACK_COMPARE_CURRENT_DAY = 2;
   const FALLBACK_COMPARE_PREVIOUS_DAY = 1;
   const SPECIAL_INCLUDED_DAYS = {
-    '2026-03': [7],
+    '2026-03': [7, 14],
   };
 
   const SEED_DB = {
@@ -61,6 +63,10 @@
       { lineId: 'alineacion_chip', date: '2026-03-11', target: 3859, real: 0 },
       { lineId: 'alineacion_chip', date: '2026-03-12', target: 3859, real: 0 },
       { lineId: 'alineacion_chip', date: '2026-03-13', target: 3859, real: 1630 },
+      { lineId: 'alineacion_chip', date: '2026-03-14', target: 3859, real: 1630 },
+      { lineId: 'alineacion_chip', date: '2026-03-17', target: 3859, real: 2000 },
+      { lineId: 'alineacion_chip', date: '2026-03-18', target: 3859, real: 2500 },
+      { lineId: 'alineacion_chip', date: '2026-03-19', target: 3859, real: 2250 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -95,7 +101,11 @@
       { lineId: 'wire_bond', date: '2026-03-10', target: 2346, real: 1500 },
       { lineId: 'wire_bond', date: '2026-03-11', target: 2346, real: 1200 },
       { lineId: 'wire_bond', date: '2026-03-12', target: 2346, real: 0 },
-      { lineId: 'wire_bond', date: '2026-03-13', target: 2346, real: 0 },
+      { lineId: 'wire_bond', date: '2026-03-13', target: 2346, real: 1400 },
+      { lineId: 'wire_bond', date: '2026-03-14', target: 2346, real: 1500 },
+      { lineId: 'wire_bond', date: '2026-03-17', target: 2346, real: 1500 },
+      { lineId: 'wire_bond', date: '2026-03-18', target: 2346, real: 1600 },
+      { lineId: 'wire_bond', date: '2026-03-19', target: 2346, real: 1600 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -131,6 +141,10 @@
       { lineId: 'montado_ceramica', date: '2026-03-11', target: 2287, real: 1900 },
       { lineId: 'montado_ceramica', date: '2026-03-12', target: 2287, real: 1800 },
       { lineId: 'montado_ceramica', date: '2026-03-13', target: 2287, real: 2140 },
+      { lineId: 'montado_ceramica', date: '2026-03-14', target: 2287, real: 2140 },
+      { lineId: 'montado_ceramica', date: '2026-03-17', target: 2287, real: 1700 },
+      { lineId: 'montado_ceramica', date: '2026-03-18', target: 2287, real: 1800 },
+      { lineId: 'montado_ceramica', date: '2026-03-19', target: 2287, real: 1870 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -166,6 +180,10 @@
       { lineId: 'montado_chip', date: '2026-03-11', target: 2610, real: 1700 },
       { lineId: 'montado_chip', date: '2026-03-12', target: 2610, real: 1700 },
       { lineId: 'montado_chip', date: '2026-03-13', target: 2610, real: 1750 },
+      { lineId: 'montado_chip', date: '2026-03-14', target: 2610, real: 1750 },
+      { lineId: 'montado_chip', date: '2026-03-17', target: 2610, real: 1600 },
+      { lineId: 'montado_chip', date: '2026-03-18', target: 2610, real: 1600 },
+      { lineId: 'montado_chip', date: '2026-03-19', target: 2610, real: 1600 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
@@ -184,6 +202,10 @@
       { lineId: 'wire_bond_hi_reel', date: '2026-03-11', target: 2346, real: 0 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-12', target: 2346, real: 0 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-13', target: 2346, real: 0 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-14', target: 2346, real: 1000 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-17', target: 2346, real: 0 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-18', target: 2346, real: 0 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-19', target: 2346, real: 0 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
@@ -202,6 +224,10 @@
       { lineId: 'alloy_hi_reel', date: '2026-03-11', target: 2287, real: 0 },
       { lineId: 'alloy_hi_reel', date: '2026-03-12', target: 2287, real: 0 },
       { lineId: 'alloy_hi_reel', date: '2026-03-13', target: 2287, real: 0 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-14', target: 2287, real: 0 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-17', target: 2287, real: 1600 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-18', target: 2287, real: 0 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-19', target: 2287, real: 0 },
     ],
   };
 
@@ -261,6 +287,11 @@
   function isSpecialIncludedDay(year, monthIndex, day) {
     const key = `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
     return (SPECIAL_INCLUDED_DAYS[key] || []).includes(day);
+  }
+
+  function isInhabilDay(year, monthIndex, day) {
+    const key = `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
+    return (INHABIL_DAYS[key] || []).includes(day);
   }
 
   function formatNumber(value) {
@@ -361,7 +392,7 @@
         return;
       }
 
-      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03' || seedRecord.date === '2026-03-04' || seedRecord.date === '2026-03-05' || seedRecord.date === '2026-03-06' || seedRecord.date === '2026-03-07' || seedRecord.date === '2026-03-09' || seedRecord.date === '2026-03-10' || seedRecord.date === '2026-03-11' || seedRecord.date === '2026-03-12' || seedRecord.date === '2026-03-13') {
+      if (seedRecord.date === '2026-02-26' || seedRecord.date === '2026-02-27' || seedRecord.date === '2026-03-02' || seedRecord.date === '2026-03-03' || seedRecord.date === '2026-03-04' || seedRecord.date === '2026-03-05' || seedRecord.date === '2026-03-06' || seedRecord.date === '2026-03-07' || seedRecord.date === '2026-03-09' || seedRecord.date === '2026-03-10' || seedRecord.date === '2026-03-11' || seedRecord.date === '2026-03-12' || seedRecord.date === '2026-03-13' || seedRecord.date === '2026-03-14' || seedRecord.date === '2026-03-17' || seedRecord.date === '2026-03-18' || seedRecord.date === '2026-03-19') {
         merged[existingIdx] = { ...merged[existingIdx], ...seedRecord };
       }
     });
@@ -764,12 +795,12 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
       const monthRecords = recordsByLineAndMonth(line.id, selectedYear, selectedMonth);
       const defaultTarget = Number(db.metas[line.id] || 0);
       const metaByDay = businessDays.map((day) => {
-        if (day === INHABIL_DAY) return null;
+        if (isInhabilDay(selectedYear, selectedMonth, day)) return null;
         const rec = monthRecords.find((r) => Number(r.date.slice(-2)) === day);
         return Number(rec?.target ?? defaultTarget);
       });
       const realByDay = businessDays.map((day) => {
-        if (day === INHABIL_DAY) return null;
+        if (isInhabilDay(selectedYear, selectedMonth, day)) return null;
         const rec = monthRecords.find((r) => Number(r.date.slice(-2)) === day);
         return rec ? Number(rec.real) : null;
       });
@@ -777,16 +808,16 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
       const resume = summarize(metaByDay, realByDay);
       const headers = businessDays
         .map((day) => {
-          const classes = [day === INHABIL_DAY ? 'inhabil-col' : '', isSpecialIncludedDay(selectedYear, selectedMonth, day) ? 'special-day-col' : '']
+          const classes = [isInhabilDay(selectedYear, selectedMonth, day) ? 'inhabil-col' : '', isSpecialIncludedDay(selectedYear, selectedMonth, day) ? 'special-day-col' : '']
             .filter(Boolean)
             .join(' ');
-          return `<th class="${classes}">${day === INHABIL_DAY ? `${day}<br><small>INHÁBIL</small>` : day}</th>`;
+          return `<th class="${classes}">${isInhabilDay(selectedYear, selectedMonth, day) ? `${day}<br><small>INHÁBIL</small>` : day}</th>`;
         })
         .join('');
 
       const metaCells = businessDays
         .map((day, idx) => {
-          if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
+          if (isInhabilDay(selectedYear, selectedMonth, day)) return '<td class="inhabil-col">INHÁBIL</td>';
           const specialClass = isSpecialIncludedDay(selectedYear, selectedMonth, day) ? ' class="special-day-col"' : '';
           return `<td${specialClass}>${formatNumber(metaByDay[idx])}</td>`;
         })
@@ -794,7 +825,7 @@ function drawDailyChart(canvas, labels, metaValues, realValues) {
 
       const realCells = businessDays
         .map((day, idx) => {
-          if (day === INHABIL_DAY) return '<td class="inhabil-col">INHÁBIL</td>';
+          if (isInhabilDay(selectedYear, selectedMonth, day)) return '<td class="inhabil-col">INHÁBIL</td>';
           const specialClass = isSpecialIncludedDay(selectedYear, selectedMonth, day) ? ' class="special-day-col"' : '';
           return `<td${specialClass}>${formatNumber(realByDay[idx])}</td>`;
         })

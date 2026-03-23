@@ -103,6 +103,12 @@
       "real": 1660
     },
     {
+      "lineId": "alineacion_chip",
+      "date": "2026-03-20",
+      "target": 3859,
+      "real": 1670
+    },
+    {
       "lineId": "montado_ceramica",
       "date": "2025-10-01",
       "target": 2287,
@@ -295,6 +301,12 @@
       "real": 2198
     },
     {
+      "lineId": "montado_chip",
+      "date": "2026-03-20",
+      "target": 2610,
+      "real": 1000
+    },
+    {
       "lineId": "wire_bond",
       "date": "2026-02-10",
       "target": 2346,
@@ -349,6 +361,12 @@
       "real": 2263
     },
     {
+      "lineId": "wire_bond",
+      "date": "2026-03-20",
+      "target": 2346,
+      "real": 1510
+    },
+    {
       "lineId": "montado_ceramica",
       "date": "2026-02-10",
       "target": 2287,
@@ -383,6 +401,12 @@
       "date": "2026-02-17",
       "target": 2346,
       "real": 600
+    },
+    {
+      "lineId": "montado_ceramica",
+      "date": "2026-03-20",
+      "target": 2287,
+      "real": 1900
     },
     {
       "lineId": "wire_bond",

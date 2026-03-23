@@ -210,7 +210,7 @@
       { lineId: 'wire_bond_hi_reel', date: '2026-03-17', target: 2346, real: 0 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-18', target: 2346, real: 0 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-19', target: 2346, real: 0 },
-      { lineId: 'wire_bond_hi_reel', date: '2026-03-20', target: 2346, real: 860 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-03-20', target: 2346, real: 0 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
@@ -233,7 +233,7 @@
       { lineId: 'alloy_hi_reel', date: '2026-03-17', target: 2287, real: 1600 },
       { lineId: 'alloy_hi_reel', date: '2026-03-18', target: 2287, real: 0 },
       { lineId: 'alloy_hi_reel', date: '2026-03-19', target: 2287, real: 0 },
-      { lineId: 'alloy_hi_reel', date: '2026-03-20', target: 2287, real: 400 },
+      { lineId: 'alloy_hi_reel', date: '2026-03-20', target: 2287, real: 0 },
     ],
   };
 

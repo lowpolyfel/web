@@ -8,7 +8,7 @@
     { id: 'alloy_hi_reel', name: 'Alloy (Nueva Maquina)' },
   ];
 
-  const DB_KEY = 'trend_salida_db_v9';
+  const DB_KEY = 'trend_salida_db_v10';
   const LEGACY_DB_KEYS = ['trend_salida_db_v8', 'trend_salida_db_v7', 'trend_salida_db_v2', 'trend_salida_records_v1'];
   const INHABIL_DAYS = {
     '2026-03': [16],
@@ -71,6 +71,7 @@
       { lineId: 'alineacion_chip', date: '2026-03-24', target: 3859, real: 1500 },
       { lineId: 'alineacion_chip', date: '2026-03-25', target: 3859, real: 0 },
       { lineId: 'alineacion_chip', date: '2026-03-26', target: 3859, real: 1550 },
+      { lineId: 'alineacion_chip', date: '2026-04-06', target: 3859, real: 1200 },
 
       // Wire Bond
       { lineId: 'wire_bond', date: '2025-10-01', target: 2346, real: 1205 },
@@ -114,6 +115,7 @@
       { lineId: 'wire_bond', date: '2026-03-24', target: 2346, real: 200 },
       { lineId: 'wire_bond', date: '2026-03-25', target: 2346, real: 200 },
       { lineId: 'wire_bond', date: '2026-03-26', target: 2346, real: 600 },
+      { lineId: 'wire_bond', date: '2026-04-06', target: 2346, real: 0 },
 
       // Montado de Cerámica
       { lineId: 'montado_ceramica', date: '2025-10-01', target: 2287, real: 2035 },
@@ -157,6 +159,7 @@
       { lineId: 'montado_ceramica', date: '2026-03-24', target: 2287, real: 1730 },
       { lineId: 'montado_ceramica', date: '2026-03-25', target: 2287, real: 1750 },
       { lineId: 'montado_ceramica', date: '2026-03-26', target: 2287, real: 1450 },
+      { lineId: 'montado_ceramica', date: '2026-04-06', target: 2287, real: 11970 },
 
       // Montado de Chip
       { lineId: 'montado_chip', date: '2025-10-01', target: 2610, real: 1973 },
@@ -200,6 +203,7 @@
       { lineId: 'montado_chip', date: '2026-03-24', target: 2610, real: 1700 },
       { lineId: 'montado_chip', date: '2026-03-25', target: 2610, real: 1000 },
       { lineId: 'montado_chip', date: '2026-03-26', target: 2610, real: 1000 },
+      { lineId: 'montado_chip', date: '2026-04-06', target: 2610, real: 1385 },
 
       // Wire Bond (Nueva Maquina)
       { lineId: 'wire_bond_hi_reel', date: '2026-02-23', target: 2346, real: 600 },
@@ -226,6 +230,7 @@
       { lineId: 'wire_bond_hi_reel', date: '2026-03-24', target: 2346, real: 2000 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-25', target: 2346, real: 700 },
       { lineId: 'wire_bond_hi_reel', date: '2026-03-26', target: 2346, real: 1000 },
+      { lineId: 'wire_bond_hi_reel', date: '2026-04-06', target: 2346, real: 0 },
 
       // Alloy (Nueva Maquina)
       { lineId: 'alloy_hi_reel', date: '2026-02-23', target: 2287, real: 1000 },
@@ -252,6 +257,7 @@
       { lineId: 'alloy_hi_reel', date: '2026-03-24', target: 2287, real: 0 },
       { lineId: 'alloy_hi_reel', date: '2026-03-25', target: 2287, real: 1300 },
       { lineId: 'alloy_hi_reel', date: '2026-03-26', target: 2287, real: 0 },
+      { lineId: 'alloy_hi_reel', date: '2026-04-06', target: 2287, real: 0 },
     ],
   };
 
@@ -275,7 +281,7 @@
   const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
   const screens = Array.from(document.querySelectorAll('.screen'));
 
-  const START_MONTH = 2;
+  const START_MONTH = 3;
   const START_YEAR = 2026;
   let selectedMonth = START_MONTH;
   let selectedYear = START_YEAR;
